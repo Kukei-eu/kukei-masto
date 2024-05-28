@@ -25,8 +25,11 @@ const run = async () => {
 	setTimeout(run, 60000);
 }
 export const startListening = () => {
-	const api = new MastoApi('pol.social');
-	const listener = makeListener(api);
-	listeners.push(listener);
+	const polSocial = makeListener(new MastoApi('pol.social'));
+	const dziesiony = makeListener(new MastoApi('101010.pl'));
+	const mastodonSocial = makeListener(new MastoApi('mastodon.social'));
+	listeners.push(polSocial);
+	listeners.push(dziesiony);
+	listeners.push(mastodonSocial);
 	run();
 }
