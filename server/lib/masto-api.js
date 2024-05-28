@@ -43,7 +43,7 @@ export class MastoApi {
 
 		const body = await this.callApi('/timelines/public', {
 			local: true,
-			limit: 100,
+			limit: 200,
 		});
 
 		if (Array.isArray(body) === false) {
