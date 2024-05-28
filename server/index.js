@@ -12,7 +12,7 @@ const main = async () => {
 	app.use(helmet({
 		contentSecurityPolicy: {
 			directives: {
-				imgSrc: ["'self'", 'data:', 'https://pol.social', 'https://101010.pl', 'https://mastodon.social'],
+				imgSrc: ["'self'", 'data:', 'https://pol.social', 'https://101010.pl', 'https://mastodon.social', 'https://files.mastodon.social'],
 			}
 		}
 	}));
