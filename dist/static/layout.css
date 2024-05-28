@@ -172,6 +172,10 @@ body.body--has-query {
 					hyphenate-character: "↵";
 				}
 
+				.result-item-first-level__avatar {
+					float: right;
+					margin: 1rem;
+				}
 				& h4 {
 					box-shadow: -.5rem 0 0 1px var(--color-background), calc(-.5rem - 3px) 0 0 0;
 				}
