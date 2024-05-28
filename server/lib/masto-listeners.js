@@ -9,12 +9,15 @@ const listeners = [];
  * @returns {(function(): Promise<void>)|*}
  */
 const makeListener = (api) => async () => {
-	const timeline = await api.getLocalTimeline();
-	for (const item of timeline) {
-		await addToIndex(item)
+	try {
+		const timeline = await api.getLocalTimeline();
+		for (const item of timeline) {
+			await addToIndex(item)
+		}
+		console.log(timeline);
+	} catch (error) {
+		console.log('Failed to fetch', error);
 	}
-	await cleanUp();
-	console.log(timeline);
 }
 
 
@@ -22,6 +25,7 @@ const run = async () => {
 	for (const listener of listeners) {
 		await listener();
 	}
+	await cleanUp();
 	setTimeout(run, 60000);
 }
 export const startListening = () => {
