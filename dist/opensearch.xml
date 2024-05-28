@@ -1,0 +1,11 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>masto.kukei.eu</ShortName>
+  <Description>Masto.kukei.eu - Curated search engine for web developers</Description>
+  <InputEncoding>[UTF-8]</InputEncoding>
+  <Image width="32" height="32" type="image/png">https://masto.kukei.eu/static/favicon-32x32.png</Image>
+  <Image width="16" height="16" type="image/png">https://mastokukei.eu/static/favicon-16x16.png</Image>
+  <Image width="600" height="600" type="image/png">https://masto.kukei.eu/static/favicon.png</Image>
+  <Image width="600" height="600" type="image/svg+xml">https://masto.kukei.eu/static/favicon.svg</Image>
+  <Url type="text/html" template="https://masto.kukei.eu?q={searchTerms}&amp;utm_source=opensearch" />
+</OpenSearchDescription>

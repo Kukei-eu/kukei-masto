@@ -1,0 +1,31 @@
+{
+  "name": "@sznowicki/kukei-masto",
+  "version": "1.0.0",
+  "type": "module",
+  "repository": "git@github.com:Kukei-eu/kukei-web.git",
+  "author": "Szymon Nowicki <sznowicki@eskalacja.com>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "node --watch --watch-path . -r dotenv/config server/index.js",
+    "start": "node server/index.js",
+    "test": "node --test",
+    "make:hash": "node ./scripts/make-hash.js",
+    "build": "yarn make:hash && yarn install --production",
+    "lint": "eslint .",
+    "sign": "drone sign Kukei-eu/kukei-web --save"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "eslint": "^9.0.0",
+    "eslint-config-minimal-tabs": "^1.0.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "html-classnames": "^1.0.0",
+    "ip-anonymize": "^0.1.0",
+    "meilisearch": "^0.38.0",
+    "mongo": "^0.1.0",
+    "mustache": "^4.2.0"
+  }
+}

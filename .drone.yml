@@ -1,0 +1,36 @@
+---
+kind: pipeline
+type: docker
+name: ci
+trigger:
+  event:
+    - push
+steps:
+  - name: test
+    image: node:21-alpine
+    commands:
+      - yarn install
+      - yarn test
+
+---
+kind: pipeline
+type: exec
+name: on-host
+depends_on:
+  - ci
+steps:
+  - name: build
+    when:
+      branch:
+        - main
+    environment:
+      CI_DEPLOY_PWD:
+        from_secret: CI_DEPLOY_PWD
+    commands:
+      - cd $CI_DEPLOY_PWD
+      - ./deploy.sh
+---
+kind: signature
+hmac: 18a19a9f87e9ad067e91aa9c1c183880bc17b62929ad1b256066ca59817cfdfb
+
+...

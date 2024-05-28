@@ -1,0 +1,53 @@
+{{{ before }}}
+<main>
+	<form action="/" class="search-form">
+		<div class="headline">
+			<h1>
+				<a href="/">masto.kukei.eu</a>
+				<br >
+				<span> real time mastodon search (wip)</span></h1>
+		</div>
+		<div class="form-main">
+			<input type="search" name="q" value="{{ q }}" aria-label="Search" placeholder="e.g.: melon ego" autofocus spellcheck="false" />
+			<button type="submit" aria-label="Search">
+				<span class="desktop-only">Search</span>
+				<span class="mobile-only">>></span>
+			</button>
+		</div>
+		{{#noQuery}}
+		<p><a href="/about">read more about this website</a></p>
+		{{/noQuery}}
+	{{#hasQuery}}
+		<div class="results">
+			<h2>Results <span>generated in {{ doneIn }}ms</span></h2>
+			{{#hasResults}}
+			{{#results}}
+			<section>
+				<h3 id="{{ anchor }}">Timeline</h3>
+				<ul>
+					{{#hits}}
+					<li class="result-item-first-level">
+						<div class="result-item-first-level__data">
+							<h4>{{ title }}</h4>
+							{{#excerpt}}
+								<p>{{ excerpt }}</p>
+							{{/excerpt}}
+							{{#excerptSafe}}
+								<p>{{{ excerptSafe }}}</p>
+							{{/excerptSafe}}
+							<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
+						</div>
+					</li>
+					{{/hits}}
+				</ul>
+			</section>
+			{{/results}}
+			{{/hasResults}}
+			{{#noResults}}
+			<p>No results found</p>
+			{{/noResults}}
+		</div>
+	{{/hasQuery}}
+	</form>
+</main>
+{{{ after }}}
