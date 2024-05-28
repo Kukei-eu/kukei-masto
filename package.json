@@ -12,7 +12,7 @@
     "make:hash": "node ./scripts/make-hash.js",
     "build": "yarn make:hash && yarn install --production",
     "lint": "eslint .",
-    "sign": "drone sign Kukei-eu/kukei-web --save"
+    "sign": "drone sign Kukei-eu/kukei-masto --save"
   },
   "devDependencies": {
     "dotenv": "^16.4.5",
