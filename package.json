@@ -24,8 +24,9 @@
     "helmet": "^7.1.0",
     "html-classnames": "^1.0.0",
     "ip-anonymize": "^0.1.0",
-    "meilisearch": "^0.38.0",
+    "minisearch": "^6.3.0",
     "mongo": "^0.1.0",
-    "mustache": "^4.2.0"
+    "mustache": "^4.2.0",
+    "sanitize-html": "^2.13.0"
   }
 }

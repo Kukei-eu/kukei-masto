@@ -1,6 +1,6 @@
 version: '3'
 services:
-  kukei-web:
+  masto-kukey-web:
     build: .
     command: yarn start
     restart: unless-stopped

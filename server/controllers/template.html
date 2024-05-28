@@ -21,27 +21,22 @@
 		<div class="results">
 			<h2>Results <span>generated in {{ doneIn }}ms</span></h2>
 			{{#hasResults}}
-			{{#results}}
 			<section>
-				<h3 id="{{ anchor }}">Timeline</h3>
+				<h3 id="{{ anchor }}">Local timelines results</h3>
 				<ul>
-					{{#hits}}
+				{{#results}}
 					<li class="result-item-first-level">
 						<div class="result-item-first-level__data">
-							<h4>{{ title }}</h4>
-							{{#excerpt}}
-								<p>{{ excerpt }}</p>
-							{{/excerpt}}
-							{{#excerptSafe}}
-								<p>{{{ excerptSafe }}}</p>
-							{{/excerptSafe}}
+							<img alt="{{ accountDisplayName }}" src="{{ accountAvatar }}" width="48" height="48" loading="lazy" decoding="async" />
+							<h4>{{ accountDisplayName }}</h4>
+							<div>{{{ content }}}</div>
+							<p><format-date>{{ createdAtDate }}</format-date></p>
 							<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
 						</div>
 					</li>
-					{{/hits}}
+				{{/results}}
 				</ul>
 			</section>
-			{{/results}}
 			{{/hasResults}}
 			{{#noResults}}
 			<p>No results found</p>

@@ -4,6 +4,7 @@ import {getDefaultViewData} from '../lib/view.js';
 import {emitPageView} from '../lib/plausible.js';
 import {parseQuery} from '../lib/parseQuery.js';
 import {renderHtml} from '../lib/sso-render.js';
+import {search} from "../lib/search.js";
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
@@ -16,40 +17,14 @@ export const indexController = async (req, res) => {
 
 	const searchTimeStamp = Date.now();
 	// TODO: search here
-	const result = q ? null : null;
+	const results = q ? await search(q) : null;
+	console.log(results);
 	const doneIn = Date.now() - searchTimeStamp;
 	console.log(`Result milestone took ${Date.now() - startTime}ms`);
 
 
 	const viewDefaults = await getDefaultViewData(env);
 	console.log(`Default view milestone took ${Date.now() - startTime}ms`);
-
-	const hasBlogs = result?.hits.blogs.length > 0;
-	const hasDocs = result?.hits.docs.length > 0;
-	const hasMagazines = result?.hits.magazines.length > 0;
-	const results = [];
-
-	if (hasDocs) {
-		results.push({
-			name: 'Docs',
-			anchor: 'docs',
-			hits: result.hits.docs,
-		});
-	}
-	if (hasBlogs) {
-		results.push({
-			name: 'Blogs',
-			anchor: 'blogs',
-			hits: result.hits.blogs,
-		});
-	}
-	if (hasMagazines) {
-		results.push({
-			name: 'Magazines',
-			anchor: 'magazines',
-			hits: result.hits.magazines,
-		});
-	}
 
 	const hasQuery = !!q;
 	const mainClass = classNames('body', {
@@ -59,14 +34,6 @@ export const indexController = async (req, res) => {
 	console.log(`Processing results milestone took ${Date.now() - startTime}ms`);
 
 	const hasResults = hasQuery ? results.length > 0 : undefined;
-	// Save used queries for analytics
-	if (q) {
-		trackQuery({ q, hasResults })
-			.catch(error => {
-				console.error('Could not send mongo analytics', error);
-			});
-	}
-
 	// without await it might get killed before sending by cloudflare
 	emitPageView(req, {
 		hasResults,
@@ -77,7 +44,7 @@ export const indexController = async (req, res) => {
 	const view = {
 		...viewDefaults,
 		q,
-		title: 'kukei.eu',
+		title: 'masto.kukei.eu',
 		results,
 		hasQuery,
 		noQuery: !hasQuery,

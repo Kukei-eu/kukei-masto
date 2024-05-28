@@ -4,10 +4,18 @@ import helmet from 'helmet';
 import { withAsyncErrorHandler } from './lib/withAsyncErrorHandler.js';
 import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
+import {startListening} from "./lib/masto-listeners.js";
 
 const main = async () => {
+	startListening();
 	const app = express();
-	app.use(helmet());
+	app.use(helmet({
+		contentSecurityPolicy: {
+			directives: {
+				imgSrc: ["'self'", 'data:', 'https://pol.social'],
+			}
+		}
+	}));
 	app.disable('x-powered-by');
 	app.use((req, res, next) => {
 		console.log(`Request: ${req.get('cf-connecting-ip')}, ${req.originalUrl}`);
