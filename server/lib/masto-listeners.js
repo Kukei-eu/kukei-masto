@@ -14,7 +14,6 @@ const makeListener = (api) => async () => {
 		for (const item of timeline) {
 			await addToIndex(item)
 		}
-		console.log(timeline);
 	} catch (error) {
 		console.log('Failed to fetch', error);
 	}
