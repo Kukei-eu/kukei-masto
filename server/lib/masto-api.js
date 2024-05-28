@@ -72,7 +72,7 @@ export class MastoApi {
 		});
 		result.content = sanitizeHTML(result.content);
 		const filtered = result.filter((item) => {
-			if (now.getTime() - item.createdAtDate.getTime() > MastoApi.getNotOlderThanMs) {
+			if (now.getTime() - item.createdAtDate.getTime() < MastoApi.getNotOlderThanMs) {
 				return true;
 			}
 			return false;
