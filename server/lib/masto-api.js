@@ -8,7 +8,7 @@ export class MastoApi {
 		content: 'content',
 		accountDisplayName: 'account.display_name',
 		accountAvatar: 'account.avatar',
-
+		noIndex: 'account.noindex',
 	}
 
 	// 1 hour
@@ -72,6 +72,9 @@ export class MastoApi {
 		});
 		result.content = sanitizeHTML(result.content);
 		const filtered = result.filter((item) => {
+			if (item.noIndex) {
+				return false;
+			}
 			if (now.getTime() - item.createdAtDate.getTime() < MastoApi.getNotOlderThanMs) {
 				return true;
 			}
