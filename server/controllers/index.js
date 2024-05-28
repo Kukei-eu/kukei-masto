@@ -18,7 +18,6 @@ export const indexController = async (req, res) => {
 	const searchTimeStamp = Date.now();
 	// TODO: search here
 	const results = q ? await search(q) : null;
-	console.log(results);
 	const doneIn = Date.now() - searchTimeStamp;
 	console.log(`Result milestone took ${Date.now() - startTime}ms`);
 
