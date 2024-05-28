@@ -71,8 +71,11 @@ export class MastoApi {
 			return final;
 		});
 		result.content = sanitizeHTML(result.content);
+
+		let ignored = 0;
 		const filtered = result.filter((item) => {
 			if (item.noIndex) {
+				ignored++;
 				return false;
 			}
 			if (now.getTime() - item.createdAtDate.getTime() < MastoApi.getNotOlderThanMs) {
@@ -80,6 +83,7 @@ export class MastoApi {
 			}
 			return false;
 		});
+		console.log(`Filtered ${ignored} items, ${result.length} -> ${filtered.length}`);
 
 		return filtered;
 	}
