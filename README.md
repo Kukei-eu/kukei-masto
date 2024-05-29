@@ -1,13 +1,11 @@
-[![Build Status](https://drone.nowicki.dev/api/badges/Kukei-eu/kukei-web/status.svg)](https://drone.nowicki.dev/Kukei-eu/kukei-web)
-
-# Kukei.eu website
+# Masto.kukei.eu website
 
 ## What is it
-Thsi is a repo of a [kukei.eu](https://kukei.eu) website.
+Thsi is a repo of a [masto.kukei.eu](https://masto.kukei.eu) website.
 
-Kukei.eu is a search engine that is curated and focused on providing good assistance for *web developers*.
+Kukei.eu is a real-time search engine for bunch of Mastodon instances.
 
-You can add your blog or website to the index by creating a PR on [kukei-spider](https://github.com/kukei-eu/spider) repo.
+It listens to public timelines, stores public (indexable) posts and keeps them for search for a short time before purging.
 
 ## I love the project, want to help
 

@@ -32,8 +32,8 @@ export const addToIndex = async (item) => {
 
 export const cleanUp = async () => {
 	const db = await getDb();
-	// 15 minutes
-	const timeout = 15 * 60 * 1000;
+	// 1 hour
+	const timeout = 1000 * 60 * 60;
 	await db.collection('posts').deleteMany({createdAtDate: {$lt: new Date(Date.now() - timeout)}});
 }
 
