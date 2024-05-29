@@ -50,6 +50,7 @@ export const search = async (query) => {
 	const result = await db.collection('posts')
 		.find({$text: {$search: query}})
 		.sort({createdAtDate: -1})
+		.limit(200)
 		.toArray();
 	return result;
 }
