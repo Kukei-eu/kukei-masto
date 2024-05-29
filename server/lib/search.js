@@ -43,7 +43,7 @@ export const search = async (query) => {
 		const result = await db.collection('posts')
 			.find()
 			.sort({createdAtDate: -1})
-			.limit(20)
+			.limit(100)
 			.toArray();
 		return result;
 	}
