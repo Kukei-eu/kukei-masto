@@ -1,5 +1,6 @@
 import { MastoApi } from "./masto-api.js";
 import {addToIndex, cleanUp} from "./search.js";
+import {instanceHosts} from "../instances.js";
 
 const listeners = [];
 
@@ -28,19 +29,9 @@ const run = async () => {
 	setTimeout(run, 60000);
 }
 export const startListening = () => {
-	const polSocial = makeListener(new MastoApi('pol.social'));
-	const dziesiony = makeListener(new MastoApi('101010.pl'));
-	const mastodonSocial = makeListener(new MastoApi('mastodon.social'));
-	const mastodonOnline = makeListener(new MastoApi('mastodon.online'));
-	const fosstodonOrg = makeListener(new MastoApi('fosstodon.org'));
-	const grueneSocial = makeListener(new MastoApi('gruene.social'));
-
-	listeners.push(polSocial);
-	listeners.push(dziesiony);
-	listeners.push(mastodonSocial);
-	listeners.push(mastodonOnline);
-	listeners.push(fosstodonOrg);
-	listeners.push(grueneSocial);
+	instanceHosts.forEach((host) => {
+		listeners.push(makeListener(new MastoApi(host)));
+	});
 
 	run();
 }

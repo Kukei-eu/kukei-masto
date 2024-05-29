@@ -3,6 +3,16 @@
 	<h1><a href="/">masto.kukei.eu</a></h1>
 	<h2>What is it</h2>
 	<p>It's an attempt to do a well done real-time search for Mastodon. Something I miss from Twitter is to be able to search what people are talking about breaking news and other heated events</p>
+	<h2>Stats</h2>
+	<p>At the moment it talks to <strong>{{ hosts }}</strong> and has <strong><format-number>{{ stats.count }}</format-number></strong> number of documents in database.</p>
+	<h2>How it works</h2>
+	<ul>
+		<li>It listens to some instances local timelines via their API.</li>
+		<li>It collects posts and keep them for a short time (currently one hour).</li>
+		<li>It only collects posts from authors that opt-in to search indexes (honors noindex flag).</li>
+		<li>It sends User-Agent header with following value when calling instance APIs: Mozilla/5.0 (compatible; Masto.Kukei.eu-Bot/0.2; +https://masto.kukei.eu)</li>
+	</ul>
+	<h2>Who's behind</h2>
 	<p>It's created and maintained by <a href="https://social.nowicki.io/@hey">Szymon Nowicki</a>, you can also check all the source code <a href="https://github.com/Kukei-eu/kukei-masto">on GitHub</a></p>
 	<p>You can always contact me on <a href="https://social.nowicki.io/@hey">Mastodon</a> or hey@nowicki.io</p>
 	<h2>Privacy policy</h2>

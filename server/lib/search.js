@@ -54,3 +54,13 @@ export const search = async (query) => {
 		.toArray();
 	return result;
 }
+
+export const getSearchStats = async () => {
+	// get number of docuemtns
+	const db = await getDb();
+	const count = await db.collection('posts').count();
+
+	return {
+		count,
+	}
+}
