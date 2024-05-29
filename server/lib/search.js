@@ -47,6 +47,9 @@ export const search = async (query) => {
 			.toArray();
 		return result;
 	}
-	const result = await db.collection('posts').find({$text: {$search: query}}).toArray();
+	const result = await db.collection('posts')
+		.find({$text: {$search: query}})
+		.sort({createdAtDate: -1})
+		.toArray();
 	return result;
 }
