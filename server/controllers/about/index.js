@@ -3,6 +3,7 @@ import {emitPageView} from '../../lib/plausible.js';
 import { getTemplate, renderHtml} from '../../lib/sso-render.js';
 import {getSearchStats} from "../../lib/search.js";
 import {instanceHosts} from "../../instances.js";
+import {TOOTS_TTL_HUMAN} from "../../lib/constants.js";
 
 const template = getTemplate(import.meta.dirname, './template.html');
 
@@ -19,6 +20,7 @@ export const aboutController = async (req, res) => {
 		title: 'About masto.kukei.eu',
 		stats,
 		hosts: instanceHosts.join(', '),
+		TOOTS_TTL_HUMAN,
 	};
 	const html = await renderHtml(template, view);
 

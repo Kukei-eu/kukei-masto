@@ -1,4 +1,5 @@
 import sanitizeHTML from 'sanitize-html';
+import {TOOTS_TTL_MS} from "./constants.js";
 
 export class MastoApi {
 	static interestingKeys = {
@@ -11,8 +12,7 @@ export class MastoApi {
 		noIndex: 'account.noindex',
 	}
 
-	// 1 hour
-	static getNotOlderThanMs = 1000 * 60 * 60;
+	static getNotOlderThanMs = TOOTS_TTL_MS;
 
 	constructor(baseUrl) {
 		this.hostname = baseUrl

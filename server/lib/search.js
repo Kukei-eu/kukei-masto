@@ -1,4 +1,5 @@
 import {MongoClient} from 'mongodb';
+import {TOOTS_TTL_MS} from "./constants.js";
 
 const envs = process.env;
 
@@ -32,9 +33,7 @@ export const addToIndex = async (item) => {
 
 export const cleanUp = async () => {
 	const db = await getDb();
-	// 1 hour
-	const timeout = 1000 * 60 * 60;
-	await db.collection('posts').deleteMany({createdAtDate: {$lt: new Date(Date.now() - timeout)}});
+	await db.collection('posts').deleteMany({createdAtDate: {$lt: new Date(Date.now() - TOOTS_TTL_MS)}});
 }
 
 export const search = async (query) => {
