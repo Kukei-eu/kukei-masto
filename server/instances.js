@@ -1,4 +1,5 @@
 export const instanceHosts = [
+	'social.nowicki.io',
 	'pol.social',
 	'101010.pl',
 	'mastodon.social',
