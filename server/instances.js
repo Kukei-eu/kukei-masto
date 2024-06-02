@@ -6,4 +6,5 @@ export const instanceHosts = [
 	'fosstodon.org',
 	'gruene.social',
 	'hachyderm.io',
+	'troet.cafe',
 ]
