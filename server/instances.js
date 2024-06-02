@@ -24,4 +24,7 @@ export const instanceHosts = [
 	'mas.to',
 	'social.vivaldi.net',
 	'front-end.social',
+	'ard.social',
+	'zdf.social',
+	'edi.social',
 ]
