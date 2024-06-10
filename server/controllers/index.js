@@ -40,6 +40,19 @@ export const indexController = async (req, res) => {
 
 	console.log(`Facets milestone took ${Date.now() - startTime}ms`);
 
+	if (req.get('Accept') === 'application/json') {
+		if (hasQuery) {
+			return res.status(200).json({
+				results,
+				doneIn,
+			});
+		} else {
+			return res.status(200).json({
+				msg: 'No query provided.'
+			});
+		}
+	}
+
 	const view = {
 		...viewDefaults,
 		q,
