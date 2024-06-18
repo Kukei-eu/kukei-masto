@@ -15,7 +15,13 @@ const main = async () => {
 	app.use(helmet({
 		contentSecurityPolicy: {
 			directives: {
-				imgSrc: ["'self'", 'data:', ...cspHosts],
+				imgSrc: [
+					"'self'",
+					'data:',
+					...cspHosts,
+					'media.ruhr.social',
+					'files.mastodon.social'
+				],
 			}
 		}
 	}));
