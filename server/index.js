@@ -19,8 +19,8 @@ const main = async () => {
 					"'self'",
 					'data:',
 					...cspHosts,
-					'media.ruhr.social',
-					'files.mastodon.social'
+					'https://media.ruhr.social',
+					'https://files.mastodon.social'
 				],
 			}
 		}
