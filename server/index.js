@@ -5,6 +5,9 @@ import { withAsyncErrorHandler } from './lib/withAsyncErrorHandler.js';
 import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
 import {startListening} from "./lib/masto-listeners.js";
+import { instanceHosts } from "./instances.js";
+
+const cspHosts = instanceHosts.map((host) => `https://${host}`);
 
 const main = async () => {
 	startListening();
@@ -12,7 +15,7 @@ const main = async () => {
 	app.use(helmet({
 		contentSecurityPolicy: {
 			directives: {
-				imgSrc: ["'self'", 'data:', 'https://pol.social', 'https://101010.pl', 'https://mastodon.social', 'https://files.mastodon.social'],
+				imgSrc: ["'self'", 'data:', ...cspHosts],
 			}
 		}
 	}));
