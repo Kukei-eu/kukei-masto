@@ -20,7 +20,9 @@ const main = async () => {
 					'data:',
 					...cspHosts,
 					'https://media.ruhr.social',
-					'https://files.mastodon.social'
+					'https://files.mastodon.social',
+					'https://media.troet.cafe',
+					'https:/storage.googleapis.com/mastodon-prod-bucket',
 				],
 			}
 		}
