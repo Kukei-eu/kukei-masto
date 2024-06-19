@@ -22,7 +22,7 @@ const main = async () => {
 					'https://media.ruhr.social',
 					'https://files.mastodon.social',
 					'https://media.troet.cafe',
-					'https:/storage.googleapis.com/mastodon-prod-bucket/',
+					'https://storage.googleapis.com/mastodon-prod-bucket/',
 				],
 			}
 		}
