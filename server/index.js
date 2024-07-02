@@ -21,6 +21,8 @@ const main = async () => {
 					...cspHosts,
 					'https://media.ruhr.social',
 					'https://files.mastodon.social',
+					'https://files.mastodon.online',
+					'https://media.mas.to',
 					'https://media.troet.cafe',
 					'https://storage.googleapis.com/mastodon-prod-bucket/',
 				],
