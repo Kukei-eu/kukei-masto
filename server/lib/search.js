@@ -7,7 +7,7 @@ export const getMongo = async () => {
 	const client = new MongoClient(process.env.MONGO_URI);
 	await client.connect();
 	const db = await client.db(process.env.MONGO_DATABASE);
-	await db.collection('posts').createIndex({ content: "text" });
+	await db.collection('posts').createIndex({ plainText: "text" });
 
 	return [client, db];
 };
