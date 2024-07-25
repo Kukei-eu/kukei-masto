@@ -55,11 +55,36 @@ export const search = async (query) => {
 }
 
 export const getSearchStats = async () => {
-	// get number of docuemtns
+	// get number of documents
 	const db = await getDb();
 	const count = await db.collection('posts').count();
 
 	return {
 		count,
 	}
+}
+
+export const getMostCommonWords = async () => {
+	const db = await getDb();
+	const words = await db.collection('posts').aggregate(
+		[
+			{
+				$project: {
+					words: { $split: ['$text', ' '] }
+				}
+			},
+			{ $unwind: { path: '$words' } },
+			{
+				$group: {
+					_id: '$words',
+					count: { $sum: 1 }
+				}
+			},
+			{ $sort: { count: -1 } },
+			{ $limit: 10 }
+		],
+		{ maxTimeMS: 60000, allowDiskUse: true }
+	).toArray();
+
+	console.log(words);
 }

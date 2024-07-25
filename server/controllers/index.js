@@ -4,7 +4,7 @@ import {getDefaultViewData} from '../lib/view.js';
 import {emitPageView} from '../lib/plausible.js';
 import {parseQuery} from '../lib/parseQuery.js';
 import {renderHtml} from '../lib/sso-render.js';
-import {search} from "../lib/search.js";
+import {getMostCommonWords, search} from "../lib/search.js";
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
@@ -20,6 +20,9 @@ export const indexController = async (req, res) => {
 	const results = q ? await search(q) : null;
 	const doneIn = Date.now() - searchTimeStamp;
 	console.log(`Result milestone took ${Date.now() - startTime}ms`);
+
+	const words = await getMostCommonWords();
+	console.log(`Words milestone took ${Date.now() - startTime}ms`);
 
 
 	const viewDefaults = await getDefaultViewData(env);
@@ -51,7 +54,7 @@ export const indexController = async (req, res) => {
 				msg: 'No query provided.'
 			});
 		}
-	}
+ 	}
 
 	const view = {
 		...viewDefaults,

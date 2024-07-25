@@ -10,7 +10,9 @@ import { instanceHosts } from "./instances.js";
 const cspHosts = instanceHosts.map((host) => `https://${host}`);
 
 const main = async () => {
-	startListening();
+	if (!process.env.NO_LISTEN) {
+		startListening();
+	}
 	const app = express();
 	app.use(helmet({
 		contentSecurityPolicy: {

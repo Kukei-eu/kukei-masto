@@ -1,4 +1,5 @@
 import sanitizeHTML from 'sanitize-html';
+import { convert } from 'html-to-text';
 import {TOOTS_TTL_MS} from "./constants.js";
 
 export class MastoApi {
@@ -41,7 +42,7 @@ export class MastoApi {
 	async getLocalTimeline() {
 		const now = new Date();
 
-		const body = await this.callApi('/timelines/public', {
+		const body = await this.callApi('timelines/public', {
 			local: true,
 			limit: 500,
 		});
@@ -68,9 +69,15 @@ export class MastoApi {
 			final.originalId = final.id;
 			final.id = `${this.hostname}-${final.originalId}`;
 			final.createdAtDate = new Date(final.createdAt);
+
+			const orgContent = final.content;
+			final.content = sanitizeHTML(orgContent);
+			final.text = convert(orgContent, {
+				wordwrap: null,
+			});
+
 			return final;
 		});
-		result.content = sanitizeHTML(result.content);
 
 		let ignored = 0;
 		const filtered = result.filter((item) => {
