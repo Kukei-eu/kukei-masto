@@ -144,7 +144,7 @@ export const getMostCommonWords = async () => {
 	const cached = getCached();
 	if (cached) {
 		console.log('CACHED')
-		return cached.result;
+		return cached;
 	}
 	const words = await fetchMostCommonWords();
 	cache.result = words;
