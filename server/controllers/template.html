@@ -5,7 +5,7 @@
 			<h1>
 				<a href="/">masto.kukei.eu</a>
 				<br >
-				<span> real time mastodon search (wip)</span></h1>
+				<span> real time mastodon search</span></h1>
 		</div>
 		<div class="form-main">
 			<input type="search" name="q" value="{{ q }}" aria-label="Search" placeholder="e.g.: melon ego" autofocus spellcheck="false" />
@@ -16,6 +16,12 @@
 		</div>
 		{{#noQuery}}
 		<p><a href="/about">read more about this website</a></p>
+		<p>
+			Experimental, most popular words in the index (min. {{ minimalPopularWordLength }} chars):
+			{{ #words }}
+				<a href="/?q={{ word }}">{{ word }}</a>,
+			{{ /words }}
+		</p>
 		{{/noQuery}}
 	{{#hasQuery}}
 		<div class="results">

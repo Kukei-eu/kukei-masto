@@ -3,11 +3,12 @@ import {TOOTS_TTL_MS} from "./constants.js";
 
 const envs = process.env;
 
+export const MINIMAL_POPULAR_WORD_LENGTH = 5;
 export const getMongo = async () => {
 	const client = new MongoClient(process.env.MONGO_URI);
 	await client.connect();
 	const db = await client.db(process.env.MONGO_DATABASE);
-	await db.collection('posts').createIndex({ plainText: "text" });
+	await db.collection('posts').createIndex({plainText: "text"});
 
 	return [client, db];
 };
@@ -64,27 +65,89 @@ export const getSearchStats = async () => {
 	}
 }
 
-export const getMostCommonWords = async () => {
+const cache = {
+	result: null,
+	time: 0,
+}
+const getCached = () => {
+	if (cache.time + 60000 > Date.now()) {
+		return cache.result;
+	}
+	return null;
+}
+const fetchMostCommonWords = async () => {
 	const db = await getDb();
 	const words = await db.collection('posts').aggregate(
 		[
 			{
 				$project: {
-					words: { $split: ['$text', ' '] }
+					words: {
+						$split: ["$plainText", " "]
+					}
 				}
 			},
-			{ $unwind: { path: '$words' } },
+			{
+				$unwind: {
+					path: "$words"
+				}
+			},
+			{
+				$project:
+					{
+						length: {
+							$strLenCP: "$words"
+						},
+						words: 1
+					}
+			},
+			{
+				$match:
+				/**
+				 * query: The query in MQL.
+				 */
+					{
+						length: {
+							$gte: MINIMAL_POPULAR_WORD_LENGTH
+						}
+					}
+			},
 			{
 				$group: {
-					_id: '$words',
-					count: { $sum: 1 }
+					_id: "$words",
+					count: {
+						$sum: 1
+					}
 				}
 			},
-			{ $sort: { count: -1 } },
-			{ $limit: 10 }
+			{
+				$sort: {
+					count: -1
+				}
+			},
+			{
+				$limit: 10
+			},
 		],
-		{ maxTimeMS: 60000, allowDiskUse: true }
+		{maxTimeMS: 60000, allowDiskUse: true}
 	).toArray();
 
-	console.log(words);
+	const result = words
+		.map((word) => ({
+			word: word._id,
+			count: word.count,
+		}));
+
+	return result;
+}
+
+export const getMostCommonWords = async () => {
+	const cached = getCached();
+	if (cached) {
+		console.log('CACHED')
+		return cached.result;
+	}
+	const words = await fetchMostCommonWords();
+	cache.result = words;
+	cache.time = Date.now();
+	return words;
 }
