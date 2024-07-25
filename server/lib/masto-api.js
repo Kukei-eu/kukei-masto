@@ -72,7 +72,7 @@ export class MastoApi {
 
 			const orgContent = final.content;
 			final.content = sanitizeHTML(orgContent);
-			final.text = convert(orgContent, {
+			final.plainText = convert(orgContent, {
 				wordwrap: null,
 			});
 
