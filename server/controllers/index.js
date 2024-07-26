@@ -23,7 +23,6 @@ export const indexController = async (req, res) => {
 	const words = await getMostCommonWords();
 	console.log(`Words milestone took ${Date.now() - startTime}ms`);
 
-
 	const viewDefaults = await getDefaultViewData(env);
 	console.log(`Default view milestone took ${Date.now() - startTime}ms`);
 

@@ -1,5 +1,5 @@
 import { MastoApi } from "./masto-api.js";
-import {addToIndex, cleanUp} from "./search.js";
+import {addToIndex, cleanUp, getMostCommonWords} from "./search.js";
 import {instanceHosts} from "../instances.js";
 
 const listeners = [];
@@ -26,6 +26,7 @@ const run = async () => {
 		await listener();
 	}
 	await cleanUp();
+	await getMostCommonWords(true);
 	setTimeout(run, 60000);
 }
 export const startListening = () => {

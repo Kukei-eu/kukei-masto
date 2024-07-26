@@ -19,7 +19,7 @@
 		<p>
 			Experimental, most popular words in the index (min. {{ minimalPopularWordLength }} chars):
 			{{ #words }}
-				<a href="/?q={{ word }}">{{ word }}</a>,
+				<a href="/?q={{ wordEncoded }}">{{ word }}</a> <small>({{ count }})</small>{{^last }}, {{/last}}
 			{{ /words }}
 		</p>
 		{{/noQuery}}

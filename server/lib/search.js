@@ -147,6 +147,11 @@ const fetchMostCommonWords = async () => {
 									$nin: allBannedWords
 								}
 							},
+							{
+								words: {
+									$not: /^\[.*/
+								}
+							}
 						]
 					},
 			},
@@ -173,21 +178,25 @@ const fetchMostCommonWords = async () => {
 	const result = words
 		.map((word) => ({
 			word: word._id,
+			wordEncoded: encodeURIComponent(word._id),
 			count: word.count,
+			last: false,
 		}));
+	result[result.length - 1].last = true;
 
 	return result;
 }
 
 
-	export const getMostCommonWords = async () => {
-		const cached = getCached();
-		if (false && cached) {
-			console.log('CACHED')
-			return cached;
-		}
-		const words = await fetchMostCommonWords();
-		cache.result = words;
-		cache.time = Date.now();
-		return words;
+export const getMostCommonWords = async (noCache = false) => {
+	const useCache = !noCache;
+	const cached = useCache ? getCached() : false;
+	if (cached) {
+		return cached;
 	}
+	const words = await fetchMostCommonWords();
+	cache.result = words;
+	cache.time = Date.now();
+
+	return cache.result;
+}
