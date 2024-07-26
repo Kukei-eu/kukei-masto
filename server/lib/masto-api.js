@@ -11,6 +11,7 @@ export class MastoApi {
 		accountDisplayName: 'account.display_name',
 		accountAvatar: 'account.avatar',
 		noIndex: 'account.noindex',
+		bot: 'account.bot',
 	}
 
 	static getNotOlderThanMs = TOOTS_TTL_MS;

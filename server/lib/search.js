@@ -1,7 +1,21 @@
 import {MongoClient} from 'mongodb';
+import stopwords from 'stopwords-iso/stopwords-iso.json' with {type: 'json'};
 import {TOOTS_TTL_MS} from "./constants.js";
 
 const envs = process.env;
+
+const allStopWords = Object.keys(stopwords).reduce((acc, lang) => {
+	const words = stopwords[lang];
+	words.forEach((word) => {
+		acc.push(word);
+	});
+	return acc;
+}, [])
+
+const allBannedWords = [
+	...allStopWords,
+	'#nowplaying'
+]
 
 export const MINIMAL_POPULAR_WORD_LENGTH = 5;
 export const getMongo = async () => {
@@ -80,6 +94,22 @@ const fetchMostCommonWords = async () => {
 	const words = await db.collection('posts').aggregate(
 		[
 			{
+				$match: {
+					$and: [
+						{
+							accountDisplayName: {
+								$nin: [
+									'Feinstaub.koeln'
+								]
+							}
+						},
+						{
+							bot: false
+						}
+					],
+				}
+			},
+			{
 				$project: {
 					words: {
 						$split: ["$plainText", " "]
@@ -106,10 +136,19 @@ const fetchMostCommonWords = async () => {
 				 * query: The query in MQL.
 				 */
 					{
-						length: {
-							$gte: MINIMAL_POPULAR_WORD_LENGTH
-						}
-					}
+						$and: [
+							{
+								length: {
+									$gte: MINIMAL_POPULAR_WORD_LENGTH,
+								},
+							},
+							{
+								words: {
+									$nin: allBannedWords
+								}
+							},
+						]
+					},
 			},
 			{
 				$group: {
@@ -140,14 +179,15 @@ const fetchMostCommonWords = async () => {
 	return result;
 }
 
-export const getMostCommonWords = async () => {
-	const cached = getCached();
-	if (cached) {
-		console.log('CACHED')
-		return cached;
+
+	export const getMostCommonWords = async () => {
+		const cached = getCached();
+		if (false && cached) {
+			console.log('CACHED')
+			return cached;
+		}
+		const words = await fetchMostCommonWords();
+		cache.result = words;
+		cache.time = Date.now();
+		return words;
 	}
-	const words = await fetchMostCommonWords();
-	cache.result = words;
-	cache.time = Date.now();
-	return words;
-}

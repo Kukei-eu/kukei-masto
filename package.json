@@ -28,6 +28,7 @@
     "minisearch": "^6.3.0",
     "mongo": "^0.1.0",
     "mustache": "^4.2.0",
-    "sanitize-html": "^2.13.0"
+    "sanitize-html": "^2.13.0",
+    "stopwords-iso": "^1.1.0"
   }
 }
