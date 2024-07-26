@@ -17,6 +17,11 @@ const allBannedWords = [
 	'#nowplaying'
 ]
 
+const bannedNames = [
+	'Feinstaub.koeln',
+	'Veena Reddy',
+];
+
 export const MINIMAL_POPULAR_WORD_LENGTH = 5;
 export const getMongo = async () => {
 	const client = new MongoClient(process.env.MONGO_URI);
@@ -98,9 +103,7 @@ const fetchMostCommonWords = async () => {
 					$and: [
 						{
 							accountDisplayName: {
-								$nin: [
-									'Feinstaub.koeln'
-								]
+								$nin: bannedNames,
 							}
 						},
 						{
