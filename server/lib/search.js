@@ -14,12 +14,14 @@ const allStopWords = Object.keys(stopwords).reduce((acc, lang) => {
 
 const allBannedWords = [
 	...allStopWords,
-	'#nowplaying'
+	'#nowplaying',
+	'playing'
 ]
 
 const bannedNames = [
 	'Feinstaub.koeln',
 	'Veena Reddy',
+	'Brittany And Tyson',
 ];
 
 export const MINIMAL_POPULAR_WORD_LENGTH = 5;
