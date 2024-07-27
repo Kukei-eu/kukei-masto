@@ -39,7 +39,7 @@ trigger:
     - custom
   cron:
     include:
-      - 0 0 /2 * * *
+      - hourly
 steps:
   - name: call
     environment:
@@ -50,6 +50,6 @@ steps:
 
 ---
 kind: signature
-hmac: 4735cdfc64c2e6427d410803970477b768d25663c4e86cd891da9e64d06e47f2
+hmac: 8f57fd27b9b5afbb6d09af2487f5e488326098596e7e9688eb3d58a4251ce690
 
 ...
