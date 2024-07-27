@@ -51,10 +51,10 @@ steps:
       CI_API_SECRET:
         from_secret: CI_API_SECRET
     commands:
-      - curl -X POST "https://masto.kukei.eu/api/trends?s=$CI_API_SECRET"
+      - curl -X POST "https://masto.kukei.eu/api/trends?s=${CI_API_SECRET}"
 
 ---
 kind: signature
-hmac: 4bae4edb0c89c3e0e3185ee62fc05d0db4e94f0ccabbd13bdccdde7393739add
+hmac: 266562cd8d3f703ec75f134720be165403b59420b274448cdadd09db76df60c5
 
 ...
