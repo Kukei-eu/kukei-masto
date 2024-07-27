@@ -5,6 +5,7 @@ name: ci
 trigger:
   event:
     - push
+    - pull_request
 steps:
   - name: test
     image: node:21-alpine
@@ -16,6 +17,10 @@ steps:
 kind: pipeline
 type: exec
 name: on-host
+trigger:
+  event:
+    - push
+    - pull_request
 depends_on:
   - ci
 steps:
@@ -39,7 +44,7 @@ trigger:
     - custom
   cron:
     include:
-      - hourly
+      - trending
 steps:
   - name: call
     environment:
@@ -50,6 +55,6 @@ steps:
 
 ---
 kind: signature
-hmac: 8f57fd27b9b5afbb6d09af2487f5e488326098596e7e9688eb3d58a4251ce690
+hmac: 4bae4edb0c89c3e0e3185ee62fc05d0db4e94f0ccabbd13bdccdde7393739add
 
 ...
