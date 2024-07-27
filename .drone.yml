@@ -30,7 +30,26 @@ steps:
       - cd $CI_DEPLOY_PWD
       - ./deploy.sh
 ---
+kind: pipeline
+type: exec
+name: trending
+trigger:
+  event:
+    - cron
+    - custom
+  cron:
+    include:
+      - 0 0 /2 * * *
+steps:
+  - name: call
+    environment:
+      CI_API_SECRET:
+        from_secret: CI_API_SECRET
+    commands:
+      - curl -X POST "https://masto.kukei.eu/api/trends?s=$CI_API_SECRET"
+
+---
 kind: signature
-hmac: 341283b9ccfc41323914c7e2c01c553e0101c1573c2a5d82e9c1ce779cf54d08
+hmac: 4735cdfc64c2e6427d410803970477b768d25663c4e86cd891da9e64d06e47f2
 
 ...

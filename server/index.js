@@ -6,6 +6,7 @@ import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
 import {startListening} from "./lib/masto-listeners.js";
 import { instanceHosts } from "./instances.js";
+import {triggerBotTrends} from "./controllers/api/index.js";
 
 const cspHosts = instanceHosts.map((host) => `https://${host}`);
 
@@ -49,6 +50,7 @@ const main = async () => {
 
 	app.get('/', withAsyncErrorHandler(indexController));
 	app.get('/about', withAsyncErrorHandler(aboutController));
+	app.post('/api/trends', withAsyncErrorHandler(triggerBotTrends));
 
 	app.listen(3010, () => {
 		console.log('Server up');

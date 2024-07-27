@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "node --watch --watch-path . -r dotenv/config server/index.js",
+    "local": "node -r dotenv/config server/index.js",
     "start": "node server/index.js",
     "test": "node --test",
     "make:hash": "node ./scripts/make-hash.js",
@@ -25,6 +26,7 @@
     "html-classnames": "^1.0.0",
     "html-to-text": "^9.0.5",
     "ip-anonymize": "^0.1.0",
+    "masto": "^6.8.0",
     "minisearch": "^6.3.0",
     "mongo": "^0.1.0",
     "mustache": "^4.2.0",
