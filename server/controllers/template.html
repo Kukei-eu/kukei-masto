@@ -17,7 +17,7 @@
 		{{#noQuery}}
 		<p><a href="/about">read more about this website</a></p>
 		<p>
-			Experimental, most popular words in the index (min. {{ minimalPopularWordLength }} chars):
+			Experimental, most popular words in the index (min. {{ minimalPopularWordLength }} chars):<br/>
 			{{ #words }}
 				<a href="/?q={{ wordEncoded }}">{{ word }}</a> <small>({{ count }})</small>{{^last }}, {{/last}}
 			{{ /words }}

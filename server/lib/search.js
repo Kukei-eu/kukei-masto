@@ -1,30 +1,11 @@
 import {MongoClient} from 'mongodb';
-import stopwords from 'stopwords-iso/stopwords-iso.json' with {type: 'json'};
 import {TOOTS_TTL_MS} from "./constants.js";
+import {
+	commonWordsPipeline,
+} from './search-utils.js'
 
 const envs = process.env;
 
-const allStopWords = Object.keys(stopwords).reduce((acc, lang) => {
-	const words = stopwords[lang];
-	words.forEach((word) => {
-		acc.push(word);
-	});
-	return acc;
-}, [])
-
-const allBannedWords = [
-	...allStopWords,
-	'#nowplaying',
-	'playing'
-]
-
-const bannedNames = [
-	'Feinstaub.koeln',
-	'Veena Reddy',
-	'Brittany And Tyson',
-];
-
-export const MINIMAL_POPULAR_WORD_LENGTH = 5;
 export const getMongo = async () => {
 	const client = new MongoClient(process.env.MONGO_URI);
 	await client.connect();
@@ -102,84 +83,7 @@ const getCached = () => {
 const fetchMostCommonWords = async () => {
 	const db = await getDb();
 	const words = await db.collection('posts').aggregate(
-		[
-			{
-				$match: {
-					$and: [
-						{
-							accountDisplayName: {
-								$nin: bannedNames,
-							}
-						},
-						{
-							bot: false
-						}
-					],
-				}
-			},
-			{
-				$project: {
-					words: {
-						$split: ["$plainText", " "]
-					}
-				}
-			},
-			{
-				$unwind: {
-					path: "$words"
-				}
-			},
-			{
-				$project:
-					{
-						length: {
-							$strLenCP: "$words"
-						},
-						words: 1
-					}
-			},
-			{
-				$match:
-				/**
-				 * query: The query in MQL.
-				 */
-					{
-						$and: [
-							{
-								length: {
-									$gte: MINIMAL_POPULAR_WORD_LENGTH,
-								},
-							},
-							{
-								words: {
-									$nin: allBannedWords
-								}
-							},
-							{
-								words: {
-									$not: /^\[.*/
-								}
-							}
-						]
-					},
-			},
-			{
-				$group: {
-					_id: "$words",
-					count: {
-						$sum: 1
-					}
-				}
-			},
-			{
-				$sort: {
-					count: -1
-				}
-			},
-			{
-				$limit: 10
-			},
-		],
+		commonWordsPipeline,
 		{maxTimeMS: 60000, allowDiskUse: true}
 	).toArray();
 
@@ -195,9 +99,20 @@ const fetchMostCommonWords = async () => {
 	return result;
 }
 
+const canUseCache = (noCache) => {
+	if (noCache) {
+		return false;
+	}
+
+	if (process.env.SEARCH_NO_CACHE) {
+		return false;
+	}
+
+	return true;
+}
 
 export const getMostCommonWords = async (noCache = false) => {
-	const useCache = !noCache;
+	const useCache = canUseCache(noCache);
 	const cached = useCache ? getCached() : false;
 	if (cached) {
 		return cached;

@@ -4,7 +4,8 @@ import {getDefaultViewData} from '../lib/view.js';
 import {emitPageView} from '../lib/plausible.js';
 import {parseQuery} from '../lib/parseQuery.js';
 import {renderHtml} from '../lib/sso-render.js';
-import {getMostCommonWords, MINIMAL_POPULAR_WORD_LENGTH, search} from "../lib/search.js";
+import {getMostCommonWords, search} from "../lib/search.js";
+import { MINIMAL_POPULAR_WORD_LENGTH } from '../lib/search-utils.js';
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
