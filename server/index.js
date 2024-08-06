@@ -28,6 +28,7 @@ const main = async () => {
 					'https://media.mas.to',
 					'https://media.troet.cafe',
 					'https://storage.googleapis.com/mastodon-prod-bucket/',
+					'https://storage.waw.cloud.ovh.net',
 				],
 			}
 		}

@@ -83,7 +83,7 @@ export const commonWordsPipeline = [
 					// Not start with [ (saw this already from links, some use markdown)
 					{
 						words: {
-							$not: /^\[.*/
+							$not: /^[\[#].*/
 						}
 					},
 					// No links
