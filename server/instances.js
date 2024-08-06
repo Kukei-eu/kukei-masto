@@ -27,4 +27,7 @@ export const instanceHosts = [
 	'ard.social',
 	'zdf.social',
 	'edi.social',
+	'hachyderm.io',
+	'mastodon.au',
+	'kind.social',
 ]
