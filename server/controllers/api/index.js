@@ -2,6 +2,13 @@ import crypto from 'crypto';
 import {getMostCommonWords} from "../../lib/search.js";
 
 export const triggerBotTrends = async (req, res) => {
+	// Only run at 8, 16, 19 hour every day
+	const d = new Date();
+	const h = d.getHours();
+	if (![8, 16, 19].includes(h)) {
+		return res.status(200).send('Skipped')
+	}
+
 	const { env } = req;
 	const { searchParams } = new URL(req.originalUrl, 'http://localhost');
 	const { s } = Object.fromEntries(searchParams.entries());
