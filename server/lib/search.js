@@ -35,9 +35,9 @@ const getDb = async () => {
 export const addToIndex = async (item) => {
 	const db = await getDb();
 	const hasItem = await db.collection('posts').findOne({id: item.id});
-	// if (hasItem) {
-	// 	return;
-	// }
+	if (hasItem) {
+		return;
+	}
 	const result = await db.collection('posts').insertOne(item);
 	return result;
 }
