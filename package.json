@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "dotenv": "^16.4.5",
-    "eslint": "^9.0.0",
+    "eslint": "^9.8.0",
     "eslint-config-minimal-tabs": "^1.0.0"
   },
   "dependencies": {
@@ -26,7 +26,6 @@
     "html-classnames": "^1.0.0",
     "html-to-text": "^9.0.5",
     "ip-anonymize": "^0.1.0",
-    "minisearch": "^6.3.0",
     "mongo": "^0.1.0",
     "mustache": "^4.2.0",
     "sanitize-html": "^2.13.0",
