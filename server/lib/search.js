@@ -11,8 +11,13 @@ export const getMongo = async () => {
 	await client.connect();
 	const db = await client.db(process.env.MONGO_DATABASE);
 	await db.collection('posts').createIndex(
-		{plainText: "text"},
-	{ default_language: "none" }
+		{
+			plainText: "text"
+		},
+	{
+			default_language: "english",
+			language_override: "none",
+		}
 	);
 
 	return [client, db];
@@ -30,9 +35,9 @@ const getDb = async () => {
 export const addToIndex = async (item) => {
 	const db = await getDb();
 	const hasItem = await db.collection('posts').findOne({id: item.id});
-	if (hasItem) {
-		return;
-	}
+	// if (hasItem) {
+	// 	return;
+	// }
 	const result = await db.collection('posts').insertOne(item);
 	return result;
 }

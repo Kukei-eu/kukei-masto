@@ -31,3 +31,7 @@ export const instanceHosts = [
 	'mastodon.au',
 	'kind.social',
 ]
+
+export const bannedAccounts = [
+	'https://mastodon.social/@narasumberesq',
+];

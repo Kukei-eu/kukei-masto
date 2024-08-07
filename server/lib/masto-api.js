@@ -1,6 +1,7 @@
 import sanitizeHTML from 'sanitize-html';
 import { convert } from 'html-to-text';
 import {TOOTS_TTL_MS} from "./constants.js";
+import {bannedAccounts} from "../instances.js";
 
 export class MastoApi {
 	static interestingKeys = {
@@ -13,6 +14,7 @@ export class MastoApi {
 		noIndex: 'account.noindex',
 		bot: 'account.bot',
 		language: 'language',
+		accountUrl: 'account.url',
 	}
 
 	static getNotOlderThanMs = TOOTS_TTL_MS;
@@ -87,6 +89,12 @@ export class MastoApi {
 				ignored++;
 				return false;
 			}
+
+			if (bannedAccounts.includes(item.accountUrl)) {
+				console.log(`Ignoring banned account: ${item.accountUrl}`);
+				return false;
+			}
+
 			if (now.getTime() - item.createdAtDate.getTime() < MastoApi.getNotOlderThanMs) {
 				return true;
 			}
