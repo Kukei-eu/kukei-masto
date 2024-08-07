@@ -53,8 +53,9 @@ const main = async () => {
 	app.get('/about', withAsyncErrorHandler(aboutController));
 	app.post('/api/trends', withAsyncErrorHandler(triggerBotTrends));
 
-	app.listen(3010, () => {
-		console.log('Server up');
+	const port = 3010;
+	app.listen(port, () => {
+		console.log(`Server up, port ${port}`);
 	});
 };
 
