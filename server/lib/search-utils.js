@@ -25,93 +25,104 @@ const bannedNames = [
 	'Brittany And Tyson',
 ];
 
-export const commonWordsPipeline = [
-	{
-		// First, filter out banned accounts and bots
-		$match: {
-			$and: [
-				{
-					accountDisplayName: {
-						$nin: bannedNames,
-					}
-				},
-				{
-					bot: false
-				}
-			],
-		}
-	},
-	// Split all words from all content
-	{
-		$project: {
-			words: {
-				$split: ["$plainText", " "]
-			}
-		}
-	},
-	{
-		$unwind: {
-			path: "$words"
-		}
-	},
-	// Assign strlen
-	{
-		$project:
-			{
-				length: {
-					$strLenCP: "$words"
-				},
-				words: 1
-			}
-	},
-	{
-		$match:
-			{
-				$and: [
-					// Must be minimum N char long
-					{
-						length: {
-							$gte: MINIMAL_POPULAR_WORD_LENGTH,
-						},
-					},
-					// Not banned
-					{
-						words: {
-							$nin: allBannedWords
-						}
-					},
-					// Not start with [ (saw this already from links, some use markdown)
-					{
-						words: {
-							$not: /^\[.*/
-						}
-					},
-					// No links
-					{
-						words: {
-							$not: /http/
-						}
-					}
-				]
+export const getCommonWordsPipeline = ({ language = undefined }) => {
+	const and = [
+		{
+			accountDisplayName: {
+				$nin: bannedNames,
 			},
-	},
-	// Group by occurances
-	{
-		$group: {
-			_id: "$words",
-			count: {
-				$sum: 1
+		},
+		{
+			bot: false
+		},
+	]
+
+	console.log({ language });
+	if (language) {
+		and.push({
+			language
+		})
+	}
+
+	return [
+		{
+			// First, filter out banned accounts and bots
+			$match: {
+				$and: and,
 			}
-		}
-	},
-	// Sort desc
-	{
-		$sort: {
-			count: -1
-		}
-	},
-	// Limit
-	{
-		$limit: 10
-	},
-]
+		},
+		// Split all words from all content
+		{
+			$project: {
+				words: {
+					$split: ["$plainText", " "]
+				}
+			}
+		},
+		{
+			$unwind: {
+				path: "$words"
+			}
+		},
+		// Assign strlen
+		{
+			$project:
+				{
+					length: {
+						$strLenCP: "$words"
+					},
+					words: 1
+				}
+		},
+		{
+			$match:
+				{
+					$and: [
+						// Must be minimum N char long
+						{
+							length: {
+								$gte: MINIMAL_POPULAR_WORD_LENGTH,
+							},
+						},
+						// Not banned
+						{
+							words: {
+								$nin: allBannedWords
+							}
+						},
+						// Not start with [ (saw this already from links, some use markdown)
+						{
+							words: {
+								$not: /^\[.*/
+							}
+						},
+						// No links
+						{
+							words: {
+								$not: /http/
+							}
+						}
+					]
+				},
+		},
+		// Group by occurances
+		{
+			$group: {
+				_id: "$words",
+				count: {
+					$sum: 1
+				}
+			}
+		},
+		// Sort desc
+		{
+			$sort: {
+				count: -1
+			}
+		},
+		// Limit
+		{
+			$limit: 10
+		},
+	]
+};

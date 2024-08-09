@@ -1,8 +1,8 @@
 import {MongoClient} from 'mongodb';
-import {TOOTS_TTL_MS} from "./constants.js";
+import {TOOTS_TTL_MS} from './constants.js';
 import {
-	commonWordsPipeline,
-} from './search-utils.js'
+	getCommonWordsPipeline,
+} from './search-utils.js';
 
 const envs = process.env;
 
@@ -12,11 +12,11 @@ export const getMongo = async () => {
 	const db = await client.db(process.env.MONGO_DATABASE);
 	await db.collection('posts').createIndex(
 		{
-			plainText: "text"
+			plainText: 'text'
 		},
-	{
-			default_language: "english",
-			language_override: "none",
+		{
+			default_language: 'english',
+			language_override: 'none',
 		}
 	);
 
@@ -40,12 +40,12 @@ export const addToIndex = async (item) => {
 	}
 	const result = await db.collection('posts').insertOne(item);
 	return result;
-}
+};
 
 export const cleanUp = async () => {
 	const db = await getDb();
 	await db.collection('posts').deleteMany({createdAtDate: {$lt: new Date(Date.now() - TOOTS_TTL_MS)}});
-}
+};
 
 export const search = async (query) => {
 	const db = await getDb();
@@ -63,7 +63,7 @@ export const search = async (query) => {
 		.limit(200)
 		.toArray();
 	return result;
-}
+};
 
 export const getSearchStats = async () => {
 	// get number of documents
@@ -72,23 +72,39 @@ export const getSearchStats = async () => {
 
 	return {
 		count,
-	}
-}
+	};
+};
 
-const cache = {
-	result: null,
-	time: 0,
-}
-const getCached = () => {
-	if (cache.time + 60000 > Date.now()) {
-		return cache.result;
+const cacheMap = new Map();
+
+const getCachedFromMap = (language) => {
+	let cache = cacheMap.get(language);
+	if (!cache) {
+		cache = {
+			time: 0,
+			result: null,
+		};
 	}
-	return null;
-}
-const fetchMostCommonWords = async () => {
+	cacheMap.set(language, cache);
+
+	return cache;
+};
+
+const getCached = (noCache, options) => {
+	const cache = getCachedFromMap(options.language);
+	const useCache = canUseCache(noCache);
+	if (!useCache) {
+		cache.valid = false;
+	} else {
+		cache.valid = cache.time + 60000 > Date.now();
+	}
+
+	return cache;
+};
+const fetchMostCommonWords = async ({ language } = {}) => {
 	const db = await getDb();
 	const words = await db.collection('posts').aggregate(
-		commonWordsPipeline,
+		getCommonWordsPipeline({ language }),
 		{maxTimeMS: 60000, allowDiskUse: true}
 	).toArray();
 
@@ -102,7 +118,7 @@ const fetchMostCommonWords = async () => {
 	result[result.length - 1].last = true;
 
 	return result;
-}
+};
 
 const canUseCache = (noCache) => {
 	if (noCache) {
@@ -114,17 +130,24 @@ const canUseCache = (noCache) => {
 	}
 
 	return true;
-}
+};
 
-export const getMostCommonWords = async (noCache = false) => {
-	const useCache = canUseCache(noCache);
-	const cached = useCache ? getCached() : false;
-	if (cached) {
-		return cached;
+export const getMostCommonWords = async (noCache = false, options = {}) => {
+	const cached =  getCached(noCache, options);
+
+	if (cached.valid) {
+		return cached.result;
 	}
-	const words = await fetchMostCommonWords();
-	cache.result = words;
-	cache.time = Date.now();
 
-	return cache.result;
+	const words = await fetchMostCommonWords(options);
+	cached.result = words;
+	cached.time = Date.now();
+
+	return cached.result;
+};
+
+export const getAllPossibleLanguages = async () => {
+	const db = await getDb();
+	const languages = await db.collection('posts').distinct('language');
+	console.log(languages);
 }

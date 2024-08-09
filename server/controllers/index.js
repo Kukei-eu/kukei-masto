@@ -4,7 +4,7 @@ import {getDefaultViewData} from '../lib/view.js';
 import {emitPageView} from '../lib/plausible.js';
 import {parseQuery} from '../lib/parseQuery.js';
 import {renderHtml} from '../lib/sso-render.js';
-import {getMostCommonWords, search} from "../lib/search.js";
+import {getAllPossibleLanguages, getMostCommonWords, search} from "../lib/search.js";
 import { MINIMAL_POPULAR_WORD_LENGTH } from '../lib/search-utils.js';
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
@@ -13,7 +13,7 @@ export const indexController = async (req, res) => {
 	const startTime = Date.now();
 	const { env } = req;
 	const { searchParams } = new URL(req.originalUrl, 'http://localhost');
-	const { q } = Object.fromEntries(searchParams.entries());
+	const { q, trendingLang} = Object.fromEntries(searchParams.entries());
 	const { q: searchQuery, lang } = parseQuery(q);
 
 	const searchTimeStamp = Date.now();
@@ -21,11 +21,16 @@ export const indexController = async (req, res) => {
 	const results = q ? await search(q) : null;
 	const doneIn = Date.now() - searchTimeStamp;
 	console.log(`Result milestone took ${Date.now() - startTime}ms`);
-	const words = await getMostCommonWords();
+	const language = trendingLang;
+	const words = await getMostCommonWords(false, { language });
 	console.log(`Words milestone took ${Date.now() - startTime}ms`);
 
 	const viewDefaults = await getDefaultViewData(env);
 	console.log(`Default view milestone took ${Date.now() - startTime}ms`);
+
+	// Later, UI needed
+	// const possibleTrendingLanguages = await getAllPossibleLanguages()
+	// console.log(`Possible languages ${Date.now() - startTime}ms`);
 
 	const hasQuery = !!q;
 	const mainClass = classNames('body', {
@@ -54,6 +59,7 @@ export const indexController = async (req, res) => {
 			});
 		}
  	}
+
 
 	const view = {
 		...viewDefaults,
