@@ -14,12 +14,15 @@ const allStopWords = Object.keys(stopwords).reduce((acc, lang) => {
 const allBannedWords = [
 	...allStopWords,
 	'#nowplaying',
-	'playing'
+	'playing',
+	'radio',
 ]
 
 // Bot accounts that don't declare themselves bots
 const bannedNames = [
 	'Feinstaub.koeln',
+	'AutomaticRadio',
+	'Relay-Radio',
 	'International Friends Network',
 	'Veena Reddy',
 	'Brittany And Tyson',
