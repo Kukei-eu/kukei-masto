@@ -1,6 +1,6 @@
-import { MastoApi } from "./masto-api.js";
-import {addToIndex, cleanUp, getMostCommonWords} from "./search.js";
-import {instanceHosts} from "../instances.js";
+import { MastoApi } from './masto-api.js';
+import {addToIndex, cleanUp, getMostCommonWords} from './search.js';
+import {instanceHosts} from '../instances.js';
 
 const listeners = [];
 
@@ -13,13 +13,15 @@ const makeListener = (api) => async () => {
 	try {
 		const timeline = await api.getLocalTimeline();
 		for (const item of timeline) {
-			await addToIndex(item)
+			await addToIndex(item);
 		}
 	} catch (error) {
 		console.log('Failed to fetch', error);
 	}
-}
+};
 
+// 3 minutes in ms
+const POLL_INTERVAL = 3 * 1000 * 60;
 
 const run = async () => {
 	for (const listener of listeners) {
@@ -27,12 +29,13 @@ const run = async () => {
 	}
 	await cleanUp();
 	await getMostCommonWords(true);
-	setTimeout(run, 60000);
-}
+	setTimeout(run, POLL_INTERVAL);
+};
+
 export const startListening = () => {
 	instanceHosts.forEach((host) => {
 		listeners.push(makeListener(new MastoApi(host)));
 	});
 
 	run();
-}
+};
