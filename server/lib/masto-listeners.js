@@ -16,6 +16,7 @@ const makeListener = (api) => async () => {
 		const timeline = await api.getLocalTimeline();
 		for (const item of timeline) {
 			await addToIndex(item);
+			await sleep(100);
 		}
 	} catch (error) {
 		console.log('Failed to fetch', error);
