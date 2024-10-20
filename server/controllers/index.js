@@ -9,16 +9,30 @@ import { MINIMAL_POPULAR_WORD_LENGTH } from '../lib/search-utils.js';
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
+/**
+ * @typedef {import('express').Request} Request
+ * @typedef {import('express').Response} Response
+
+ */
+/**
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<*>}
+ */
 export const indexController = async (req, res) => {
 	const startTime = Date.now();
 	const { env } = req;
 	const { searchParams } = new URL(req.originalUrl, 'http://localhost');
-	const { q, trendingLang} = Object.fromEntries(searchParams.entries());
+	const { q , trendingLang} = Object.fromEntries(searchParams.entries());
 	const { q: searchQuery, lang } = parseQuery(q);
+
+	console.log(`Called ${req.originalUrl}, query: ${searchQuery}`)
+
 
 	const searchTimeStamp = Date.now();
 	// TODO: search here
-	const results = q ? await search(q) : null;
+	const results = searchQuery ? await search(searchQuery) : null;
 	const doneIn = Date.now() - searchTimeStamp;
 	console.log(`Result milestone took ${Date.now() - startTime}ms`);
 	const language = trendingLang;
