@@ -2,6 +2,8 @@ import { MastoApi } from './masto-api.js';
 import {addToIndex, cleanUp, getMostCommonWords} from './search.js';
 import {instanceHosts} from '../instances.js';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const listeners = [];
 
 /**
@@ -26,6 +28,7 @@ const POLL_INTERVAL = 3 * 1000 * 60;
 const run = async () => {
 	for (const listener of listeners) {
 		await listener();
+		await sleep(1000);
 	}
 	await cleanUp();
 	await getMostCommonWords(true);
