@@ -6,8 +6,8 @@ labels:
     backend: local
 
 steps:
-    - name: test
-      image: node:22-alpine
+    - name: trigger
+      image: bash
       environment:
           MASTO_BOT_INCOMING_SECRET:
                 from_secret: MASTO_BOT_INCOMING_SECRET

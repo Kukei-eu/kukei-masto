@@ -9,7 +9,7 @@ labels:
     backend: local
 
 steps:
-    - name: build
+    - name: deploy
       image: bash
       commands:
           - cd /home/sznowicki/storage/kukei-masto
