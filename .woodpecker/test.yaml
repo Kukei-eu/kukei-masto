@@ -1,0 +1,15 @@
+when:
+    - event: push
+      branch: main
+    - event: pull_request
+      branch: main
+
+labels:
+    backend: docker
+
+steps:
+    - name: test
+      image: node:22-alpine
+      commands:
+          - yarn install
+          - yarn test

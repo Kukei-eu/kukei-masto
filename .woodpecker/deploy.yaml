@@ -1,0 +1,16 @@
+when:
+    - event: push
+      branch: main
+
+depends_on:
+    - test
+
+labels:
+    backend: local
+
+steps:
+    - name: build
+      image: bash
+      commands:
+          - cd /home/sznowicki/storage/kukei-masto
+          - ./deploy.sh

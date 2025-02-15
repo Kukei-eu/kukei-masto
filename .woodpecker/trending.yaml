@@ -1,0 +1,15 @@
+when:
+    - event: cron
+      cron: trending
+
+labels:
+    backend: local
+
+steps:
+    - name: test
+      image: node:22-alpine
+      environment:
+          MASTO_BOT_INCOMING_SECRET:
+                from_secret: MASTO_BOT_INCOMING_SECRET
+      commands:
+          - curl -X POST "https://masto.kukei.eu/api/trends?s=$${MASTO_BOT_INCOMING_SECRET}"
