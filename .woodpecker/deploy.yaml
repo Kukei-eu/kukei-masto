@@ -12,5 +12,5 @@ steps:
     - name: deploy
       image: bash
       commands:
-          - cd /mnt/serverstorage/servers/
+          - cd /mnt/server/storage/servers/
           - ./deploy.sh
