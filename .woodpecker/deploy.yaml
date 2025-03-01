@@ -11,6 +11,9 @@ labels:
 steps:
     - name: deploy
       image: bash
+      environment:
+          CI_DEPLOY_PWD:
+              from_secret: CI_DEPLOY_PWD
       commands:
-          - cd /home/server/servers/kukei-masto
+          - cd $CI_DEPLOY_PWD
           - ./deploy.sh
