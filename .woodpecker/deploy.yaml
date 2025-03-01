@@ -12,5 +12,5 @@ steps:
     - name: deploy
       image: bash
       commands:
-          - cd /mnt/serverstorage/servers/kukei-masto
+          - cd /home/server/servers/kukei-masto
           - ./deploy.sh
