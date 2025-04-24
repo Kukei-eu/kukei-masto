@@ -30,7 +30,8 @@ export const instanceHosts = [
 	'hachyderm.io',
 	'mastodon.au',
 	'kind.social',
-]
+	'cyberplace.social',
+];
 
 export const bannedAccounts = [
 	'https://mastodon.social/@narasumberesq',
