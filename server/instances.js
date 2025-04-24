@@ -31,6 +31,7 @@ export const instanceHosts = [
 	'mastodon.au',
 	'kind.social',
 	'cyberplace.social',
+	'mstdn.social',
 ];
 
 export const bannedAccounts = [
