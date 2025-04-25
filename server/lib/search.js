@@ -1,36 +1,9 @@
-import {MongoClient} from 'mongodb';
 import {TOOTS_TTL_MS} from './constants.js';
 import {
 	getCommonWordsPipeline,
 } from './search-utils.js';
+import {getDb} from './db/mongo.js';
 
-const envs = process.env;
-
-export const getMongo = async () => {
-	const client = new MongoClient(process.env.MONGO_URI);
-	await client.connect();
-	const db = await client.db(process.env.MONGO_DATABASE);
-	await db.collection('posts').createIndex(
-		{
-			plainText: 'text'
-		},
-		{
-			default_language: 'english',
-			language_override: 'none',
-		}
-	);
-
-	return [client, db];
-};
-
-let db;
-let client;
-const getDb = async () => {
-	if (!db) {
-		[client, db] = await getMongo();
-	}
-	return db;
-};
 
 export const addToIndex = async (item) => {
 	const db = await getDb();
@@ -150,4 +123,4 @@ export const getAllPossibleLanguages = async () => {
 	const db = await getDb();
 	const languages = await db.collection('posts').distinct('language');
 	console.log(languages);
-}
+};

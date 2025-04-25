@@ -4,9 +4,9 @@ import helmet from 'helmet';
 import { withAsyncErrorHandler } from './lib/withAsyncErrorHandler.js';
 import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
-import {startListening} from "./lib/masto-listeners.js";
-import { instanceHosts } from "./instances.js";
-import {triggerBotTrends} from "./controllers/api/index.js";
+import {startListening} from './lib/masto-listeners.js';
+import { instanceHosts } from './instances.js';
+import {triggerBotTrends} from './controllers/api/index.js';
 
 const cspHosts = instanceHosts.map((host) => `https://${host}`);
 
@@ -26,9 +26,14 @@ const main = async () => {
 					'https://files.mastodon.social',
 					'https://files.mastodon.online',
 					'https://media.mas.to',
+					'https://media.mstdn.social',
 					'https://media.troet.cafe',
 					'https://storage.googleapis.com/mastodon-prod-bucket/',
 					'https://storage.waw.cloud.ovh.net',
+					'https://assets.chaos.social',
+					'https://media.norden.social',
+					'https://cdn.fosstodon.org',
+					'https://social-cdn.vivaldi.net',
 				],
 			}
 		}
@@ -53,7 +58,7 @@ const main = async () => {
 	app.get('/about', withAsyncErrorHandler(aboutController));
 	app.post('/api/trends', withAsyncErrorHandler(triggerBotTrends));
 
-	const port = 3010;
+	const port = process.env.PORT || 3010;
 	app.listen(port, () => {
 		console.log(`Server up, port ${port}`);
 	});

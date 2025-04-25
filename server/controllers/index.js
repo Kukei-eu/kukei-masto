@@ -6,6 +6,8 @@ import {parseQuery} from '../lib/parseQuery.js';
 import {renderHtml} from '../lib/sso-render.js';
 import {getAllPossibleLanguages, getMostCommonWords, search} from "../lib/search.js";
 import { MINIMAL_POPULAR_WORD_LENGTH } from '../lib/search-utils.js';
+import {logQuery} from "../lib/log.js";
+import * as sea from "node:sea";
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
@@ -27,8 +29,15 @@ export const indexController = async (req, res) => {
 	const { q , trendingLang} = Object.fromEntries(searchParams.entries());
 	const { q: searchQuery, lang } = parseQuery(q);
 
-	console.log(`Called ${req.originalUrl}, query: ${searchQuery}`)
+	console.log(`Called ${req.originalUrl}, query: ${searchQuery}`);
 
+	if (searchQuery) {
+		// fire and forget
+		logQuery(searchQuery)
+			.catch(error => {
+				console.error('Error logging query', error);
+			});
+	}
 
 	const searchTimeStamp = Date.now();
 	// TODO: search here
