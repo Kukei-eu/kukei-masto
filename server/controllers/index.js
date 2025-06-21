@@ -8,6 +8,7 @@ import {getAllPossibleLanguages, getMostCommonWords, search} from "../lib/search
 import { MINIMAL_POPULAR_WORD_LENGTH } from '../lib/search-utils.js';
 import {logQuery} from "../lib/log.js";
 import * as sea from "node:sea";
+import {checkCreeps} from "../lib/checkCreeps.js";
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
@@ -30,6 +31,12 @@ export const indexController = async (req, res) => {
 	const { q: searchQuery, lang } = parseQuery(q);
 
 	console.log(`Called ${req.originalUrl}, query: ${searchQuery}`);
+
+	const bail = checkCreeps(searchQuery, res);
+
+	if (bail) {
+		return;
+	}
 
 	if (searchQuery) {
 		// fire and forget

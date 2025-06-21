@@ -7,6 +7,7 @@ import { aboutController } from './controllers/about/index.js';
 import {startListening} from './lib/masto-listeners.js';
 import { instanceHosts } from './instances.js';
 import {triggerBotTrends} from './controllers/api/index.js';
+import {creepsController} from "./controllers/creeps/index.js";
 
 const cspHosts = instanceHosts.map((host) => `https://${host}`);
 
@@ -57,6 +58,7 @@ const main = async () => {
 	app.get('/', withAsyncErrorHandler(indexController));
 	app.get('/about', withAsyncErrorHandler(aboutController));
 	app.post('/api/trends', withAsyncErrorHandler(triggerBotTrends));
+	app.get('/error/creeps', withAsyncErrorHandler(creepsController));
 
 	const port = process.env.PORT || 3010;
 	app.listen(port, () => {
