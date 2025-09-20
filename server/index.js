@@ -35,6 +35,7 @@ const main = async () => {
 					'https://media.norden.social',
 					'https://cdn.fosstodon.org',
 					'https://social-cdn.vivaldi.net',
+					'https://pcdn.mastodon.com.pl',
 				],
 			}
 		}
