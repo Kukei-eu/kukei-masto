@@ -4,11 +4,10 @@ import {getDefaultViewData} from '../lib/view.js';
 import {emitPageView} from '../lib/plausible.js';
 import {parseQuery} from '../lib/parseQuery.js';
 import {renderHtml} from '../lib/sso-render.js';
-import {getAllPossibleLanguages, getMostCommonWords, search} from "../lib/search.js";
+import {getMostCommonWords, search} from '../lib/search.js';
 import { MINIMAL_POPULAR_WORD_LENGTH } from '../lib/search-utils.js';
-import {logQuery} from "../lib/log.js";
-import * as sea from "node:sea";
-import {checkCreeps} from "../lib/checkCreeps.js";
+import {logQuery} from '../lib/log.js';
+import {checkCreeps} from '../lib/checkCreeps.js';
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 

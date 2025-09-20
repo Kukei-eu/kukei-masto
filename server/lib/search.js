@@ -38,6 +38,16 @@ export const search = async (query) => {
 	return result;
 };
 
+export const getBrowse = async () => {
+	const db = await getDb();
+	const result = await db.collection('posts')
+		.find()
+		.sort({createdAtDate: -1})
+		.limit(100)
+		.toArray();
+	return result;
+};
+
 export const getSearchStats = async () => {
 	// get number of documents
 	const db = await getDb();
