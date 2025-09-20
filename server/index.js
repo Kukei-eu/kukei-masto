@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
+import crypto from 'crypto';
+
 import { withAsyncErrorHandler } from './lib/withAsyncErrorHandler.js';
 import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
@@ -15,11 +17,16 @@ const main = async () => {
 	if (!process.env.NO_LISTEN) {
 		startListening();
 	}
-	const app = express();
+	app.use((req, res, next) => {
+		res.locals.cspNonce = crypto.randomBytes(32).toString('hex');
+		next();
+	});
+
 	app.use(helmet({
 		contentSecurityPolicy: {
 			directives: {
 				imgSrc: [
+					// eslint-disable-next-line quotes
 					"'self'",
 					'data:',
 					...cspHosts,
@@ -38,6 +45,8 @@ const main = async () => {
 					'https://pcdn.mastodon.com.pl',
 					'https://fsn1.your-objectstorage.com'
 				],
+				// eslint-disable-next-line quotes
+				scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`],
 			}
 		}
 	}));
