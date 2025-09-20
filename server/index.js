@@ -36,6 +36,7 @@ const main = async () => {
 					'https://cdn.fosstodon.org',
 					'https://social-cdn.vivaldi.net',
 					'https://pcdn.mastodon.com.pl',
+					'https://fsn1.your-objectstorage.com'
 				],
 			}
 		}
