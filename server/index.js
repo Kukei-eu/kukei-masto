@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import crypto from 'crypto';
 
-import { withAsyncErrorHandler } from './lib/withAsyncErrorHandler.js';
 import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
 import {startListening} from './lib/masto-listeners.js';
@@ -69,10 +68,10 @@ const main = async () => {
 		}),
 	);
 
-	app.get('/', withAsyncErrorHandler(indexController));
-	app.get('/about', withAsyncErrorHandler(aboutController));
-	app.post('/api/trends', withAsyncErrorHandler(triggerBotTrends));
-	app.get('/error/creeps', withAsyncErrorHandler(creepsController));
+	app.get('/', indexController);
+	app.get('/about', aboutController);
+	app.post('/api/trends', triggerBotTrends);
+	app.get('/error/creeps', creepsController);
 
 	const port = process.env.PORT || 3010;
 	app.listen(port, () => {

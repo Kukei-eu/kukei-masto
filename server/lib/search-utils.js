@@ -127,5 +127,5 @@ export const getCommonWordsPipeline = ({ language = undefined }) => {
 		{
 			$limit: 10
 		},
-	]
+	];
 };

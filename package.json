@@ -16,19 +16,19 @@
     "sign": "drone sign Kukei-eu/kukei-masto --save"
   },
   "devDependencies": {
-    "dotenv": "^16.4.5",
-    "eslint": "^8.57.0",
+    "dotenv": "^17.2.2",
+    "eslint": "^9.36.0",
     "eslint-config-minimal-tabs": "^1.0.0"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "helmet": "^7.1.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
     "html-classnames": "^1.0.0",
     "html-to-text": "^9.0.5",
     "ip-anonymize": "^0.1.0",
     "mongo": "^0.1.0",
     "mustache": "^4.2.0",
-    "sanitize-html": "^2.13.0",
+    "sanitize-html": "^2.17.0",
     "stopwords-iso": "^1.1.0"
   }
 }
