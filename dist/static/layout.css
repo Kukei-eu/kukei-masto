@@ -75,10 +75,20 @@ h1, h2 {
 
 body {
 	display: grid;
-	grid-template-rows: 1fr auto;
+	grid-template-rows: auto 1fr auto;
 	height: 100%;
 }
 
+header {
+	display: grid;
+	width: 100%;
+}
+
+header .header__user {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+}
 main {
 	background: var(--color-background);
 	padding: 2rem 1rem;
@@ -222,7 +232,7 @@ textarea {
 }
 
 
-button {
+button, .button {
 	padding: calc(0.75rem - 4px) .75rem;
 	font-size: 1.25rem;
 	font-family: var(--font-family-head);

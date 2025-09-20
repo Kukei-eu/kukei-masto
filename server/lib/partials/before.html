@@ -20,3 +20,14 @@
 	<meta name="fediverse:creator" content="@mastobot@social.nowicki.io">
 </head>
 <body class="{{ mainClass }}">
+<header>
+	<div class="header__user">
+		{{ #user.isLoggedIn }}
+			<span>Welcome {{ user.data.name }}</span>
+			<a href="/logout">Logout</a>
+		{{ /user.isLoggedIn }}
+		{{ ^user.isLoggedIn }}
+			<a href="/login">Login</a>
+		{{ /user.isLoggedIn }}
+	</div>
+</header>

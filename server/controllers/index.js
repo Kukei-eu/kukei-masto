@@ -55,7 +55,7 @@ export const indexController = async (req, res) => {
 	const words = await getMostCommonWords(false, { language });
 	console.log(`Words milestone took ${Date.now() - startTime}ms`);
 
-	const viewDefaults = await getDefaultViewData(env);
+	const viewDefaults = await getDefaultViewData(req, res);
 	console.log(`Default view milestone took ${Date.now() - startTime}ms`);
 
 	// Later, UI needed

@@ -9,6 +9,7 @@ import {startListening} from './lib/masto-listeners.js';
 import { instanceHosts } from './instances.js';
 import {triggerBotTrends} from './controllers/api/index.js';
 import {creepsController} from './controllers/creeps/index.js';
+import {authMiddleware} from './middleware/auth.js';
 
 const cspHosts = instanceHosts.map((host) => `https://${host}`);
 
@@ -57,6 +58,7 @@ const main = async () => {
 		console.log(`Request: ${req.get('cf-connecting-ip')}, ${req.originalUrl}`);
 		next();
 	});
+	authMiddleware(app);
 	app.use('/', bodyParser.urlencoded({ extended: false }));
 	app.use((req, res, next) => {
 		req.env = process.env;

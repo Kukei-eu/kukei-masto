@@ -7,9 +7,8 @@ const template = getTemplate(import.meta.dirname, './template.html');
 export const creepsController = async (req, res) => {
 	emitPageView(req);
 	const ip = req.get('cf-connecting-ip');
-	const { env } = req;
 
-	const viewDefaults = await getDefaultViewData(env);
+	const viewDefaults = await getDefaultViewData(req, res);
 
 	const view = {
 		...viewDefaults,

@@ -11,7 +11,7 @@ const afterTemplate = getTemplate(import.meta.dirname, './partials/after.html');
 export const renderHtml = async (template, data) => {
 	const finalData = {
 		...data,
-	}
+	};
 	const before = Mustache.render(beforeTemplate, finalData);
 	const after = Mustache.render(afterTemplate, finalData);
 

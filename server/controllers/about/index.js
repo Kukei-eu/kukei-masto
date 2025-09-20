@@ -1,9 +1,9 @@
 import { getDefaultViewData } from '../../lib/view.js';
 import {emitPageView} from '../../lib/plausible.js';
 import { getTemplate, renderHtml} from '../../lib/sso-render.js';
-import {getSearchStats} from "../../lib/search.js";
-import {instanceHosts} from "../../instances.js";
-import {TOOTS_TTL_HUMAN} from "../../lib/constants.js";
+import {getSearchStats} from '../../lib/search.js';
+import {instanceHosts} from '../../instances.js';
+import {TOOTS_TTL_HUMAN} from '../../lib/constants.js';
 
 const template = getTemplate(import.meta.dirname, './template.html');
 
@@ -11,7 +11,7 @@ export const aboutController = async (req, res) => {
 	emitPageView(req);
 	const { env } = req;
 
-	const viewDefaults = await getDefaultViewData(env);
+	const viewDefaults = await getDefaultViewData(req, res);
 	const stats = await getSearchStats();
 
 	const view = {
