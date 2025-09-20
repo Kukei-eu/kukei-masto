@@ -32,6 +32,7 @@ export const instanceHosts = [
 	'kind.social',
 	'cyberplace.social',
 	'mstdn.social',
+	'mastodon.com.pl',
 ];
 
 export const bannedAccounts = [
