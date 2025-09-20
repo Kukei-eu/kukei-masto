@@ -73,6 +73,7 @@ const main = async () => {
 
 	app.get('/', indexController);
 	app.get('/browse', browseController);
+	app.get('/random', browseController);
 	app.get('/about', aboutController);
 	app.post('/api/trends', triggerBotTrends);
 	app.get('/error/creeps', creepsController);

@@ -1,6 +1,6 @@
 import {getTemplate, renderHtml} from '../../lib/sso-render.js';
 import {getDefaultViewData} from '../../lib/view.js';
-import {getBrowse} from '../../lib/search.js';
+import {getBrowse, getRandom} from '../../lib/search.js';
 import classNames from 'html-classnames';
 
 
@@ -10,7 +10,7 @@ export const browseController = async (req, res) => {
 	const hasAccess = !!res.locals.user.isPremium;
 	const viewDefaults = await getDefaultViewData(req, res);
 
-	const results = await getBrowse();
+	const results = req.path === '/random' ? await getRandom() : await getBrowse();
 	const mainClass = classNames('body', {
 		'--is-browse': true,
 	});

@@ -48,6 +48,14 @@ export const getBrowse = async () => {
 	return result;
 };
 
+export const getRandom = async (count = 100) => {
+	const db = await getDb();
+	const result = await db.collection('posts').aggregate([
+		{$sample: {size: count}},
+	]).toArray();
+	return result;
+};
+
 export const getSearchStats = async () => {
 	// get number of documents
 	const db = await getDb();
