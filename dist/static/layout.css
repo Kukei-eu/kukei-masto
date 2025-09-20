@@ -181,6 +181,7 @@ body.body--is-browse {
 		grid-template-areas:
 			"headline ."
 			"results results";
+		grid-template-rows: min-content max-content;
 	}
 }
 body.body--has-query {

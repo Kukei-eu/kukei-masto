@@ -6,10 +6,10 @@
 			<br >
 			<span> real time mastodon search engine</span></h1>
 	</div>
-	{{#hasAccess}}
 	<div class="results">
 		<h2>Newest 100 toots</h2>
 		<section>
+			{{#hasAccess}}
 			<ul>
 			{{#results}}
 				<li class="result-item-first-level">
@@ -31,11 +31,12 @@
 				</li>
 			{{/results}}
 			</ul>
+			{{/hasAccess}}
+			{{^hasAccess}}
+			<p>This section is currently in beta is being tested for compliance by few users.</p>
+			<p>Log in and shout out to me on mastodon if you want to participate.</p>
+			{{/hasAccess}}
 		</section>
 	</div>
-	{{/hasAccess}}
-	{{^hasAccess}}
-	<p>This section is currently in beta is being tested for compliance by few users.</p>
-	{{/hasAccess}}
 </main>
 {{{ after }}}
