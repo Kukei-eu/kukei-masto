@@ -7,6 +7,12 @@
 			<span> real time mastodon search engine</span></h1>
 	</div>
 	<div class="results">
+		<nav>
+			Browse by categories:
+			{{#allCategories}}
+				<a href="/browse/{{ encodedName }}">{{ name }}</a>
+			{{/allCategories}}
+		</nav>
 		<h2>Newest 100 toots</h2>
 		<section>
 			{{#hasAccess}}
@@ -26,6 +32,12 @@
 						/>
 						<div>{{{ content }}}</div>
 						<p><format-date>{{ createdAtDate }}</format-date></p>
+						<p>
+							Categories
+							{{#categoriesParsed}}
+							  <a href="/browse/{{ encodedName }}">{{ name }}</a>
+							{{/categoriesParsed}}
+						</p>
 						<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
 					</div>
 				</li>

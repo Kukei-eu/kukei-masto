@@ -38,10 +38,14 @@ export const search = async (query) => {
 	return result;
 };
 
-export const getBrowse = async () => {
+export const getBrowse = async (category) => {
 	const db = await getDb();
+	const find = category ? {categories: {
+		$in: [category]
+	}} : undefined;
+
 	const result = await db.collection('posts')
-		.find()
+		.find(find)
 		.sort({createdAtDate: -1})
 		.limit(100)
 		.toArray();
@@ -64,6 +68,44 @@ export const getSearchStats = async () => {
 	return {
 		count,
 	};
+};
+
+/**
+ * Gets one randompost that has no category
+ */
+export const getUncategorized = async (db) => {
+	const result = await db.collection('posts').aggregate([
+		{$match: {categories: {$exists: false}}},
+		{$sample: {size: 1}},
+	]).toArray();
+
+	return result[0];
+};
+
+/** Gets count of uncategorized posts */
+export const getUncategorizedCount = async (db) => {
+	const count = await db.collection('posts').countDocuments({categories: {$exists: false}});
+	return count;
+};
+
+export const assignCategories = async (db, id, categories) => {
+	await db.collection('posts').updateOne(
+		{
+			_id: id,
+		},
+		{
+			$set: {categories}
+		}
+	);
+};
+
+/**
+ * Gets all possible categories
+ */
+export const getAllPossibleCategories = async () => {
+	const db = await getDb();
+	const categories = await db.collection('posts').distinct('categories');
+	return categories.filter(Boolean).sort();
 };
 
 const cacheMap = new Map();
