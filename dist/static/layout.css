@@ -147,6 +147,21 @@ body.body--has-query {
 				max-width: var(--width-max-content);
 				display: grid;
 				gap: 1rem;
+
+				& section {
+					display: grid;
+					gap: .5rem;
+					& span {}
+					& div {
+						display: flex;
+						flex-wrap: wrap;
+						gap: .5rem;
+
+						& a {
+							text-decoration: none;
+						}
+					}
+				}
 			}
 
 		}
@@ -482,13 +497,14 @@ history-chart {
 }
 
 [popover] {
-	bottom: 0;
-	left: 1rem;
 	width: calc(var(--width-max-content) - 1rem);
-	top: unset;
-	right: unset;
 	background: var(--color-background);
 	color: var(--color-base);
+	inset: unset;
+	margin: unset;
+	justify-self: anchor-center;
+	bottom: calc(anchor(top) + 20px);
+	padding: 0.5rem;
 }
 
 [popover]::backdrop {

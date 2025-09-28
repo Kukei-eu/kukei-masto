@@ -8,16 +8,20 @@
 		</h1>
 		<nav>
 			<section>
-				Filter by categories:
-				{{#allCategories}}
-				<a href="/browse/{{ encodedName }}">{{ name }}</a>
-				{{/allCategories}}
+				<span>Filter by categories</span>
+				<div>
+					{{#allCategories}}
+					<a href="/browse/{{ encodedName }}">{{ name }}</a>
+					{{/allCategories}}
+				</div>
 			</section>
 			<section>
-				Filter by languages
-				{{#languages}}
-				<a href="?lang={{ . }}">{{ . }}</a>
-				{{/languages}}
+				<span>Filter by languages</span>
+				<div>
+					{{#languages}}
+					<a href="?lang={{ . }}">{{ . }}</a>
+					{{/languages}}
+				</div>
 			</section>
 
 		</nav>

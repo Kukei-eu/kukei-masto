@@ -43,7 +43,7 @@ const main = async () => {
 		console.log(count);
 
 		const now = Date.now();
-		const n = 9;
+		const n = 1;
 
 		const uncategorized = await getUncategorized(db, n);
 
