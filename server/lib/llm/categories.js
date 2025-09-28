@@ -7,7 +7,7 @@ export const categories = [
 	'economy',
 	'blogging',
 	'shitpost',
-	'BANNED',
+	'banned',
 	'donations',
 	'other',
 ];

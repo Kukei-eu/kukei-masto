@@ -3,13 +3,16 @@ import { categories } from '../../server/lib/llm/categories.js';
 const makePrompt = () => `
 You are an expert in content categorization of social media posts.
 
-You need to categorize the following post into one or more of the following categories:
+
+Your job is to categorize posts info one or more of the following categories:
 
 ${categories.map(c => ' - '+c).join('\n')}.
 
-BANNED is a special category for posts that contain illegal content, such as hate speech, fraud or phishing attempt.
+BANNED is a special category for posts that contain potentially illegal content, such as porn, fraud or phishing attempt.
 
-Posts about hate speech, or fraud and phishing, while not being such, are not BANNED.
+Only posts that ARE porn, fraud or phishing attempt should be categorized as BANNED. Not posts that just discuss these topics.
+
+Never ban a post simply because it contains upsetting message.
 
 When choosing "donations" it should not have any other category.
 

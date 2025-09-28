@@ -83,14 +83,14 @@ export const getSearchStats = async () => {
 };
 
 /**
- * Gets one randompost that has no category
+ * Gets number of youngest posts without categories
  */
 export const getUncategorized = async (db, size = 1) => {
-	const result = await db.collection('posts').aggregate([
-		{$match: {categories: {$exists: false}}},
-		{$sample: {size}},
-	]).toArray();
-
+	const result = await db.collection('posts')
+		.find({categories: {$exists: false}})
+		.sort({createdAtDate: -1})
+		.limit(size)
+		.toArray();
 	return result;
 };
 

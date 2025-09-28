@@ -12,6 +12,24 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const normalizeCategories = (categories) => categories.map((cat) => cat.toLowerCase().trim());
 
 
+const processBatch = async (db, posts) => {
+	await categorize(posts);
+	for (const post of posts) {
+		const log = [];
+		log.push(['Text:', post.plainText]);
+		const {result} = post;
+		const [categories, reason, language] = result;
+		const normalized = normalizeCategories(categories);
+		log.push(['Categories:', normalized.join(', ')]);
+		log.push(['Reason:', reason]);
+		log.push(['Language:', language]);
+
+		await assignCategories(db, post._id, normalized, reason, language);
+		log.forEach((line) => console.log(...line));
+		console.log('---');
+	}
+};
+
 const main = async () => {
 	const [client, db] = await getMongo();
 	// testing
@@ -24,32 +42,20 @@ const main = async () => {
 		const count = await getUncategorizedCount(db);
 		console.log(count);
 
-		const n = 3;
 		const now = Date.now();
+		const n = 9;
+
 		const uncategorized = await getUncategorized(db, n);
 
-		if (!uncategorized) 	{
+		if (!uncategorized.length) 	{
 			run = false;
 			continue;
 		}
 
-		await categorize(uncategorized);
+		console.log('Youngest is', uncategorized[0]?.createdAtDate);
 
-		for (const post of uncategorized) {
-			const log = [];
-			log.push(['Text:', post.plainText]);
-			const {result} = post;
-			const [categories, reason, language] = result;
-			const normalized = normalizeCategories(categories);
-			log.push(['Categories:', normalized.join(', ')]);
-			log.push(['Reason:', reason]);
-			log.push(['Language:', language]);
-
-			await assignCategories(db, uncategorized._id, normalized, reason, language);
-			log.forEach((line) => console.log(...line));
-			console.log('---');
-		}
-
+		await processBatch(db, uncategorized);
+		// await processBatch(db, uncategorized);
 		const elapsed = Date.now() - now;
 		totalTime += elapsed;
 		totalCount += uncategorized.length;
@@ -61,6 +67,7 @@ const main = async () => {
 		console.log(`Turn time: ${elapsed / 1000} s, avg: ${(totalTime / totalCount / 1000).toFixed(2)} s/post`);
 		console.log('Next turn');
 		console.log('');
+
 		// await sleep(100);
 	} while (run);
 	await client.close();
