@@ -4,6 +4,7 @@ import {
 } from './search-utils.js';
 import {getDb} from './db/mongo.js';
 
+import { categories } from './llm/categories.js';
 
 export const addToIndex = async (item) => {
 	const db = await getDb();
@@ -20,6 +21,11 @@ export const cleanUp = async () => {
 	await db.collection('posts').deleteMany({createdAtDate: {$lt: new Date(Date.now() - TOOTS_TTL_MS)}});
 };
 
+const normalizePosts = (posts) => posts.map((post) => ({
+	...post,
+	categories: post.categories?.filter((cat) => categories.includes(cat)) ?? [],
+}));
+
 export const search = async (query) => {
 	const db = await getDb();
 	if (query === '*') {
@@ -35,21 +41,27 @@ export const search = async (query) => {
 		.sort({createdAtDate: -1})
 		.limit(200)
 		.toArray();
-	return result;
+	return normalizePosts(result);
 };
 
-export const getBrowse = async (category) => {
+export const getBrowse = async (category, lang) => {
 	const db = await getDb();
-	const find = category ? {categories: {
-		$in: [category]
-	}} : undefined;
+	const find = category ? {
+		categories: {
+			$in: [category]
+		},
+	} : {};
+
+	if (lang) {
+		find.detectedLanguage = lang;
+	}
 
 	const result = await db.collection('posts')
 		.find(find)
 		.sort({createdAtDate: -1})
 		.limit(100)
 		.toArray();
-	return result;
+	return normalizePosts(result);
 };
 
 export const getRandom = async (count = 100) => {
@@ -57,7 +69,7 @@ export const getRandom = async (count = 100) => {
 	const result = await db.collection('posts').aggregate([
 		{$sample: {size: count}},
 	]).toArray();
-	return result;
+	return normalizePosts(result);
 };
 
 export const getSearchStats = async () => {
@@ -73,13 +85,13 @@ export const getSearchStats = async () => {
 /**
  * Gets one randompost that has no category
  */
-export const getUncategorized = async (db) => {
+export const getUncategorized = async (db, size = 1) => {
 	const result = await db.collection('posts').aggregate([
 		{$match: {categories: {$exists: false}}},
-		{$sample: {size: 1}},
+		{$sample: {size}},
 	]).toArray();
 
-	return result[0];
+	return result;
 };
 
 /** Gets count of uncategorized posts */
@@ -88,13 +100,17 @@ export const getUncategorizedCount = async (db) => {
 	return count;
 };
 
-export const assignCategories = async (db, id, categories) => {
+export const assignCategories = async (db, id, categories, categoriesReason, detectedLanguage) => {
 	await db.collection('posts').updateOne(
 		{
 			_id: id,
 		},
 		{
-			$set: {categories}
+			$set: {
+				categories,
+				categoriesReason,
+				detectedLanguage,
+			}
 		}
 	);
 };
@@ -104,8 +120,17 @@ export const assignCategories = async (db, id, categories) => {
  */
 export const getAllPossibleCategories = async () => {
 	const db = await getDb();
-	const categories = await db.collection('posts').distinct('categories');
-	return categories.filter(Boolean).sort();
+	const categoriesDb = await db.collection('posts').distinct('categories');
+	return categoriesDb
+		.filter(Boolean)
+		.filter((cat) => categories.includes(cat))
+		.sort();
+};
+
+export const getAllDetectedLanguages = async () => {
+	const db = await getDb();
+	const languages = await db.collection('posts').distinct('detectedLanguage');
+	return languages.filter(Boolean).sort();
 };
 
 const cacheMap = new Map();

@@ -1,74 +1,106 @@
-const categories = [
-	'politics',
-	'technology',
-	'news',
-	'programming',
-	'Polish politics',
-	'BANNED',
-	'economy',
-];
+import { categories } from '../../server/lib/llm/categories.js';
 
-const makePrompt = (post) => `
-You are an expert in content categorization, you work as a social media moderator.
+const makePrompt = () => `
+You are an expert in content categorization of social media posts.
 
-You need to categorize the following post into one or more of the following categories: ${categories.join(', ')}.
+You need to categorize the following post into one or more of the following categories:
 
-BANNED is a special category for everything that seems to be harmful, offensive, illegal in Europe or simply an advertisement.
+${categories.map(c => ' - '+c).join('\n')}.
 
-If the post does fit to any other categories, but still has some harmful, offensive or illegal content, you should still assign it to BANNED.
+BANNED is a special category for posts that contain illegal content, such as hate speech, fraud or phishing attempt.
+
+Posts about hate speech, or fraud and phishing, while not being such, are not BANNED.
+
+When choosing "donations" it should not have any other category.
 
 You must not, under any circumstances, invent new categories.
-\`\`\`
-${post}
-\`\`\`
+
+If you are unsure, return empty list.
+
+For every response please also post a reason for picked categories (few words).
+
+For every response please also provide a language (two letter ISO code, e.g. 'en') of the original post.
 `;
 
 
-export const categorize = async (text) => {
-	try {
-		console.log('Categorizing:', text.slice(0, 500));
-		const request = await fetch(
-			`${process.env.OLLAMA_API}/chat`,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Accept': 'application/json',
-					'Authorization': `Bearer ${process.env.OLLAMA_TOKEN}`,
-				},
-				body: JSON.stringify({
-					messages: [
-						{
-							role: 'tool',
-							content: makePrompt(text),
-						}
-					],
-					model: process.env.OLLAMA_MODEL,
-					stream: false,
-					max_token: 256,
-					temperature: 0.1,
-					think: false,
-					format: {
-						type: 'object',
-						properties: {
-							categories: {
-								type: 'array',
-								items: {
-									type: 'string',
-								},
+const doPrompt = async (userMessages) => {
+	const prompt = makePrompt();
+	const request = await fetch(
+		`${process.env.OLLAMA_API}/chat`,
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+				'Authorization': `Bearer ${process.env.OLLAMA_TOKEN}`,
+			},
+			body: JSON.stringify({
+				messages: [
+					{
+						role: 'system',
+						content: prompt,
+					},
+					...userMessages
+				],
+				model: process.env.OLLAMA_MODEL,
+				stream: false,
+				max_token: 256,
+				temperature: 0.1,
+				think: false,
+				format: {
+					type: 'object',
+					properties: {
+						categories: {
+							type: 'array',
+							items: {
+								type: 'string',
 							},
 						},
-					}
-				}),
-			},
-		);
+						reason: {
+							type: 'string'
+						},
+						language: {
+							type: 'string',
+						}
+					},
+				}
+			}),
+		},
+	);
 
-		const response = await request.json();
+	const response = await request.json();
 
-		const content = JSON.parse(response.message.content);
-		return content?.categories ?? ['UNCATEGORIZED'];
+	return response;
+};
+
+export const categorize = async (posts) => {
+	try {
+		const userMessages = [];
+		for (const post of posts) {
+			const text = post.plainText.trim().slice(0, 500);
+			if (text.length < 10) {
+				post.result = [['UNCATEGORIZED'], 'TOO_SHORT', 'N/A'];
+				continue;
+			}
+			userMessages.push({
+				role: 'user',
+				content: text,
+			});
+
+			const result = await doPrompt(userMessages);
+			const content = JSON.parse(result.message.content);
+			userMessages.push({
+				role: 'assistant',
+				content: result.message.content,
+			});
+			post.result = [
+				content?.categories?.length ? content.categories : ['UNCATEGORIZED'],
+				content.reason || 'NO_REASON_GIVEN',
+				content.language || 'N/A',
+			];
+		}
 	} catch (error) {
 		console.error('Error categorizing', error);
-		return ['ERROR'];
+		return [['ERROR'], 'ERRORED', 'N/A'];
 	}
 };

@@ -131,7 +131,7 @@ body.body--has-query {
 			grid-area: headline;
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			align-items: flex-start;
 			justify-content: center;
 			min-height: 3rem;
 			& h1 {
@@ -141,6 +141,14 @@ body.body--has-query {
 					display: none;
 				}
 			}
+
+			& nav {
+				margin: 1rem 0 2rem;
+				max-width: var(--width-max-content);
+				display: grid;
+				gap: 1rem;
+			}
+
 		}
 
 		& .results {
@@ -164,6 +172,9 @@ body.body--has-query {
 					float: right;
 					margin: 1rem;
 				}
+				.result-item-first-level__categories {
+					position: relative;
+				}
 				& h4 {
 					box-shadow: -.5rem 0 0 1px var(--color-background), calc(-.5rem - 3px) 0 0 0;
 				}
@@ -181,6 +192,7 @@ body.body--is-browse {
 		grid-template-areas:
 			"headline ."
 			"results results";
+		grid-template-columns: auto 1fr;
 		grid-template-rows: min-content max-content;
 	}
 }
@@ -273,6 +285,24 @@ button, .button {
 	&:focus,
 	&:active {
 		box-shadow: 0 0 0 4px var(--color-contrast-bg);
+	}
+}
+
+.button--hint {
+	font-size: 1em;
+	box-shadow: none;
+	border: none;
+	background: transparent;
+	color: var(--color-base);
+	padding: 0 .5rem;
+	cursor: pointer;
+
+	&:hover,
+	&:focus,
+	&:active {
+		text-decoration: underline;
+		padding: 0 .5rem;
+		border: none;
 	}
 }
 
@@ -449,4 +479,18 @@ history-chart {
 	.desktop-only {
 		display: none;
 	}
+}
+
+[popover] {
+	bottom: 0;
+	left: 1rem;
+	width: calc(var(--width-max-content) - 1rem);
+	top: unset;
+	right: unset;
+	background: var(--color-background);
+	color: var(--color-base);
+}
+
+[popover]::backdrop {
+	pointer-events: none !important;
 }

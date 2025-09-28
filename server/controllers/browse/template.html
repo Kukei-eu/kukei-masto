@@ -4,16 +4,26 @@
 		<h1>
 			<a href="/">masto.kukei.eu</a>
 			<br >
-			<span> real time mastodon search engine</span></h1>
+			<span> real time mastodon search engine</span>
+		</h1>
+		<nav>
+			<section>
+				Filter by categories:
+				{{#allCategories}}
+				<a href="/browse/{{ encodedName }}">{{ name }}</a>
+				{{/allCategories}}
+			</section>
+			<section>
+				Filter by languages
+				{{#languages}}
+				<a href="?lang={{ . }}">{{ . }}</a>
+				{{/languages}}
+			</section>
+
+		</nav>
 	</div>
 	<div class="results">
-		<nav>
-			Browse by categories:
-			{{#allCategories}}
-				<a href="/browse/{{ encodedName }}">{{ name }}</a>
-			{{/allCategories}}
-		</nav>
-		<h2>Newest 100 toots</h2>
+		<h2>Browse stuff</h2>
 		<section>
 			{{#hasAccess}}
 			<ul>
@@ -32,12 +42,13 @@
 						/>
 						<div>{{{ content }}}</div>
 						<p><format-date>{{ createdAtDate }}</format-date></p>
-						<p>
-							Categories
+						<p class="result-item-first-level__categories">
+							Categories (<button type="button" class="button button--hint" popovertarget="popover-{{ id }}">?</button>):
 							{{#categoriesParsed}}
 							  <a href="/browse/{{ encodedName }}">{{ name }}</a>
 							{{/categoriesParsed}}
 						</p>
+						<p popover id="popover-{{ id}}">{{ categoriesReason }}</p>
 						<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
 					</div>
 				</li>
