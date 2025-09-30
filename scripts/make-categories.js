@@ -15,7 +15,7 @@ const normalizeCategories = (categories) => categories.map((cat) => cat.toLowerC
 
 const processBatch = async (db, posts) => {
 	await categorize(posts);
-	await sleep(10);
+	await sleep(1000);
 	for (const post of posts) {
 		const log = [];
 		log.push(['Text:', post.plainText]);
