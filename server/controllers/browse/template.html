@@ -23,13 +23,14 @@
 					{{/languages}}
 				</div>
 			</section>
-
+			<section>
+				<p><a href="#disclaimer">Please read the disclaimer below</a></p>
+			</section>
 		</nav>
 	</div>
 	<div class="results">
 		<h2>Browse stuff</h2>
 		<section>
-			{{#hasAccess}}
 			<ul>
 			{{#results}}
 				<li class="result-item-first-level">
@@ -58,12 +59,24 @@
 				</li>
 			{{/results}}
 			</ul>
-			{{/hasAccess}}
-			{{^hasAccess}}
-			<p>This section is currently in beta is being tested for compliance by few users.</p>
-			<p>Log in and shout out to me on mastodon if you want to participate.</p>
-			{{/hasAccess}}
+		</section>
+		<section id="disclaimer">
+			<p>
+				<strong>Disclaimer</strong>
+				This is an experimental browse page. You can browse by categories and/or languages.
+			</p>
+			<p>
+				It is all a result of LLM processing using local Ollama models on my computer.
+				Some posts are filtered out as I'm a chicken and I don't want risk showing something illegal here.
+				Ergo, some posts that model considers "harmful" are being flagged as "banned" and not shown.
+			</p>
+			<p>
+				This whole thing is provided as is. I'm still fiddling with that LLM processing as for now it takes little too much power for my liking.
+			</p>
+			<p>Sometimes it might be empty if I don't run the process.</p>
+			<p>To see how this works exactly, go to the source code to /scripts/make-categories.js</p>
 		</section>
 	</div>
+
 </main>
 {{{ after }}}

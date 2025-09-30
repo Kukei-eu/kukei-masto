@@ -5,6 +5,7 @@ import {
 } from '../server/lib/search.js';
 import {getMongo} from '../server/lib/db/mongo.js';
 import {categorize} from './ollama/categorize.js';
+// import {categorize} from './openwebui/categorize.js';
 
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -14,6 +15,7 @@ const normalizeCategories = (categories) => categories.map((cat) => cat.toLowerC
 
 const processBatch = async (db, posts) => {
 	await categorize(posts);
+	await sleep(10);
 	for (const post of posts) {
 		const log = [];
 		log.push(['Text:', post.plainText]);
@@ -30,7 +32,7 @@ const processBatch = async (db, posts) => {
 	}
 };
 
-const main = async () => {
+const doRun = async () => {
 	const [client, db] = await getMongo();
 	// testing
 	// await db.collection('posts').updateMany({}, {$unset: {categories: ''}});
@@ -71,6 +73,12 @@ const main = async () => {
 		// await sleep(100);
 	} while (run);
 	await client.close();
+};
+
+const main = async () => {
+	await doRun();
+	await sleep(10000);
+	main();
 };
 
 main();

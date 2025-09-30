@@ -3,7 +3,6 @@ import { categories } from '../../server/lib/llm/categories.js';
 const makePrompt = () => `
 You are an expert in content categorization of social media posts.
 
-
 Your job is to categorize posts info one or more of the following categories:
 
 ${categories.map(c => ' - '+c).join('\n')}.
@@ -20,24 +19,26 @@ You must not, under any circumstances, invent new categories.
 
 If you are unsure, return empty list.
 
-Keep original category names. DO NOT translate them, category names must stay as is.
-
 For every response please also post a reason for picked categories (few words).
 
 For every response please also provide a language (two letter ISO code, e.g. 'en') of the original post.
+
+Your output MUST be in minified JSON format, without any other text, not even markdown, with following fields:
+
+{ categories: Array<string>, reason: string, language: string }
 `;
 
 
 const doPrompt = async (userMessages) => {
 	const prompt = makePrompt();
 	const request = await fetch(
-		`${process.env.OLLAMA_API}/chat`,
+		`${process.env.OPENWEBUI_API}/chat/completions`,
 		{
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json',
-				'Authorization': `Bearer ${process.env.OLLAMA_TOKEN}`,
+				'Authorization': `Bearer ${process.env.OPENWEBUI_TOKEN}`,
 			},
 			body: JSON.stringify({
 				messages: [
@@ -47,35 +48,20 @@ const doPrompt = async (userMessages) => {
 					},
 					...userMessages
 				],
-				model: process.env.OLLAMA_MODEL,
+				model: process.env.OPENWEBUI_MODEL,
 				stream: false,
-				max_token: 256,
 				temperature: 0.1,
-				think: false,
-				format: {
-					type: 'object',
-					properties: {
-						categories: {
-							type: 'array',
-							items: {
-								type: 'string',
-							},
-						},
-						reason: {
-							type: 'string'
-						},
-						language: {
-							type: 'string',
-						}
-					},
-				}
 			}),
 		},
 	);
 
 	const response = await request.json();
 
-	return response;
+	console.log(response);
+	const content = response.choices?.[0]?.message?.content || '';
+	if (!content) throw new Error('No content in response');
+
+	return content;
 };
 
 export const categorize = async (posts) => {
@@ -93,11 +79,11 @@ export const categorize = async (posts) => {
 			});
 
 			const result = await doPrompt(userMessages);
-			console.log(result);
-			const content = JSON.parse(result.message.content);
+			console.log('Categorize result', result);
+			const content = JSON.parse(result);
 			userMessages.push({
 				role: 'assistant',
-				content: result.message.content,
+				content: result,
 			});
 			post.result = [
 				content?.categories?.length ? content.categories : ['UNCATEGORIZED'],

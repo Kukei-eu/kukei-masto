@@ -4,15 +4,10 @@ import {
 	getAllDetectedLanguages,
 	getAllPossibleCategories,
 	getBrowse,
-	getRandom
 } from '../../lib/search.js';
 import classNames from 'html-classnames';
 
 const getResults = async (req) => {
-	if (req.path === '/random') {
-		return getRandom();
-	}
-
 	const { category } = req.params;
 	const { lang } = req.query;
 
@@ -29,12 +24,26 @@ const normalizeResults = (results) => results.map((item) => ({
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
-export const browseController = async (req, res) => {
-	const hasAccess = !!res.locals.user.isPremium;
-	const viewDefaults = await getDefaultViewData(req, res);
-	const { category } = req.params;
-	const results = await getResults(req);
+const processCategories = async (req, res) => {
 	const categories = await getAllPossibleCategories();
+	const category = req.params.category;
+	const userIsPremium = !!res.locals.user?.isPremium;
+
+	const normalizedCategories = userIsPremium ? categories : (
+		categories.filter((cat) => cat !== 'banned')
+	);
+
+	const normalizedCategory = userIsPremium ? category : (
+		category === 'banned' ? null : category
+	);
+
+	return [normalizedCategories, normalizedCategory];
+};
+
+export const browseController = async (req, res) => {
+	const viewDefaults = await getDefaultViewData(req, res);
+	const results = await getResults(req);
+	const [categories, category] = await processCategories(req, res);
 	const languages = await getAllDetectedLanguages();
 
 	console.log(results);
@@ -44,7 +53,6 @@ export const browseController = async (req, res) => {
 	const view = {
 		...viewDefaults,
 		title: 'masto.kukei.eu',
-		hasAccess,
 		results: normalizeResults(results),
 		mainClass,
 		allCategories: categories.map((cat) => ({
