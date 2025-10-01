@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     network_mode: "host"
-  mast-kukei-llm:
+  masto-kukei-llm:
     build: .
     command: yarn llm
     restart: unless-stopped
