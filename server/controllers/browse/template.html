@@ -10,6 +10,7 @@
 			<section>
 				<span>Filter by categories</span>
 				<div>
+					<a href="/browse">none</a>
 					{{#allCategories}}
 					<a href="/browse/{{ encodedName }}">{{ name }}</a>
 					{{/allCategories}}
@@ -66,14 +67,13 @@
 				This is an experimental browse page. You can browse by categories and/or languages.
 			</p>
 			<p>
-				It is all a result of LLM processing using local Ollama models on my computer.
+				It is all a result of LLM processing using local Ollama models on my computer, Ollama.com cloud and/or using OpenAI compatible providers..
 				Some posts are filtered out as I'm a chicken and I don't want risk showing something illegal here.
 				Ergo, some posts that model considers "harmful" are being flagged as "banned" and not shown.
 			</p>
 			<p>
-				This whole thing is provided as is. I'm still fiddling with that LLM processing as for now it takes little too much power for my liking.
+				This whole thing is provided as is.
 			</p>
-			<p>Sometimes it might be empty if I don't run the process.</p>
 			<p>To see how this works exactly, go to the source code to /scripts/make-categories.js</p>
 		</section>
 	</div>
