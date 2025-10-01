@@ -6,6 +6,7 @@ import {
 	getBrowse,
 } from '../../lib/search.js';
 import classNames from 'html-classnames';
+import {emitPageView} from '../../lib/plausible.js';
 
 const getResults = async (req) => {
 	const { category } = req.params;
@@ -46,10 +47,12 @@ export const browseController = async (req, res) => {
 	const [categories, category] = await processCategories(req, res);
 	const languages = await getAllDetectedLanguages();
 
-	console.log(results);
 	const mainClass = classNames('body', {
 		'--is-browse': true,
 	});
+
+	emitPageView(req);
+
 	const view = {
 		...viewDefaults,
 		title: 'masto.kukei.eu',

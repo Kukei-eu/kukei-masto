@@ -25,6 +25,10 @@ Keep original category names. DO NOT translate them, category names must stay as
 For every response please also post a reason for picked categories (few words).
 
 For every response please also provide a language (two letter ISO code, e.g. 'en') of the original post.
+
+Your output MUST be in minified JSON format, without any other text, not even markdown, with following fields:
+
+{ categories: Array<string>, reason: string, language: string }
 `;
 
 

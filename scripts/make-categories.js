@@ -15,20 +15,24 @@ const normalizeCategories = (categories) => categories.map((cat) => cat.toLowerC
 
 const processBatch = async (db, posts) => {
 	await categorize(posts);
-	await sleep(1000);
+	await sleep(100);
 	for (const post of posts) {
-		const log = [];
-		log.push(['Text:', post.plainText]);
-		const {result} = post;
-		const [categories, reason, language] = result;
-		const normalized = normalizeCategories(categories);
-		log.push(['Categories:', normalized.join(', ')]);
-		log.push(['Reason:', reason]);
-		log.push(['Language:', language]);
+		try {
+			const log = [];
+			log.push(['Text:', post.plainText]);
+			const {result} = post;
+			const [categories, reason, language] = result;
+			const normalized = normalizeCategories(categories);
+			log.push(['Categories:', normalized.join(', ')]);
+			log.push(['Reason:', reason]);
+			log.push(['Language:', language]);
 
-		await assignCategories(db, post._id, normalized, reason, language);
-		log.forEach((line) => console.log(...line));
-		console.log('---');
+			await assignCategories(db, post._id, normalized, reason, language);
+			log.forEach((line) => console.log(...line));
+			console.log('---');
+		} catch (error) {
+			console.error(error);
+		}
 	}
 };
 
@@ -46,7 +50,6 @@ const doRun = async () => {
 
 		const now = Date.now();
 		const n = 1;
-
 		const uncategorized = await getUncategorized(db, n);
 
 		if (!uncategorized.length) 	{
