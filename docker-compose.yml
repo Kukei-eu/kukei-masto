@@ -1,9 +1,15 @@
 version: '3'
 services:
-  masto-kukey-web:
+  masto-kukei-web:
     build: .
     command: yarn start
     restart: unless-stopped
     env_file:
       - .env
     network_mode: "host"
+  mast-kukei-llm:
+    build: .
+    command: yarn llm
+    restart: unless-stopped
+    env_file:
+      - .env

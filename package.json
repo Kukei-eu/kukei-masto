@@ -9,6 +9,7 @@
     "dev": "node --watch --watch-path . -r dotenv/config server/index.js",
     "local": "node -r dotenv/config server/index.js",
     "start": "node server/index.js",
+    "llm": "node scripts/make-categories.js",
     "test": "node --test",
     "make:hash": "node ./scripts/make-hash.js",
     "build": "yarn make:hash && yarn install --production",
