@@ -201,3 +201,14 @@ export const getAllPossibleLanguages = async () => {
 	const languages = await db.collection('posts').distinct('language');
 	console.log(languages);
 };
+
+export const getAllPostsCountWithCategorizedCount = async () => {
+	const db = await getDb();
+	const total = await db.collection('posts').countDocuments();
+	const categorized = await db.collection('posts').countDocuments({categories: {$exists: true}});
+	return {
+		total,
+		categorized,
+		uncategorized: total - categorized,
+	};
+};

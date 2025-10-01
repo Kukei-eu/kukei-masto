@@ -2,7 +2,7 @@ import {getTemplate, renderHtml} from '../../lib/sso-render.js';
 import {getDefaultViewData} from '../../lib/view.js';
 import {
 	getAllDetectedLanguages,
-	getAllPossibleCategories,
+	getAllPossibleCategories, getAllPostsCountWithCategorizedCount,
 	getBrowse,
 } from '../../lib/search.js';
 import classNames from 'html-classnames';
@@ -46,6 +46,10 @@ export const browseController = async (req, res) => {
 	const results = await getResults(req);
 	const [categories, category] = await processCategories(req, res);
 	const languages = await getAllDetectedLanguages();
+	const {
+		total: totalPostsCount,
+		categorized: categorizedPostsCount
+	} = await getAllPostsCountWithCategorizedCount();
 
 	const mainClass = classNames('body', {
 		'--is-browse': true,
@@ -62,6 +66,8 @@ export const browseController = async (req, res) => {
 			name: cat,
 			encodedName: encodeURIComponent(cat),
 		})),
+		totalPostsCount,
+		categorizedPostsCount,
 		languages,
 		category,
 		encodedCategory: category ? encodeURIComponent(category) : null,
