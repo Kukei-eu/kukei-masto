@@ -4,18 +4,16 @@ import {
 	assignCategories,
 } from '../server/lib/search.js';
 import {getMongo} from '../server/lib/db/mongo.js';
-import {categorize} from './ollama/categorize.js';
-// import {categorize} from './openwebui/categorize.js';
+import {categorize} from './llm/categorize.js';
+import {getProvider} from './llm/providers/getProvider.js';
 
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const normalizeCategories = (categories) => categories.map((cat) => cat.toLowerCase().trim());
 
-
-const processBatch = async (db, posts) => {
-	await categorize(posts);
-	await sleep(100);
+const processBatch = async (db, llmProvider, posts) => {
+	await categorize(llmProvider, posts);
 	for (const post of posts) {
 		try {
 			const log = [];
@@ -36,7 +34,7 @@ const processBatch = async (db, posts) => {
 	}
 };
 
-const doRun = async () => {
+const doRun = async (llmProvider) => {
 	const [client, db] = await getMongo();
 	// testing
 	// await db.collection('posts').updateMany({}, {$unset: {categories: ''}});
@@ -59,8 +57,7 @@ const doRun = async () => {
 
 		console.log('Youngest is', uncategorized[0]?.createdAtDate);
 
-		await processBatch(db, uncategorized);
-		// await processBatch(db, uncategorized);
+		await processBatch(db, llmProvider, uncategorized);
 		const elapsed = Date.now() - now;
 		totalTime += elapsed;
 		totalCount += uncategorized.length;
@@ -73,13 +70,18 @@ const doRun = async () => {
 		console.log('Next turn');
 		console.log('');
 
-		// await sleep(100);
+		await sleep(process.env.LLM_SLEEP || 100);
 	} while (run);
 	await client.close();
 };
 
 const main = async () => {
-	await doRun();
+	const llmProvider = getProvider();
+
+	if (!llmProvider) {
+		return;
+	}
+	await doRun(llmProvider);
 	await sleep(10000);
 	main();
 };
