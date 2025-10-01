@@ -11,5 +11,6 @@ services:
     build: .
     command: yarn llm
     restart: unless-stopped
+    network_mode: "host"
     env_file:
       - .env
