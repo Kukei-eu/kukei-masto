@@ -2,6 +2,7 @@
 	input[type="search"],
 	input[type="text"],
 	input[type="url"],
+	input,
 	textarea {
 		font-family: var(--font-family-base);
 		padding: .75rem 0.5rem;
