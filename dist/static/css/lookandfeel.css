@@ -3,6 +3,7 @@
 		background: var(--color-background);
 		color: var(--color-base);
 		font-family: var(--font-family-base);
+		font-weight: 500;
 		width: 100%;
 		height: 100%;
 		padding: 0;

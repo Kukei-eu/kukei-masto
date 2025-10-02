@@ -9,15 +9,14 @@
 		--width-max-content-wide: min(120ch, 100%);
 
 
-		--color-background: oklch(0.83 0.108 309.12);
+		--color-background: oklch(0.73 0.14 308.38);
 		--color-base: oklch(0 0 0);
-		--color-base-muted: oklch(0.521 0 89.876);
-		--color-contrast-bg: oklch(0 0 0);
-		--color-contrast-fg: oklch(0.83 0.108 309.12);
-		--color-link: unset;
-		--color-link-visited: unset;
+		--color-base-muted: oklch(0.41 0 0);
+		--color-contrast-bg: var(--color-base);
+		--color-contrast-fg: var(--color-background);
+		--color-link: oklch(0.2 0.08 257.24);
+		--color-link-visited: oklch(0.19 0.1 303.86);
 		--border-size: 4px;
-
 	}
 
 	@media screen and (prefers-color-scheme: dark) {

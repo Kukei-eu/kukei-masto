@@ -16,6 +16,10 @@
 			box-shadow: 0 2px 0 0px var(--color-base),  0 0 0 2px var(--color-base);
 			outline: none;
 		}
+
+		&::placeholder {
+			color: var(--color-base-muted);
+		}
 	}
 
 	button, .button {
