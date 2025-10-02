@@ -10,9 +10,12 @@ import {emitPageView} from '../../lib/plausible.js';
 
 const getResults = async (req) => {
 	const { category } = req.params;
-	const { lang } = req.query;
+	const { lang, page = 0 } = req.query;
 
-	return getBrowse(category, lang);
+	const limit = 10;
+	const offset = page * limit;
+	console.log(limit, offset);
+	return getBrowse(category, lang, { limit, offset });
 };
 
 const normalizeResults = (results) => results.map((item) => ({
@@ -44,6 +47,7 @@ export const processCategories = async (req, res) => {
 export const browseController = async (req, res) => {
 	const viewDefaults = await getDefaultViewData(req, res);
 	const results = await getResults(req);
+	const { lang, page = 0 } = req.query;
 	const [categories, category] = await processCategories(req, res);
 	const languages = await getAllDetectedLanguages();
 	const {
@@ -57,10 +61,23 @@ export const browseController = async (req, res) => {
 
 	emitPageView(req);
 
+	const prevParams = new URLSearchParams();
+	const nextParams = new URLSearchParams();
+	if (lang) {
+		prevParams.set('lang', lang);
+		nextParams.set('lang', lang);
+	}
+	if (page > 0) {
+		prevParams.set('page', parseInt(page, 10) - 1);
+	}
+	nextParams.set('page', parseInt(page, 10) + 1);
+
+	const normalizedResults =  normalizeResults(results);
 	const view = {
 		...viewDefaults,
 		title: 'masto.kukei.eu',
-		results: normalizeResults(results),
+		results: normalizedResults,
+		hasResults: normalizedResults.length > 0,
 		mainClass,
 		allCategories: categories.map((cat) => ({
 			name: cat,
@@ -70,6 +87,8 @@ export const browseController = async (req, res) => {
 		categorizedPostsCount,
 		languages,
 		category,
+		nextPageUrl: nextParams.toString(),
+		prevPageUrl: page > 0 ? prevParams.toString() : null,
 		encodedCategory: category ? encodeURIComponent(category) : null,
 	};
 

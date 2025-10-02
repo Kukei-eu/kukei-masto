@@ -31,6 +31,15 @@
 	</div>
 	<div class="results">
 		<h2>Browse stuff</h2>
+		{{#hasResults}}
+		<p>
+			{{#prevPageUrl}}
+			<a href="?{{ . }}">Previous page</a>
+			{{/prevPageUrl}}
+			{{#nextPageUrl}}
+			<a href="?{{ . }}">Next page</a>
+			{{/nextPageUrl}}
+		</p>
 		<section>
 			<ul>
 			{{#results}}
@@ -61,6 +70,10 @@
 			{{/results}}
 			</ul>
 		</section>
+		{{/hasResults}}
+		{{^hasResults}}
+		<p>Looks like there's nothing here.</p>
+		{{/hasResults}}
 	</div>
 
 </main>

@@ -44,7 +44,7 @@ export const search = async (query) => {
 	return normalizePosts(result);
 };
 
-export const getBrowse = async (category, lang) => {
+export const getBrowse = async (category, lang, {limit, offset}) => {
 	const db = await getDb();
 	const find = category ? {
 		categories: {
@@ -56,10 +56,12 @@ export const getBrowse = async (category, lang) => {
 		find.detectedLanguage = lang;
 	}
 
+
 	const result = await db.collection('posts')
 		.find(find)
 		.sort({createdAtDate: -1})
-		.limit(100)
+		.limit(limit)
+		.skip(offset)
 		.toArray();
 	return normalizePosts(result);
 };
