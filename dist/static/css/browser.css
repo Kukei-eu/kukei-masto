@@ -16,29 +16,6 @@
 						display: none;
 					}
 				}
-
-				& nav {
-					margin: 1rem 0 2rem;
-					max-width: var(--width-max-content);
-					display: grid;
-					gap: 1rem;
-
-					& section {
-						display: grid;
-						gap: .5rem;
-						& span {}
-						& div {
-							display: flex;
-							flex-wrap: wrap;
-							gap: .5rem;
-
-							& a {
-								text-decoration: none;
-							}
-						}
-					}
-				}
-
 			}
 
 			& .results {
@@ -125,6 +102,28 @@
 			"form form"
 			"results results";
 				gap: 2rem;
+			}
+		}
+	}
+
+	nav.nav-filter {
+		margin: 1rem 0 2rem;
+		max-width: var(--width-max-content);
+		display: grid;
+		gap: 1rem;
+
+		& section {
+			display: grid;
+			gap: .5rem;
+			& span {}
+			& div {
+				display: flex;
+				flex-wrap: wrap;
+				gap: .5rem;
+
+				& a {
+					text-decoration: none;
+				}
 			}
 		}
 	}

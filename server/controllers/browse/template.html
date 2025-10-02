@@ -6,7 +6,7 @@
 			<br >
 			<span> real time mastodon search engine</span>
 		</h1>
-		<nav>
+		<nav class="nav-filter">
 			<section>
 				<span>Filter by categories</span>
 				<div>
@@ -25,7 +25,7 @@
 				</div>
 			</section>
 			<section>
-				<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total). <a href="#disclaimer">Please read the disclaimer below</a></p>
+				<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total). <a href="/about#browse-disclaimer">Please read the disclaimer</a></p>
 			</section>
 		</nav>
 	</div>
@@ -60,21 +60,6 @@
 				</li>
 			{{/results}}
 			</ul>
-		</section>
-		<section id="disclaimer">
-			<p>
-				<strong>Disclaimer</strong>
-				This is an experimental browse page. You can browse by categories and/or languages.
-			</p>
-			<p>
-				It is all a result of LLM processing using local Ollama models on my computer, Ollama.com cloud and/or using OpenAI compatible providers..
-				Some posts are filtered out as I'm a chicken and I don't want risk showing something illegal here.
-				Ergo, some posts that model considers "harmful" are being flagged as "banned" and not shown.
-			</p>
-			<p>
-				This whole thing is provided as is.
-			</p>
-			<p>To see how this works exactly, go to the source code to /scripts/make-categories.js</p>
 		</section>
 	</div>
 

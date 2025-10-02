@@ -4,6 +4,7 @@
 		--font-family-base: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
 
 		--box-shadow-corner: 4lh 2px 0 1px var(--color-background), -2px 2px 0 1px;
+		--box-shadow-corner-top-right: -5lh -2px 0 1px var(--color-background), 2px -2px 0 1px;
 		--box-shadow-bottom: 4rem -1px 0 4px var(--color-background), 0 4px 0 -2px, 0 6px 0 0 var(--color-background);
 		--width-max-content: min(70ch, 100%);
 		--width-max-content-wide: min(120ch, 100%);

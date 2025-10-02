@@ -7,7 +7,22 @@
 			width: var(--width-max-content);
 
 			& h2 {
-				margin-top: 2rem;
+				margin-top: 3rem;
+				margin-bottom: 0.6rem;
+			}
+
+			& p {
+				margin: 0;
+				/* Intend the first line of each paragraph */
+				text-indent: 1rem;
+			}
+
+			& ul {
+				margin-left: 2rem;
+				& li {
+					margin-bottom: 0.5rem;
+					list-style: disc;
+				}
 			}
 		}
 	}

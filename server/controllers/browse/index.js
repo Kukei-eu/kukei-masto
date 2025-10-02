@@ -25,7 +25,7 @@ const normalizeResults = (results) => results.map((item) => ({
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
-const processCategories = async (req, res) => {
+export const processCategories = async (req, res) => {
 	const categories = await getAllPossibleCategories();
 	const category = req.params.category;
 	const userIsPremium = !!res.locals.user?.isPremium;

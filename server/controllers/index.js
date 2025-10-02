@@ -4,10 +4,11 @@ import {getDefaultViewData} from '../lib/view.js';
 import {emitPageView} from '../lib/plausible.js';
 import {parseQuery} from '../lib/parseQuery.js';
 import {renderHtml} from '../lib/sso-render.js';
-import {getMostCommonWords, search} from '../lib/search.js';
+import {getAllDetectedLanguages, getMostCommonWords, search} from '../lib/search.js';
 import { MINIMAL_POPULAR_WORD_LENGTH } from '../lib/search-utils.js';
 import {logQuery} from '../lib/log.js';
 import {checkCreeps} from '../lib/checkCreeps.js';
+import {processCategories} from './browse/index.js';
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
@@ -28,7 +29,8 @@ export const indexController = async (req, res) => {
 	const { searchParams } = new URL(req.originalUrl, 'http://localhost');
 	const { q , trendingLang} = Object.fromEntries(searchParams.entries());
 	const { q: searchQuery, lang } = parseQuery(q);
-
+	const [categories] = await processCategories(req, res);
+	const languages = await getAllDetectedLanguages();
 	console.log(`Called ${req.originalUrl}, query: ${searchQuery}`);
 
 	const bail = checkCreeps(searchQuery, res);
@@ -98,6 +100,11 @@ export const indexController = async (req, res) => {
 		hasQuery,
 		noQuery: !hasQuery,
 		mainClass,
+		allCategories: categories.map((cat) => ({
+			name: cat,
+			encodedName: encodeURIComponent(cat),
+		})),
+		languages,
 		noResults: !hasResults,
 		hasResults,
 		doneIn,

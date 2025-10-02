@@ -15,16 +15,25 @@
 			</button>
 		</div>
 		{{#noQuery}}
-		<p>
-			Most popular words in the index (min. {{ minimalPopularWordLength }} chars):<br/>
-			{{ #words }}
-				<a href="/?q={{ wordEncoded }}">{{ word }}</a> <small>({{ count }})</small>{{^last }}, {{/last}}
-			{{ /words }}
-		</p>
-		<p>
-			Trending by language (experimental): <a href="/">none</a>, <a href="/?trendingLang=pl">pl</a>, <a href="/?trendingLang=de">de</a>
-		</p>
-		<p>Browse <a href="/browse">latest</a> posts by category and/or language (experimental)</p>
+		<nav class="nav-filter">
+			<section>
+				<span>Filter by categories</span>
+				<div>
+					<a href="/browse">none</a>
+					{{#allCategories}}
+					<a href="/browse/{{ encodedName }}">{{ name }}</a>
+					{{/allCategories}}
+				</div>
+			</section>
+			<section>
+				<span>Filter by languages</span>
+				<div>
+					{{#languages}}
+					<a href="?lang={{ . }}">{{ . }}</a>
+					{{/languages}}
+				</div>
+			</section>
+		</nav>
 		{{/noQuery}}
 	{{#hasQuery}}
 		<div class="results">
