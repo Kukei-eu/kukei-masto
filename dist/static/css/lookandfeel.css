@@ -3,7 +3,6 @@
 		background: var(--color-background);
 		color: var(--color-base);
 		font-family: var(--font-family-base);
-		font-weight: 500;
 		width: 100%;
 		height: 100%;
 		padding: 0;
@@ -15,6 +14,7 @@
 		font-family: var(--font-family-head);
 		margin: 1em 0 1em;
 		padding: 0;
+		text-wrap: balance;
 	}
 
 	h1, h2 {
