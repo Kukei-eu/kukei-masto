@@ -9,22 +9,26 @@ import classNames from 'html-classnames';
 import {emitPageView} from '../../lib/plausible.js';
 
 const getResults = async (req) => {
-	const { category } = req.params;
-	const { lang, page = 0 } = req.query;
+	const {category} = req.params;
+	const {lang, page = 0} = req.query;
 
 	const limit = 10;
 	const offset = page * limit;
 	console.log(limit, offset);
-	return getBrowse(category, lang, { limit, offset });
+	return getBrowse(category, lang, {limit, offset});
 };
 
-const normalizeResults = (results) => results.map((item) => ({
-	...item,
-	categoriesParsed: item?.categories?.map((cat) => ({
-		name: cat,
-		encodedName: encodeURIComponent(cat),
-	})) ?? []
-}));
+const normalizeResults = (results) => results.map(
+	(item) => {
+		return {
+			...item,
+			categoriesParsed: item?.categories?.map((cat) => ({
+				name: cat,
+				encodedName: encodeURIComponent(cat),
+			})) ?? []
+		};
+	}
+);
 
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 

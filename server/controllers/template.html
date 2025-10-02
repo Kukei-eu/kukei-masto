@@ -57,7 +57,15 @@
 							/>
 							<div>{{{ content }}}</div>
 							<p><format-date>{{ createdAtDate }}</format-date></p>
-							<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
+							<p>
+								Original url:
+								<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
+							</p>
+							{{# instanceUrl }}
+							<p>
+								<a href="{{ . }}{{ authorizePath }}">Open in your instance</a>
+							</p>
+							{{ / instanceUrl }}
 						</div>
 					</li>
 				{{/results}}

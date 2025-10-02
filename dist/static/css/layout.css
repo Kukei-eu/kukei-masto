@@ -13,6 +13,12 @@
 		margin: 1rem;
 		box-shadow: var(--box-shadow-corner-top-right);
 	    width: calc(100% - 2em);
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+	}
+
+	header.header--instance {
+
 	}
 
 	header .header__user {

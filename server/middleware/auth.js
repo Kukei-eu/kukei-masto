@@ -31,7 +31,7 @@ export const authMiddleware = (app) => {
 			res.locals.user.isPremium = res.locals.user.data.roles.has('premium');
 		}
 		if (process.env.LOG_DEBUG) {
-			console.log(res.locals.user);
+			// console.log(res.locals.user);
 		}
 		next();
 	});

@@ -22,6 +22,7 @@
     "eslint-config-minimal-tabs": "^1.0.0"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
     "express-openid-connect": "^2.19.2",
     "helmet": "^8.1.0",

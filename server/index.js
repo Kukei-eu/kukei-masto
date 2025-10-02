@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import crypto from 'crypto';
-
+import cookieParser from 'cookie-parser';
 import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
 import {startListening} from './lib/masto-listeners.js';
@@ -21,6 +21,7 @@ const main = async () => {
 
 	const app = express();
 
+	app.use(cookieParser());
 	app.use((req, res, next) => {
 		res.locals.cspNonce = crypto.randomBytes(32).toString('hex');
 		next();
@@ -65,6 +66,24 @@ const main = async () => {
 		req.env = process.env;
 		next();
 	});
+	app.use((req, res, next) => {
+		// Set instanceUrl from cookie to res.locals for templates
+		res.locals.instanceUrl = req.cookies?.instanceUrl;
+		next();
+	});
+
+	app.post('/user/setInstance', (req, res) => {
+		// Get referer
+		const referer = req.get('Referer') || '/';
+
+		// instance-url from form
+		const instanceUrl = req.body['instance-url'];
+		// Set cookie for 360 days
+		res.cookie('instanceUrl', instanceUrl, { maxAge: 360 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'lax' });
+		res.redirect(referer);
+	});
+
+
 	app.use(
 		express.static('dist', {
 			maxAge: '1y',

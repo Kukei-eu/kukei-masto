@@ -6,6 +6,21 @@ import {getDb} from './db/mongo.js';
 
 import { categories } from './llm/categories.js';
 
+const getAuthorizeUrl = (itemUrl) => {
+	try {
+		const url = new URL(itemUrl);
+		const path = url.pathname;
+		const parts = path.split('/');
+		const [,user, id] = parts;
+		if (!user || !id) {
+			return null;
+		}
+		return `/authorize_interaction?uri=${encodeURIComponent(`https://${url.hostname}/users/${user.replace('@', '')}/statuses/${id}`)}`;
+	} catch (error) {
+		return null;
+	}
+};
+
 export const addToIndex = async (item) => {
 	const db = await getDb();
 	const hasItem = await db.collection('posts').findOne({id: item.id});
@@ -24,6 +39,7 @@ export const cleanUp = async () => {
 const normalizePosts = (posts) => posts.map((post) => ({
 	...post,
 	categories: post.categories?.filter((cat) => categories.includes(cat)) ?? [],
+	authorizePath: getAuthorizeUrl(post.url),
 }));
 
 export const search = async (query) => {
@@ -34,7 +50,7 @@ export const search = async (query) => {
 			.sort({createdAtDate: -1})
 			.limit(100)
 			.toArray();
-		return result;
+		return normalizePosts(result);
 	}
 	const result = await db.collection('posts')
 		.find({$text: {$search: query}})

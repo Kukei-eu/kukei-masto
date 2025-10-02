@@ -57,6 +57,15 @@
 						/>
 						<div>{{{ content }}}</div>
 						<p><format-date>{{ createdAtDate }}</format-date></p>
+						<p>
+							Original url:
+							<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
+						</p>
+						{{# instanceUrl }}
+						<p>
+							<a href="{{ . }}{{ authorizePath }}">Open in your instance</a>
+						</p>
+						{{ / instanceUrl }}
 						<p class="result-item-first-level__categories">
 							Categories (<button type="button" class="button button--hint" popovertarget="popover-{{ id }}">?</button>):
 							{{#categoriesParsed}}
@@ -64,7 +73,6 @@
 							{{/categoriesParsed}}
 						</p>
 						<p popover id="popover-{{ id}}">{{ categoriesReason }}</p>
-						<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
 					</div>
 				</li>
 			{{/results}}

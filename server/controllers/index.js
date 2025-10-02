@@ -91,7 +91,6 @@ export const indexController = async (req, res) => {
 		}
  	}
 
-
 	const view = {
 		...viewDefaults,
 		q,
