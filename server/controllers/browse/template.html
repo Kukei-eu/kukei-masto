@@ -78,6 +78,14 @@
 			{{/results}}
 			</ul>
 		</section>
+		<p>
+			{{#prevPageUrl}}
+			<a href="?{{ . }}">Previous page</a>
+			{{/prevPageUrl}}
+			{{#nextPageUrl}}
+			<a href="?{{ . }}">Next page</a>
+			{{/nextPageUrl}}
+		</p>
 		{{/hasResults}}
 		{{^hasResults}}
 		<p>Looks like there's nothing here.</p>
