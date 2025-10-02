@@ -5,8 +5,10 @@
 	<title>{{ title }} </title>
 	<meta name="description" content="Mastodon real-time search engine">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="/static/variables.css?v={{ hash }}" />
-	<link rel="stylesheet" href="/static/layout.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/all.css?v={{ hash }}" />
+	{{#extraCss}}
+	<link rel="stylesheet" href="/static/css/{{ . }}?v={{ hash }}" />
+	{{/extraCss}}
 	<script type="module" src="/static/modules.js?v={{ hash }}"></script>
 	<link rel="icon" href="/static/favicon.svg" type="image/svg+xml" sizes="any" />
 	<link rel="icon" href="/static/favicon.png" type="image/png" sizes="600x600" />

@@ -18,6 +18,7 @@ export const aboutController = async (req, res) => {
 		...viewDefaults,
 		mainClass: 'about body',
 		title: 'About masto.kukei.eu',
+		extraCss: 'static-page.css',
 		stats,
 		hosts: instanceHosts.join(', '),
 		TOOTS_TTL_HUMAN,

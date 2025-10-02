@@ -1,0 +1,22 @@
+@layer popover {
+	[popover] {
+		width: calc(var(--width-max-content) - 1rem);
+		background: var(--color-background);
+		color: var(--color-base);
+		inset: unset;
+		margin: unset;
+		bottom: 1rem;
+		padding: 0.5rem;
+	}
+
+	@supports (justify-self: anchor-center) {
+		[popover] {
+			justify-self: anchor-center;
+			bottom: calc(anchor(top) + 20px);
+		}
+	}
+
+	[popover]::backdrop {
+		pointer-events: none !important;
+	}
+}

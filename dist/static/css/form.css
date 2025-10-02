@@ -1,0 +1,68 @@
+@layer form {
+	input[type="search"],
+	input[type="text"],
+	textarea {
+		font-family: var(--font-family-base);
+		padding: .75rem 0.5rem;
+		width: 100%;
+		font-size: 1.25rem;
+		border: 0;
+		box-shadow: 0 2px 0 0px var(--color-base);
+		background: var(--color-background);
+		color: var(--color-base);
+
+		&:focus,
+		&:active {
+			box-shadow: 0 2px 0 0px var(--color-base),  0 0 0 2px var(--color-base);
+			outline: none;
+		}
+	}
+
+	button, .button {
+		padding: calc(0.75rem - 4px) .75rem;
+		font-size: 1.25rem;
+		font-family: var(--font-family-head);
+		background: var(--color-contrast-bg);
+		color: var(--color-contrast-fg);
+		border: 2px solid var(--color-contrast-bg);
+		box-shadow: 0 0 0 4px var(--color-contrast-bg);
+
+		&:hover,
+		&:focus,
+		&:active {
+			border: 2px solid var(--color-contrast-fg);
+		}
+	}
+
+	.button--secondary {
+		box-shadow: none;
+		background: var(--color-background);
+		color: var(--color-base);
+		border: 2px solid var(--color-base);
+
+		&:hover,
+		&:focus,
+		&:active {
+			box-shadow: 0 0 0 4px var(--color-contrast-bg);
+		}
+	}
+
+	.button--hint {
+		font-size: 1em;
+		box-shadow: none;
+		border: none;
+		background: transparent;
+		color: var(--color-base);
+		padding: 0 .5rem;
+		cursor: pointer;
+
+		&:hover,
+		&:focus,
+		&:active {
+			text-decoration: underline;
+			padding: 0 .5rem;
+			border: none;
+		}
+	}
+
+}

@@ -1,0 +1,91 @@
+@layer typography {
+	html {
+		background: var(--color-background);
+		color: var(--color-base);
+		font-family: var(--font-family-base);
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		scroll-behavior: smooth;
+	}
+
+	h1, h2, h3, h4, h5 {
+		font-family: var(--font-family-head);
+		margin: 1em 0 1em;
+		padding: 0;
+	}
+
+	h1, h2 {
+		margin-top: 0;
+		& span {
+			font-size: 0.75em;
+		}
+	}
+
+	h1 {
+		& a {
+			color: var(--color-base);
+			text-decoration: none;
+
+			&:visited {
+				color: inherit;
+			}
+
+			&:hover,
+			&:focus,
+			&:active {
+				text-decoration: underline;
+				color: var(--color-base);
+			}
+		}
+	}
+
+	p {
+		margin: 1em 0;
+	}
+
+	ul {
+		margin: 1rem 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 1rem;
+
+		& > li > ul {
+			margin-left: 2rem;
+		}
+	}
+
+	ul.list {
+		display: block;
+		margin-left: 2rem;
+
+		& li {
+			display: list-item;
+			list-style: circle;
+
+			& ul {
+				display: block;
+				margin-left: 1rem;
+
+				& li {
+					list-style: square;
+					margin-bottom: .75em;
+				}
+			}
+
+			/* Any link should break lines */
+			& a {
+				word-break: break-word;
+				hyphens: auto;
+				hyphenate-character: "↵";
+			}
+		}
+	}
+
+	blockquote {
+		max-width: 100%;
+		word-break: break-all;
+	}
+}

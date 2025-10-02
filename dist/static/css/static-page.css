@@ -1,0 +1,14 @@
+@layer staticPage {
+	body.about {
+		height: auto;
+		& > main {
+			display: block;
+			text-align: left;
+			width: var(--width-max-content);
+
+			& h2 {
+				margin-top: 2rem;
+			}
+		}
+	}
+}

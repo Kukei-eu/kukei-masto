@@ -34,8 +34,8 @@
 				<h3 id="{{ anchor }}">Local timelines results</h3>
 				<ul>
 				{{#results}}
-					<li class="result-item-first-level">
-						<div class="result-item-first-level__data">
+					<li class="result-item">
+						<div class="result-item__data">
 							<h4>{{ accountDisplayName }}</h4>
 							<img
 								alt="{{ accountDisplayName }}"
@@ -44,7 +44,7 @@
 								height="48"
 								loading="lazy"
 								decoding="async"
-								class="result-item-first-level__avatar"
+								class="result-item__avatar"
 							/>
 							<div>{{{ content }}}</div>
 							<p><format-date>{{ createdAtDate }}</format-date></p>

@@ -14,6 +14,7 @@ export const creepsController = async (req, res) => {
 		...viewDefaults,
 		mainClass: 'about body',
 		title: 'Access denied',
+		extraCss: 'static-page.css',
 		ip,
 	};
 	const html = await renderHtml(template, view);

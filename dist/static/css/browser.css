@@ -1,0 +1,131 @@
+@layer browser {
+	body.body--is-browse,
+	body.body--has-query {
+		& > main {
+			& .headline {
+				grid-area: headline;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: center;
+				min-height: 3rem;
+				& h1 {
+					margin: 0;
+					font-size: 1.5rem;
+					& span {
+						display: none;
+					}
+				}
+
+				& nav {
+					margin: 1rem 0 2rem;
+					max-width: var(--width-max-content);
+					display: grid;
+					gap: 1rem;
+
+					& section {
+						display: grid;
+						gap: .5rem;
+						& span {}
+						& div {
+							display: flex;
+							flex-wrap: wrap;
+							gap: .5rem;
+
+							& a {
+								text-decoration: none;
+							}
+						}
+					}
+				}
+
+			}
+
+			& .results {
+				padding: 2rem 1rem;
+				display: grid;
+				grid-template-columns: var(--width-max-content);
+				box-shadow: -3px 4lh 0 1px var(--color-background), -3px 0 0 0;
+				grid-area: results;
+
+				& > section {
+					margin-top: 2rem;
+					box-shadow: 4rem -2px 0 1px var(--color-background), 0 -2px 0 0;
+
+					& li  a {
+						word-break: break-word;
+						hyphens: auto;
+						hyphenate-character: "↵";
+					}
+
+					.result-item-first-level__avatar {
+						float: right;
+						margin: 1rem;
+					}
+					.result-item-first-level__categories {
+						position: relative;
+					}
+					& h4 {
+						box-shadow: -.5rem 0 0 1px var(--color-background), calc(-.5rem - 3px) 0 0 0;
+					}
+				}
+
+				& > section:first-of-type {
+					box-shadow: none;
+				}
+			}
+		}
+	}
+	body.body--is-browse {
+		& > main {
+			display: grid;
+			grid-template-areas:
+			"headline ."
+			"results results";
+			grid-template-columns: auto 1fr;
+			grid-template-rows: min-content max-content;
+		}
+	}
+	body.body--has-query {
+		display: grid;
+		height: auto;
+
+		& > main > form.search-form {
+			width: 100%;
+			display: grid;
+			grid-template-areas:
+			"headline form"
+			"results results";
+			gap: 2rem;
+			grid-template-columns: auto 1fr;
+
+			& .form-main {
+				transition: 125ms ease-in-out;
+				grid-area: form;
+
+				&:has(:focus) {
+					transform: scale(1.005);
+				}
+
+			}
+
+			& input[type="search"] {
+				box-shadow: 0 0 0 2px var(--color-base);
+			}
+		}
+	}
+
+	@media screen and (max-width: 600px) {
+		body.body--has-query {
+			& > main > form.search-form {
+				width: 100%;
+				display: grid;
+				grid-template-areas:
+			"headline headline"
+			"form form"
+			"results results";
+				gap: 2rem;
+			}
+		}
+	}
+}
