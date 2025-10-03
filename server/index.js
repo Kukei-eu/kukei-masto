@@ -77,7 +77,11 @@ const main = async () => {
 		const referer = req.get('Referer') || '/';
 
 		// instance-url from form
-		const instanceUrl = req.body['instance-url'];
+		let instanceUrl = req.body['instance-url'];
+		if (!instanceUrl.startsWith('https://')) {
+			instanceUrl = `https://${instanceUrl}`;
+		}
+
 		// Set cookie for 360 days
 		res.cookie('instanceUrl', instanceUrl, { maxAge: 360 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'lax' });
 		res.redirect(referer);

@@ -12,7 +12,7 @@
 	@supports (justify-self: anchor-center) {
 		[popover] {
 			justify-self: anchor-center;
-			bottom: calc(anchor(top) + 20px);
+			bottom: calc(anchor(bottom) - 40px);
 		}
 	}
 
