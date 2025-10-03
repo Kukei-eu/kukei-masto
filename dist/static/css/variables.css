@@ -1,7 +1,7 @@
 @layer variavbles {
 	:root {
 		--font-family-head: Superclarendon, 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', Georgia, serif;
-		--font-family-base: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+		--font-family-base: Seravek, 'Gill Sans Nova', Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
 
 		--box-shadow-corner: 4lh 2px 0 1px var(--color-background), -2px 2px 0 1px;
 		--box-shadow-corner-top-right: -5lh -2px 0 1px var(--color-background), 2px -2px 0 1px;

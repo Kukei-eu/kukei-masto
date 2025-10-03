@@ -17,7 +17,7 @@
     "sign": "drone sign Kukei-eu/kukei-masto --save"
   },
   "devDependencies": {
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "eslint": "^9.36.0",
     "eslint-config-minimal-tabs": "^1.0.0"
   },
