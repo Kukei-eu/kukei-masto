@@ -32,6 +32,7 @@
 		color: var(--color-contrast-fg);
 		border: 2px solid var(--color-contrast-bg);
 		box-shadow: 0 0 0 4px var(--color-contrast-bg);
+		text-decoration: none;
 
 		&:hover,
 		&:focus,
@@ -72,16 +73,32 @@
 	}
 
 	#instance-form {
-		display: flex;
-		flex-direction: row;
-		gap: 1rem;
-
-		& form {
-			display: flex;
+		display: grid;
+		grid-template-areas:
+			"input input button"
+			"label hint .";
+		grid-template-columns: auto min-content min-content;
+		gap: 0.25rem;
+		& label {
+			grid-area: label;
+			font-size: 0.8rem;
+			padding-left: 0.35rem;
+		}
+		& input {
+			grid-area: input;
+			width: 100%;
+			font-size: 1rem;
+		}
+		& button[type="submit"] {
+			grid-area: button;
+			padding: calc(0.55rem - 4px) .55rem;
+			font-size: 1rem;
 		}
 
-		& input {
-			font-size: 1rem;
+		& button[popovertarget] {
+			grid-area: hint;
+			position: relative;
+			top: -1.6lh;
 		}
 	}
 

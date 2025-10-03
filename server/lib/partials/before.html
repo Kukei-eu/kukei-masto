@@ -31,10 +31,11 @@
 <header>
 	<div class="header__instance">
 		<form action="/user/setInstance" id="instance-form" method="POST">
-			<label>
-				Your instance <button type="button" class="button button--hint" popovertarget="popover-instance">?</button>:
-				<input type="text" id="instance" name="instance-url" value="{{ instanceUrl }}" />
+			<label for="instance">
+				<span>Your instance</span>
 			</label>
+			<button type="button" class="button button--hint" popovertarget="popover-instance">?</button>
+			<input type="text" id="instance" name="instance-url" value="{{ instanceUrl }}" />
 			<button type="submit" class="button button--secondary">Set</button>
 			<p popover id="popover-instance">When filled out, enables "open in your instance" action.</p>
 		</form>

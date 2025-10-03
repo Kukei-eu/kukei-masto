@@ -6,6 +6,9 @@
 			<br >
 			<span> real time mastodon search engine</span>
 		</h1>
+	</div>
+	<div class="results">
+		<h2>Browse stuff</h2>
 		<nav class="nav-filter">
 			<section>
 				<span>Filter by categories</span>
@@ -28,18 +31,8 @@
 				<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total). <a href="/about#browse-disclaimer">Please read the disclaimer</a></p>
 			</section>
 		</nav>
-	</div>
-	<div class="results">
-		<h2>Browse stuff</h2>
+		<h2>Results</h2>
 		{{#hasResults}}
-		<p>
-			{{#prevPageUrl}}
-			<a href="?{{ . }}">Previous page</a>
-			{{/prevPageUrl}}
-			{{#nextPageUrl}}
-			<a href="?{{ . }}">Next page</a>
-			{{/nextPageUrl}}
-		</p>
 		<section>
 			<ul>
 			{{#results}}
@@ -78,14 +71,15 @@
 			{{/results}}
 			</ul>
 		</section>
-		<p>
+		<nav class="pagination" aria-labelledby="pagination">
+			<h2 class="visually-hidden" id="pagination">Pagination</h2>
 			{{#prevPageUrl}}
-			<a href="?{{ . }}">Previous page</a>
+			<a href="?{{ . }}" class="button button--secondary">Previous page</a>
 			{{/prevPageUrl}}
 			{{#nextPageUrl}}
-			<a href="?{{ . }}">Next page</a>
+			<a href="?{{ . }}" class="button button--secondary">Next page</a>
 			{{/nextPageUrl}}
-		</p>
+		</nav>
 		{{/hasResults}}
 		{{^hasResults}}
 		<p>Looks like there's nothing here.</p>
