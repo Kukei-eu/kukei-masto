@@ -230,3 +230,59 @@ export const getAllPostsCountWithCategorizedCount = async () => {
 		uncategorized: total - categorized,
 	};
 };
+
+export const getLatestNPostsPerCategoryAndLang = async (
+	db,
+	category,
+	detectedLang,
+	limit = 1000,
+) => {
+	const result = await db.collection('posts').aggregate(
+		[
+			{
+				'$match': {
+					'categories': category,
+					'detectedLanguage': detectedLang,
+				}
+			}, {
+				'$sort': {
+					'createdAtDate': -1
+				}
+			}, {
+				'$limit': limit
+			}, {
+				'$group': {
+					'_id': null,
+					'concatenatedText': {
+						'$push': '$plainText'
+					}
+				}
+			}, {
+				'$project': {
+					'_id': 0,
+					'allTexts': {
+						'$reduce': {
+							'input': '$concatenatedText',
+							'initialValue': '',
+							'in': {
+								'$cond': [
+									{
+										'$eq': [
+											'$$value', ''
+										]
+									}, '$$this', {
+										'$concat': [
+											'$$value', 'NEXTENTRY', '$$this'
+										]
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		]
+	).toArray();
+
+	return result[0].allTexts;
+};

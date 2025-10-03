@@ -1,12 +1,7 @@
-import { makePrompt } from './lib/makePrompt.js';
-import {OllamaProvider} from './providers/OllamaProvider.js';
-import {OpenAIProvider} from './providers/OpenAIProvider.js';
-
-
-
+import { makeCategoriesPrompt } from './lib/makeCategoriesPrompt.js';
 
 const doPrompt = async (llmProvider, userMessages) => {
-	const prompt = makePrompt();
+	const prompt = makeCategoriesPrompt();
 
 	const response = await llmProvider.prompt(prompt, userMessages);
 

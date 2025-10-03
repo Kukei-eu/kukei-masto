@@ -10,6 +10,8 @@
     "local": "node -r dotenv/config server/index.js",
     "start": "node server/index.js",
     "llm": "node scripts/make-categories.js",
+    "llm:summaries": "node scripts/make-summaries.js",
+    "llm:summaries:local": "node -r dotenv/config scripts/make-summaries.js",
     "test": "node --test",
     "make:hash": "node ./scripts/make-hash.js",
     "build": "yarn make:hash && yarn install --production",
