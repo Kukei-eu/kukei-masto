@@ -5,7 +5,13 @@
 	<title>{{ title }} </title>
 	<meta name="description" content="Mastodon real-time search engine">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="/static/css/all.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/variables.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/basic.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/lookandfeel.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/layout.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/browser.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/form.css?v={{ hash }}" />
+	<link rel="stylesheet" href="/static/css/popover.css?v={{ hash }}" />
 	{{#extraCss}}
 	<link rel="stylesheet" href="/static/css/{{ . }}?v={{ hash }}" />
 	{{/extraCss}}
