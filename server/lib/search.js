@@ -242,7 +242,7 @@ export const getLatestNPostsPerCategoryAndLang = async (
 			{
 				'$match': {
 					'categories': category,
-					'detectedLanguage': detectedLang,
+					// 'detectedLanguage': detectedLang,
 				}
 			}, {
 				'$sort': {

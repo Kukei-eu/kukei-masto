@@ -5,10 +5,10 @@ export class OpenAIProvider {
 
 	#apiUrl;
 
-	constructor() {
+	constructor(model) {
 		this.#apiUrl = process.env.OPENAI_API;
 		this.#token = process.env.OPENAI_TOKEN;
-		this.#model = process.env.OPENAI_MODEL;
+		this.#model = model || process.env.OPENAI_MODEL;
 	}
 
 	async prompt(prompt, userMessages) {
