@@ -237,13 +237,16 @@ export const getLatestNPostsPerCategoryAndLang = async (
 	detectedLang,
 	limit = 1000,
 ) => {
+	const match = {
+		'categories': category,
+	};
+	if (detectedLang) {
+		match.detectedLanguage = detectedLang;
+	}
 	const result = await db.collection('posts').aggregate(
 		[
 			{
-				'$match': {
-					'categories': category,
-					// 'detectedLanguage': detectedLang,
-				}
+				'$match': match,
 			}, {
 				'$sort': {
 					'createdAtDate': -1
@@ -285,4 +288,20 @@ export const getLatestNPostsPerCategoryAndLang = async (
 	).toArray();
 
 	return result[0].allTexts;
+};
+
+export const getLatestPostsPerCategoryAndLangWrapped = async (
+	category,
+	detectedLang,
+	limit = 1000,
+) => {
+	const db = await getDb();
+	const result = await getLatestNPostsPerCategoryAndLang(
+		db,
+		category,
+		detectedLang,
+		limit
+	);
+
+	return result;
 };

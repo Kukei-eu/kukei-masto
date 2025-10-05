@@ -1,7 +1,7 @@
-import { makeSummaryPrompt } from './llm/lib/makeSummaryPrompt.js';
+import { makeSummaryPrompt } from '../server/llm/lib/makeSummaryPrompt.js';
 import {getLatestNPostsPerCategoryAndLang} from '../server/lib/search.js';
 import {getMongo} from '../server/lib/db/mongo.js';
-import {OllamaPlain} from './llm/providers/OllamaPlain.js';
+import {OllamaPlain} from '../server/llm/providers/OllamaPlain.js';
 // import {OpenAIProvider} from './llm/providers/OpenAIProvider.js';
 
 const main = async () => {

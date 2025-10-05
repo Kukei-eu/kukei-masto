@@ -1,4 +1,4 @@
-import {categories} from '../../../server/lib/llm/categories.js';
+import {categories} from '../../lib/llm/categories.js';
 
 export const makeCategoriesPrompt = () => `
 You are an expert in content categorization of social media posts.

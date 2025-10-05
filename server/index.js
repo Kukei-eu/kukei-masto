@@ -7,7 +7,7 @@ import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
 import {startListening} from './lib/masto-listeners.js';
 import { instanceHosts } from './instances.js';
-import {triggerBotTrends} from './controllers/api/index.js';
+import {triggerBotTrends, triggerSummaries} from './controllers/api/index.js';
 import {creepsController} from './controllers/creeps/index.js';
 import {authMiddleware} from './middleware/auth.js';
 import {browseController} from './controllers/browse/index.js';
@@ -100,6 +100,7 @@ const main = async () => {
 	app.get('/random', browseController);
 	app.get('/about', aboutController);
 	app.post('/api/trends', triggerBotTrends);
+	app.get('/api/summaries', triggerSummaries);
 	app.get('/error/creeps', creepsController);
 
 	const port = process.env.PORT || 3010;

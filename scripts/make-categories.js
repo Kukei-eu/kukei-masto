@@ -4,8 +4,8 @@ import {
 	assignCategories,
 } from '../server/lib/search.js';
 import {getMongo} from '../server/lib/db/mongo.js';
-import {categorize} from './llm/categorize.js';
-import {getProvider} from './llm/providers/getProvider.js';
+import {categorize} from '../server/llm/categorize.js';
+import {getProvider} from '../server/llm/providers/getProvider.js';
 
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
