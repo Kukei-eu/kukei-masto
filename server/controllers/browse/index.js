@@ -3,7 +3,7 @@ import {getDefaultViewData} from '../../lib/view.js';
 import {
 	getAllDetectedLanguages,
 	getAllPossibleCategories, getAllPostsCountWithCategorizedCount,
-	getBrowse,
+	getBrowse, getSummary,
 } from '../../lib/search.js';
 import classNames from 'html-classnames';
 import {emitPageView} from '../../lib/plausible.js';
@@ -14,8 +14,13 @@ const getResults = async (req) => {
 
 	const limit = 10;
 	const offset = page * limit;
-	console.log(limit, offset);
 	return getBrowse(category, lang, {limit, offset});
+};
+
+const getSummaryForCategory = async (req) => {
+	const { category } = req.params;
+	const summary = await getSummary(category);
+	return summary;
 };
 
 const normalizeResults = (results) => results.map(
@@ -54,6 +59,7 @@ export const browseController = async (req, res) => {
 	const { lang, page = 0 } = req.query;
 	const [categories, category] = await processCategories(req, res);
 	const languages = await getAllDetectedLanguages();
+	const summary = await getSummaryForCategory(req);
 	const {
 		total: totalPostsCount,
 		categorized: categorizedPostsCount
@@ -91,6 +97,7 @@ export const browseController = async (req, res) => {
 		categorizedPostsCount,
 		languages,
 		category,
+		summary,
 		nextPageUrl: nextParams.toString(),
 		prevPageUrl: page > 0 ? prevParams.toString() : null,
 		encodedCategory: category ? encodeURIComponent(category) : null,

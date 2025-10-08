@@ -31,7 +31,14 @@
 				<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total). <a href="/about#browse-disclaimer">Please read the disclaimer</a></p>
 			</section>
 		</nav>
-		<h2>Results</h2>
+		{{#summary}}
+		<section class="summary">
+			<h2>Summary</h2>
+			<p>{{ summary }}</p>
+			<p><small>Disclaimer: "summary" is an experimental feature, read more on <a href="/about#summaries">about page</a>.</small></p>
+		</section>
+		{{/summary}}
+		<h2>Posts</h2>
 		{{#hasResults}}
 		<section>
 			<ul>

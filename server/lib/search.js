@@ -314,3 +314,14 @@ export const saveSummary = async (category, summary) => {
 		createdAt: new Date(),
 	});
 };
+
+export const getSummary = async (category) => {
+	const db =await  getDb();
+	const result = await db.collection('summaries').findOne(
+		{category},
+		{
+			sort: {createdAt: -1},
+		}
+	);
+	return result?.summary ?? null;
+};
