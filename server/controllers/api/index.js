@@ -50,7 +50,7 @@ export const triggerSummaries = async (req, res) => {
 	const d = new Date();
 	const h = d.getHours();
 
-	if (![8, 16, 19].includes(h)) {
+	if (![8, 10, 16, 20].includes(h)) {
 		return res.status(200).send('Skipped');
 	}
 
