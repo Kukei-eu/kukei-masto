@@ -13,3 +13,4 @@ steps:
                 from_secret: MASTO_BOT_INCOMING_SECRET
       commands:
           - curl -o - -X POST "https://masto.kukei.eu/api/trends?s=$${MASTO_BOT_INCOMING_SECRET}"
+          - curl -o - -X POST "https://masto.kukei.eu/api/summaries?s=$${MASTO_BOT_INCOMING_SECRET}"

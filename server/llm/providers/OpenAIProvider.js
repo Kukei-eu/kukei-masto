@@ -37,6 +37,7 @@ export class OpenAIProvider {
 		);
 
 		const response = await request.json();
+		console.log(response);
 		const message = response.choices?.[0];
 
 		return message;

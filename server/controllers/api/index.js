@@ -1,8 +1,6 @@
-import crypto from 'crypto';
-import {getLatestPostsPerCategoryAndLangWrapped, getMostCommonWords} from '../../lib/search.js';
+import { getMostCommonWords} from '../../lib/search.js';
 import {sendMastodonStatus} from '../../lib/bot/sendMessage.js';
-import {OpenAIProvider} from '../../llm/providers/OpenAIProvider.js';
-import {makeSummaryPrompt} from '../../llm/lib/makeSummaryPrompt.js';
+import {makeAndSendSummary} from '../../llm/lib/makeAndsendSummary.js';
 
 export const triggerBotTrends = async (req, res) => {
 	// Only run at 8, 16, 19 hour every day
@@ -10,9 +8,12 @@ export const triggerBotTrends = async (req, res) => {
 	const h = d.getHours();
 	const { searchParams } = new URL(req.originalUrl, 'http://localhost');
 	const { s } = Object.fromEntries(searchParams.entries());
-	const { env } = req;
 
-	if (s !== env.MASTO_BOT_INCOMING_SECRET) {
+	if (!process.env.MASTO_BOT_INCOMING_SECRET) {
+		throw new Error('No secret set');
+	}
+
+	if (s !== process.env.MASTO_BOT_INCOMING_SECRET) {
 		return res.status(401).send('Nope');
 	}
 
@@ -27,7 +28,7 @@ export const triggerBotTrends = async (req, res) => {
 			(word) => `${word.word} (${word.count})`
 		)
 		.join(', ');
-	const status = `Trending words on https://masto.kukei.eu at the moment are: ${wordsText} \n #trendingOnMasto #mastoKukeiEu`;
+	const status = `Trending words on https://masto.kukei.eu at the moment are: ${wordsText} \n #trendingOnMasto #mastobot`;
 	try {
 		await sendMastodonStatus(status, 'en');
 	} catch (e) {
@@ -40,30 +41,22 @@ export const triggerBotTrends = async (req, res) => {
 
 export const triggerSummaries = async (req, res) => {
 	const s = req.query.s;
+	if (!process.env.MASTO_BOT_INCOMING_SECRET) {
+		throw new Error('No secret set');
+	}
 	if (s !== process.env.MASTO_BOT_INCOMING_SECRET) {
 		return res.status(401).send('Nope');
 	}
 	const d = new Date();
 	const h = d.getHours();
 
-	if (![19].includes(h)) {
-		// return res.status(200).send('Skipped');
-	}
+	// if (![8, 16, 19].includes(h)) {
+	// 	return res.status(200).send('Skipped');
+	// }
 
-	const entries = await getLatestPostsPerCategoryAndLangWrapped(
-		'news',
-		undefined,
-		5000,
-	);
-	const prompt = makeSummaryPrompt();
-	const llm = new OpenAIProvider(
-		// 'cogito:8b',
-	);
-	const response = await llm.prompt(prompt, [{
-		role: 'user',
-		content: entries,
-	}]);
-	console.log(response);
+	await makeAndSendSummary('news');
+	await makeAndSendSummary('technology');
+	await makeAndSendSummary('programming');
 
-	res.send(200);
+	res.status(201).send();
 };

@@ -305,3 +305,12 @@ export const getLatestPostsPerCategoryAndLangWrapped = async (
 
 	return result;
 };
+
+export const saveSummary = async (category, summary) => {
+	const db =await  getDb();
+	await db.collection('summaries').insertOne({
+		category,
+		summary,
+		createdAt: new Date(),
+	});
+};
