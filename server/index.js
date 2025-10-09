@@ -100,7 +100,7 @@ const main = async () => {
 	app.get('/random', browseController);
 	app.get('/about', aboutController);
 	app.post('/api/trends', triggerBotTrends);
-	app.get('/api/summaries', triggerSummaries);
+	app.post('/api/summaries', triggerSummaries);
 	app.get('/error/creeps', creepsController);
 
 	const port = process.env.PORT || 3010;
