@@ -9,12 +9,12 @@ const main = async () => {
 	const prompt = makeSummaryPrompt();
 	const entries = await getLatestNPostsPerCategoryAndLang(
 		db,
-		'programming',
-		'pl',
-		5000
+		'news',
+		undefined,
+		2000
 	);
 	const llm = new OllamaPlain(
-		// 'cogito:8b',
+		'qwen3:8b',
 	);
 	const response = await llm.prompt(prompt, [{
 		role: 'user',

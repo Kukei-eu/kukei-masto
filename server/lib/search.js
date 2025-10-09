@@ -323,5 +323,5 @@ export const getSummary = async (category) => {
 			sort: {createdAt: -1},
 		}
 	);
-	return result?.summary ?? null;
+	return result?.summary ? result : null;
 };

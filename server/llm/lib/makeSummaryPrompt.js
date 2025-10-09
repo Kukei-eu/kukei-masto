@@ -7,5 +7,7 @@ export const makeSummaryPrompt = () => `
 
 	Make sure you name actual things, do not be too generic.
 
-	Try to keep the summary under 500 characters. Avoid introductory phrases like "Here's a summary of..."
+	Try to keep the summary under 600 characters.
+
+	Remember this is made for a website "summary" section. Avoid being chatty, do not make any introduction, do not make any ending question. You must respond in English.
 `;

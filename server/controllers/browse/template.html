@@ -34,8 +34,8 @@
 		{{#summary}}
 		<section class="summary">
 			<h2>Summary</h2>
-			<p>{{ summary }}</p>
-			<p><small>Disclaimer: "summary" is an experimental feature, read more on <a href="/about#summaries">about page</a>.</small></p>
+			<p>{{ summary.summary }}</p>
+			<p><small>Updated: <format-date>{{summary.createdAt }}</format-date>. Disclaimer: "summary" is an experimental feature, read more on <a href="/about#summaries">about page</a>.</small></p>
 		</section>
 		{{/summary}}
 		<h2>Posts</h2>
