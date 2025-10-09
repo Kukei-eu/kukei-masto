@@ -12,7 +12,7 @@ const getResults = async (req) => {
 	const {category} = req.params;
 	const {lang, page = 0} = req.query;
 
-	const limit = 10;
+	const limit = 20;
 	const offset = page * limit;
 	return getBrowse(category, lang, {limit, offset});
 };
