@@ -38,7 +38,7 @@
 			<p><small>Updated: <format-date>{{summary.createdAt }}</format-date>. Disclaimer: "summary" is an experimental feature, read more on <a href="/about#summaries">about page</a>.</small></p>
 		</section>
 		{{/summary}}
-		<h2>Posts</h2>
+		<h2 id="posts">Posts</h2>
 		{{#hasResults}}
 		<section>
 			<ul>
@@ -81,10 +81,10 @@
 		<nav class="pagination" aria-labelledby="pagination">
 			<h2 class="visually-hidden" id="pagination">Pagination</h2>
 			{{#prevPageUrl}}
-			<a href="?{{ . }}" class="button button--secondary">Previous page</a>
+			<a href="?{{ . }}#posts" class="button button--secondary">Previous page</a>
 			{{/prevPageUrl}}
 			{{#nextPageUrl}}
-			<a href="?{{ . }}" class="button button--secondary">Next page</a>
+			<a href="?{{ . }}#posts" class="button button--secondary">Next page</a>
 			{{/nextPageUrl}}
 		</nav>
 		{{/hasResults}}
