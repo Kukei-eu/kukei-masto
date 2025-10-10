@@ -30,6 +30,7 @@ const emitEvent = async (req, name, props = {}, fakeUrl) => {
 			url: fakeUrl ? fakeUrl : req.originalUrl,
 			domain: env.PLAUSIBLE_REPORTED_DOMAIN,
 			props,
+			referrer: req.get('Referrer') || '',
 		}),
 	});
 
