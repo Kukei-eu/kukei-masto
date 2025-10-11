@@ -1,3 +1,4 @@
+import classNames from 'html-classnames';
 import { getDefaultViewData } from '../../lib/view.js';
 import {emitPageView} from '../../lib/plausible.js';
 import { getTemplate, renderHtml} from '../../lib/sso-render.js';
@@ -9,14 +10,14 @@ const template = getTemplate(import.meta.dirname, './template.html');
 
 export const aboutController = async (req, res) => {
 	emitPageView(req);
-	const { env } = req;
-
 	const viewDefaults = await getDefaultViewData(req, res);
 	const stats = await getSearchStats();
 
 	const view = {
 		...viewDefaults,
-		mainClass: 'about body',
+		mainClass: classNames('body', {
+			'--is-page-about': true,
+		}),
 		title: 'About masto.kukei.eu',
 		extraCss: 'static-page.css',
 		stats,

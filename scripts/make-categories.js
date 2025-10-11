@@ -47,7 +47,7 @@ const doRun = async (llmProvider) => {
 		console.log(count);
 
 		const now = Date.now();
-		const n = 1;
+		const n = 10;
 		const uncategorized = await getUncategorized(db, n);
 
 		if (!uncategorized.length) 	{

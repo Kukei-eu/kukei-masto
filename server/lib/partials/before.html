@@ -5,11 +5,11 @@
 	<title>{{ title }} </title>
 	<meta name="description" content="Mastodon real-time search engine">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Design inspired by https://labs.jensimmons.com/2019/01-006.html -->
 	<link rel="stylesheet" href="/static/css/variables.css?v={{ hash }}" />
 	<link rel="stylesheet" href="/static/css/basic.css?v={{ hash }}" />
 	<link rel="stylesheet" href="/static/css/lookandfeel.css?v={{ hash }}" />
 	<link rel="stylesheet" href="/static/css/layout.css?v={{ hash }}" />
-	<link rel="stylesheet" href="/static/css/browser.css?v={{ hash }}" />
 	<link rel="stylesheet" href="/static/css/form.css?v={{ hash }}" />
 	<link rel="stylesheet" href="/static/css/popover.css?v={{ hash }}" />
 	{{#extraCss}}
@@ -28,25 +28,20 @@
 	<meta name="fediverse:creator" content="@mastobot@social.nowicki.io">
 </head>
 <body class="{{ mainClass }}">
-<header>
-	<div class="header__instance">
-		<form action="/user/setInstance" id="instance-form" method="POST">
-			<label for="instance">
-				<span>Your instance</span>
-			</label>
-			<button type="button" class="button button--hint" popovertarget="popover-instance">?</button>
-			<input type="text" id="instance" name="instance-url" value="{{ instanceUrl }}" />
-			<button type="submit" class="button button--secondary">Set</button>
-			<p popover id="popover-instance">When filled out, enables "open in your instance" action.</p>
-		</form>
-	</div>
-	<div class="header__user">
-		{{ #user.isLoggedIn }}
-			<span>Welcome {{ user.data.name }}</span>
-			<a href="/logout">Logout</a>
-		{{ /user.isLoggedIn }}
-		{{ ^user.isLoggedIn }}
-			<a href="/login">Login</a>
-		{{ /user.isLoggedIn }}
-	</div>
-</header>
+<div class="instance">
+	<form action="/user/setInstance" id="instance-form" method="POST">
+		<label for="instance">
+			<span>Your instance</span>
+		</label>
+		<button type="button" class="button button--hint" popovertarget="popover-instance">?</button>
+		<input type="text" id="instance" name="instance-url" value="{{ instanceUrl }}" />
+		<button type="submit" class="button button--secondary">Set</button>
+		<p popover id="popover-instance">When filled out, enables "open in your instance" action.</p>
+	</form>
+</div>
+<div class="logo">
+	<h1>
+		<a href="/">masto.kukei.eu</a>
+		<span> real time mastodon search engine</span>
+	</h1>
+</div>

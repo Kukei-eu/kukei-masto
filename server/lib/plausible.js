@@ -6,6 +6,9 @@ const anonIp = (ip) => {
 
 const emitEvent = async (req, name, props = {}, fakeUrl) => {
 	const { env } = req;
+	if (!env.PLAUSIBLE_REPORTED_DOMAIN) {
+		return;
+	}
 	const userAgent = req.get('user-agent');
 	let ip = req.get('cf-connecting-ip');
 

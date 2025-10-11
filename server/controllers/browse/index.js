@@ -66,7 +66,7 @@ export const browseController = async (req, res) => {
 	} = await getAllPostsCountWithCategorizedCount();
 
 	const mainClass = classNames('body', {
-		'--is-browse': true,
+		'--is-page-browse': true,
 	});
 
 	emitPageView(req);

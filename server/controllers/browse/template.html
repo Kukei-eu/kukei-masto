@@ -1,36 +1,29 @@
 {{{ before }}}
 <main>
-	<div class="headline">
-		<h1>
-			<a href="/">masto.kukei.eu</a>
-			<br >
-			<span> real time mastodon search engine</span>
-		</h1>
-	</div>
+	<nav class="nav-filter">
+		<section class="nav-filter__item">
+			<span>Filter by categories</span>
+			<div>
+				<a href="/browse">none</a>
+				{{#allCategories}}
+				<a href="/browse/{{ encodedName }}">{{ name }}</a>
+				{{/allCategories}}
+			</div>
+		</section>
+		<section class="nav-filter__item">
+			<span>Filter by languages</span>
+			<div>
+				{{#languages}}
+				<a href="?lang={{ . }}">{{ . }}</a>
+				{{/languages}}
+			</div>
+		</section>
+		<section>
+			<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total). <a href="/about#browse-disclaimer">Please read the disclaimer</a></p>
+		</section>
+	</nav>
 	<div class="results">
 		<h2>Browse stuff</h2>
-		<nav class="nav-filter">
-			<section>
-				<span>Filter by categories</span>
-				<div>
-					<a href="/browse">none</a>
-					{{#allCategories}}
-					<a href="/browse/{{ encodedName }}">{{ name }}</a>
-					{{/allCategories}}
-				</div>
-			</section>
-			<section>
-				<span>Filter by languages</span>
-				<div>
-					{{#languages}}
-					<a href="?lang={{ . }}">{{ . }}</a>
-					{{/languages}}
-				</div>
-			</section>
-			<section>
-				<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total). <a href="/about#browse-disclaimer">Please read the disclaimer</a></p>
-			</section>
-		</nav>
 		{{#summary}}
 		<section class="summary">
 			<h2>Summary</h2>

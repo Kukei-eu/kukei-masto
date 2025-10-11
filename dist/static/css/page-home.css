@@ -1,0 +1,103 @@
+@layer pageHome {
+	.instance {
+		display: none;
+	}
+	body {
+		display: grid;
+		grid-template-areas:
+			". . . . instance"
+			"logo logo . . ."
+			"logo logo form form form"
+			". . nav nav ."
+			"footer footer footer footer footer";
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: 25vh auto auto min-content min-content;
+	}
+	.logo {
+		grid-area: logo;
+		align-self: stretch;
+		width: 100%;
+		display: flex;
+		justify-content: end;
+		background: var(--color-primary);
+
+		& > h1 {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+			position: relative;
+			top: -3rem;
+		}
+	}
+
+	.instance {
+		grid-area: instance;
+	}
+
+	.form-main {
+		grid-area: form;
+		background: oklch(from var(--color-background-focus) L C H / 0.8);
+		margin-left: -14rem;
+		padding-left: 15rem;
+		backdrop-filter: brightness(1);
+	}
+
+	.nav-filter {
+		grid-area: nav;
+		position: relative;
+		left: 1rem;
+
+		& > section:first-child {
+			padding: 2rem 0 0;
+		}
+	}
+
+	footer {
+		grid-area: footer;
+	}
+
+	@media (max-width: 850px) {
+		body {
+			grid-template-areas:
+			". . ."
+			"logo logo ."
+			". form form"
+			"nav nav ."
+			"footer footer footer";
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: auto auto auto auto auto;
+		}
+
+		.logo {
+			min-height: 6rem;
+			align-items: end;
+			justify-content: end;
+			& > h1 {
+				top: 0;
+			}
+		}
+
+		.form-main {
+			margin-left: -4rem;
+			padding-left: 4rem;
+			position: relative;
+			top: -4rem;
+			z-index: -1;
+			padding-top: 4rem;
+		}
+	}
+
+	@media (max-width: 600px) {
+		body {
+			grid-template-areas:
+			"."
+			"logo"
+			"form"
+			"nav"
+			"footer";
+			grid-template-columns: 1fr;
+		}
+	}
+}

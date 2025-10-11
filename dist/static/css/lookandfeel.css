@@ -91,4 +91,12 @@
 		max-width: 100%;
 		word-break: break-all;
 	}
+
+	ul.list {
+		margin-left: 2rem;
+		& li {
+			margin-bottom: 0.5rem;
+			list-style: disc;
+		}
+	}
 }

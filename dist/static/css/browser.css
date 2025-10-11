@@ -66,30 +66,6 @@
 	body.body--has-query {
 		display: grid;
 		height: auto;
-
-		& > main > form.search-form {
-			width: 100%;
-			display: grid;
-			grid-template-areas:
-			"headline form"
-			"results results";
-			gap: 2rem;
-			grid-template-columns: auto 1fr;
-
-			& .form-main {
-				transition: 125ms ease-in-out;
-				grid-area: form;
-
-				&:has(:focus) {
-					transform: scale(1.005);
-				}
-
-			}
-
-			& input[type="search"] {
-				box-shadow: 0 0 0 2px var(--color-base);
-			}
-		}
 	}
 
 	@media screen and (max-width: 600px) {

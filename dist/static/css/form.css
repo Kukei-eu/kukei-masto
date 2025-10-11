@@ -1,16 +1,14 @@
 @layer form {
 	input[type="search"],
 	input[type="text"],
-	input[type="url"],
-	input,
-	textarea {
+	input[type="url"] {
 		font-family: var(--font-family-base);
 		padding: .75rem 0.5rem;
 		width: 100%;
 		font-size: 1.25rem;
 		border: 0;
 		box-shadow: 0 2px 0 0px var(--color-base);
-		background: var(--color-background);
+		background: transparent;
 		color: var(--color-base);
 
 		&:focus,
@@ -25,7 +23,7 @@
 	}
 
 	button, .button {
-		padding: calc(0.75rem - 4px) .75rem;
+		padding: calc(0.75rem - 2px) .75rem;
 		font-size: 1.25rem;
 		font-family: var(--font-family-head);
 		background: var(--color-contrast-bg);
@@ -74,6 +72,7 @@
 
 	#instance-form {
 		display: grid;
+		max-width: 350px;
 		grid-template-areas:
 			"input input button"
 			"label hint .";
@@ -102,4 +101,19 @@
 		}
 	}
 
+	form.form-main {
+		background: var(--color-background-focus);
+		display: flex;
+		transition: 125ms ease-in-out;
+		justify-content: start;
+		align-items: start;
+		padding: 1rem;
+		height: min-content;
+		& > div {
+			display: flex;
+			height: min-content;
+			max-width: 80ch;
+			min-width: min(80ch, 100%);
+		}
+	}
 }

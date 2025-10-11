@@ -1,82 +1,83 @@
 {{{ before }}}
-<main>
-	<form action="/" class="search-form">
-		<div class="headline">
-			<h1>
-				<a href="/">masto.kukei.eu</a>
-				<br >
-				<span> real time mastodon search engine</span></h1>
-		</div>
-		<div class="form-main">
-			<input type="search" name="q" value="{{ q }}" aria-label="Search" placeholder="e.g.: melon ego" autofocus spellcheck="false" />
-			<button type="submit" aria-label="Search">
-				<span class="desktop-only">Search</span>
-				<span class="mobile-only">>></span>
-			</button>
-		</div>
-		{{#noQuery}}
-		<nav class="nav-filter">
-			<section>
-				<span>Browse by categories</span>
-				<div>
-					<a href="/browse">none</a>
-					{{#allCategories}}
-					<a href="/browse/{{ encodedName }}">{{ name }}</a>
-					{{/allCategories}}
-				</div>
-			</section>
-			<section>
-				<span>Browse by languages</span>
-				<div>
-					{{#languages}}
-					<a href="/browse/?lang={{ . }}">{{ . }}</a>
-					{{/languages}}
-				</div>
-			</section>
-		</nav>
-		{{/noQuery}}
-	{{#hasQuery}}
-		<div class="results">
-			<h2>Results <span>generated in {{ doneIn }}ms</span></h2>
-			{{#hasResults}}
-			<section>
-				<h3 id="{{ anchor }}">Local timelines results</h3>
-				<ul>
-				{{#results}}
-					<li class="result-item">
-						<div class="result-item__data">
-							<h4>{{ accountDisplayName }}</h4>
-							<img
-								alt="{{ accountDisplayName }}"
-								src="{{ accountAvatar }}"
-								width="48"
-								height="48"
-								loading="lazy"
-								decoding="async"
-								class="result-item__avatar"
-							/>
-							<div>{{{ content }}}</div>
-							<p><format-date>{{ createdAtDate }}</format-date></p>
-							<p>
-								Original url:
-								<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
-							</p>
-							{{# instanceUrl }}
-							<p>
-								<a href="{{ . }}{{ authorizePath }}">Open in your instance</a>
-							</p>
-							{{ / instanceUrl }}
-						</div>
-					</li>
-				{{/results}}
-				</ul>
-			</section>
-			{{/hasResults}}
-			{{#noResults}}
-			<p>No results found</p>
-			{{/noResults}}
-		</div>
-	{{/hasQuery}}
-	</form>
-</main>
+<form action="/" class="form-main">
+	<div>
+		<input type="search" name="q" value="{{ q }}" aria-label="Search" placeholder="e.g.: melon ego" autofocus spellcheck="false" />
+		<button type="submit" aria-label="Search">
+			<span class="desktop-only">Search</span>
+			<span class="mobile-only">>></span>
+		</button>
+	</div>
+</form>
+{{#noQuery}}
+<nav class="nav-filter">
+	<section>
+		<span>Browse by categories</span>
+		<ul>
+			<li>
+				<a href="/browse">none</a>
+			</li>
+			{{#allCategories}}
+			<li>
+				<a href="/browse/{{ encodedName }}">{{ name }}</a>
+			</li>
+			{{/allCategories}}
+		</ul>
+	</section>
+	<section>
+		<span>Browse by languages</span>
+		<ul>
+			<li>
+				<a href="/browse/">none</a>
+			</li>
+			{{#languages}}
+			<li>
+				<a href="/browse/?lang={{ . }}">{{ . }}</a>
+			</li>
+			{{/languages}}
+		</ul>
+	</section>
+</nav>
+{{/noQuery}}
+{{#hasQuery}}
+	<div class="results">
+		<h2>Results <span>generated in {{ doneIn }}ms</span></h2>
+		{{#hasResults}}
+		<section>
+			<h3 id="{{ anchor }}">Local timelines results</h3>
+			<ul>
+			{{#results}}
+				<li class="result-item">
+					<div class="result-item__data">
+						<h4>{{ accountDisplayName }}</h4>
+						<img
+							alt="{{ accountDisplayName }}"
+							src="{{ accountAvatar }}"
+							width="48"
+							height="48"
+							loading="lazy"
+							decoding="async"
+							class="result-item__avatar"
+						/>
+						<div>{{{ content }}}</div>
+						<p><format-date>{{ createdAtDate }}</format-date></p>
+						<p>
+							Original url:
+							<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
+						</p>
+						{{# instanceUrl }}
+						<p>
+							<a href="{{ . }}{{ authorizePath }}">Open in your instance</a>
+						</p>
+						{{ / instanceUrl }}
+					</div>
+				</li>
+			{{/results}}
+			</ul>
+		</section>
+		{{/hasResults}}
+		{{#noResults}}
+		<p>No results found</p>
+		{{/noResults}}
+	</div>
+{{/hasQuery}}
 {{{ after }}}

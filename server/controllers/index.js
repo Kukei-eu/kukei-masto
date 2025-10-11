@@ -56,7 +56,8 @@ export const indexController = async (req, res) => {
 	// Later, UI needed
 	const hasQuery = !!q;
 	const mainClass = classNames('body', {
-		'--has-query': hasQuery,
+		'--is-page-home': !hasQuery,
+		'--is-page-results': hasQuery,
 	});
 
 	console.log(`Processing results milestone took ${Date.now() - startTime}ms`);
@@ -90,6 +91,7 @@ export const indexController = async (req, res) => {
 		hasQuery,
 		noQuery: !hasQuery,
 		mainClass,
+		extraCss: 'page-home.css',
 		allCategories: categories.map((cat) => ({
 			name: cat,
 			encodedName: encodeURIComponent(cat),

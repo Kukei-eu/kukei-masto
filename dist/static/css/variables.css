@@ -9,8 +9,10 @@
 		--width-max-content: min(70ch, 100%);
 		--width-max-content-wide: min(120ch, 100%);
 
-
-		--color-background: oklch(0.73 0.14 308.38);
+		--color-primary: oklch(0.8 0.19 87.93);
+		--color-background: oklch(0.88 0 0);
+		--color-background-focus: oklch(0.92 0 0);
+		--color-background-aside: oklch(0.7 0 0);
 		--color-base: oklch(0 0 0);
 		--color-base-muted: oklch(0.41 0 0);
 		--color-contrast-bg: var(--color-base);
