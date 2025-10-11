@@ -97,7 +97,6 @@ const main = async () => {
 	app.get('/', indexController);
 	app.get('/browse', browseController);
 	app.get('/browse/:category', browseController);
-	app.get('/random', browseController);
 	app.get('/about', aboutController);
 	app.post('/api/summaries', triggerSummaries);
 	app.get('/error/creeps', creepsController);
