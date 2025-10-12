@@ -40,19 +40,22 @@ const normalizePosts = (posts) => posts.map((post) => ({
 
 export const search = async (query) => {
 	const db = await getDb();
+	const find = {
+		categories: {$ne: 'banned'}
+	};
+	let limit = 200;
 	if (query === '*') {
-		const result = await db.collection('posts')
-			.find()
-			.sort({createdAtDate: -1})
-			.limit(100)
-			.toArray();
-		return normalizePosts(result);
+		limit = 100;
+	} else {
+		find.$text = {$search: query};
 	}
+
 	const result = await db.collection('posts')
-		.find({$text: {$search: query}})
+		.find(find)
 		.sort({createdAtDate: -1})
-		.limit(200)
+		.limit(limit)
 		.toArray();
+
 	return normalizePosts(result);
 };
 
