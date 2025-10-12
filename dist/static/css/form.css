@@ -102,18 +102,17 @@
 	}
 
 	form.form-main {
-		background: var(--color-background-focus);
+		background: transparent;
 		display: flex;
 		transition: 125ms ease-in-out;
 		justify-content: start;
 		align-items: start;
-		padding: 1rem;
 		height: min-content;
+		justify-content: center;
 		& > div {
 			display: flex;
 			height: min-content;
-			max-width: 80ch;
-			min-width: min(80ch, 100%);
+			width: 100%;
 		}
 	}
 }

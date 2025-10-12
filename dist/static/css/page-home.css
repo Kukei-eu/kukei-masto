@@ -5,30 +5,45 @@
 	body {
 		display: grid;
 		grid-template-areas:
-			". . . . instance"
-			"logo logo . . ."
-			"logo logo form form form"
-			". . nav nav ."
-			"footer footer footer footer footer";
-		grid-template-columns: repeat(5, 1fr);
-		grid-template-rows: 25vh auto auto min-content min-content;
+		  ". . ."
+			". logo ."
+			"form form form"
+			"nav nav nav"
+			". . ."
+			"footer footer footer";
+		grid-template-columns: auto min-content auto;
+		grid-template-rows: auto min-content min-content min-content auto min-content;
 	}
+
 	.logo {
 		grid-area: logo;
 		align-self: stretch;
 		width: 100%;
 		display: flex;
 		justify-content: end;
-		background: var(--color-primary);
+		/* background: var(--color-primary); */
 
 		& > h1 {
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			align-items: start;
 			justify-content: center;
 			line-height: 1;
-			position: relative;
-			top: -3rem;
+			max-width: 12ch;
+
+			& > span {
+				position: relative;
+				padding-right: 2rem;
+			}
+			& > span:after {
+				content: "";
+				position: absolute;
+				width: 1rem;
+				height: 1rem;
+				background: var(--color-primary);
+				right: 0px;
+				top: .25rem;
+			}
 		}
 	}
 
@@ -38,66 +53,40 @@
 
 	.form-main {
 		grid-area: form;
-		background: oklch(from var(--color-background-focus) L C H / 0.8);
-		margin-left: -14rem;
-		padding-left: 15rem;
-		backdrop-filter: brightness(1);
+		background: var(--color-background-focus);
+		padding: 0;
 	}
 
 	.nav-filter {
 		grid-area: nav;
-		position: relative;
-		left: 1rem;
-
-		& > section:first-child {
-			padding: 2rem 0 0;
-		}
+		padding: 1rem;
 	}
 
 	footer {
 		grid-area: footer;
 	}
 
-	@media (max-width: 850px) {
+	@media (min-width: 650px) {
 		body {
 			grid-template-areas:
-			". . ."
-			"logo logo ."
-			". form form"
-			"nav nav ."
-			"footer footer footer";
-			grid-template-columns: repeat(3, 1fr);
-			grid-template-rows: auto auto auto auto auto;
-		}
+				". . . ."
+			  "logo . . ."
+				". form form ."
+				". nav nav ."
+				"footer footer footer footer"
+			;
 
-		.logo {
-			min-height: 6rem;
-			align-items: end;
-			justify-content: end;
-			& > h1 {
-				top: 0;
-			}
+			grid-template-columns: min-content minmax(1fr, 80ch) auto minmax(0, 1fr);
+			grid-template-rows: auto min-content min-content auto min-content;
 		}
 
 		.form-main {
-			margin-left: -4rem;
-			padding-left: 4rem;
-			position: relative;
-			top: -4rem;
-			z-index: -1;
-			padding-top: 4rem;
+			max-width: 80ch;
+		}
+
+		.nav-filter {
+			max-width: 80ch;
 		}
 	}
 
-	@media (max-width: 600px) {
-		body {
-			grid-template-areas:
-			"."
-			"logo"
-			"form"
-			"nav"
-			"footer";
-			grid-template-columns: 1fr;
-		}
-	}
 }

@@ -23,19 +23,6 @@
 			{{/allCategories}}
 		</ul>
 	</section>
-	<section>
-		<span>Browse by languages</span>
-		<ul>
-			<li>
-				<a href="/browse/">none</a>
-			</li>
-			{{#languages}}
-			<li>
-				<a href="/browse/?lang={{ . }}">{{ . }}</a>
-			</li>
-			{{/languages}}
-		</ul>
-	</section>
 </nav>
 {{/noQuery}}
 {{#hasQuery}}

@@ -9,7 +9,7 @@
 		--width-max-content: min(70ch, 100%);
 		--width-max-content-wide: min(120ch, 100%);
 
-		--color-primary: oklch(0.8 0.19 87.93);
+		--color-primary: oklch(0.56 0.22 34.07);
 		--color-background: oklch(0.88 0 0);
 		--color-background-focus: oklch(0.92 0 0);
 		--color-background-aside: oklch(0.7 0 0);
@@ -24,14 +24,14 @@
 
 	@media screen and (prefers-color-scheme: dark) {
 		:root {
-			--color-background: oklch(0.25 0 0);
-			--color-base: oklch(0.777 0.058 302.15);
-			--color-base-muted: oklch(0.849 0.024 313.11);
-			--color-contrast-bg: oklch(0.779 0.059 305.456);
-			--color-contrast-fg: oklch(0.25 0 0);
-			--border-size: 4px;
-			--color-link: oklch(0.77 0.12 281.95);
-			--color-link-visited: oklch(0.684 0.193 314.833);
+			/*--color-background: oklch(0.25 0 0);*/
+			/*--color-base: oklch(0.777 0.058 302.15);*/
+			/*--color-base-muted: oklch(0.849 0.024 313.11);*/
+			/*--color-contrast-bg: oklch(0.779 0.059 305.456);*/
+			/*--color-contrast-fg: oklch(0.25 0 0);*/
+			/*--border-size: 4px;*/
+			/*--color-link: oklch(0.77 0.12 281.95);*/
+			/*--color-link-visited: oklch(0.684 0.193 314.833);*/
 		}
 	}
 }
