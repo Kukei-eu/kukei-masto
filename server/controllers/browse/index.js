@@ -23,18 +23,6 @@ const getSummaryForCategory = async (req) => {
 	return summary;
 };
 
-const normalizeResults = (results) => results.map(
-	(item) => {
-		return {
-			...item,
-			categoriesParsed: item?.categories?.map((cat) => ({
-				name: cat,
-				encodedName: encodeURIComponent(cat),
-			})) ?? []
-		};
-	}
-);
-
 const indexTemplate = getTemplate(import.meta.dirname, './template.html');
 
 export const processCategories = async (req, res) => {
@@ -81,13 +69,11 @@ export const browseController = async (req, res) => {
 		prevParams.set('page', parseInt(page, 10) - 1);
 	}
 	nextParams.set('page', parseInt(page, 10) + 1);
-
-	const normalizedResults =  normalizeResults(results);
 	const view = {
 		...viewDefaults,
 		title: 'masto.kukei.eu',
-		results: normalizedResults,
-		hasResults: normalizedResults.length > 0,
+		results,
+		hasResults: results.length > 0,
 		mainClass,
 		allCategories: categories.map((cat) => ({
 			name: cat,

@@ -35,6 +35,10 @@ export const cleanUp = async () => {
 const normalizePosts = (posts) => posts.map((post) => ({
 	...post,
 	categories: post.categories?.filter((cat) => categories.includes(cat)) ?? [],
+	categoriesParsed: post?.categories?.map((cat) => ({
+		name: cat,
+		encodedName: encodeURIComponent(cat),
+	})) ?? [],
 	authorizePath: getAuthorizeUrl(post.url),
 }));
 
@@ -78,6 +82,7 @@ export const getBrowse = async (category, lang, {limit, offset}) => {
 		.limit(limit)
 		.skip(offset)
 		.toArray();
+
 	return normalizePosts(result);
 };
 
