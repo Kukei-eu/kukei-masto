@@ -19,7 +19,7 @@ export const aboutController = async (req, res) => {
 			'--is-page-about': true,
 		}),
 		title: 'About masto.kukei.eu',
-		extraCss: 'static-page.css',
+		extraCss: 'page-static.css',
 		stats,
 		hosts: instanceHosts.join(', '),
 		TOOTS_TTL_HUMAN,

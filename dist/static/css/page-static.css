@@ -1,0 +1,88 @@
+@layer pageStatic {
+	.body--is-page-about {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 25vh auto min-content;
+
+		& .instance {
+			display: none;
+		}
+
+		& main {
+			display: grid;
+
+			& section {
+				padding: 2rem;
+				background: var(--color-background-focus);
+			}
+
+			& section:nth-child(even) {
+				background: var(--color-background-aside);
+			}
+
+			& h2 {
+				margin:0;
+			}
+
+			& h2:has(+ p),
+			& h2:has(+ ul) {
+				margin: 0;
+			}
+
+			& h2 + p,
+			& h2 + ul {
+				margin-top: 0;
+			}
+		}
+	}
+
+	@media (min-width: 650px) {
+		.body--is-page-about {
+			& #about {
+				grid-area: about;
+			}
+
+			& #stats {
+				grid-area: stats;
+			}
+
+			& #browse-disclaimer {
+				grid-area: disclaimer;
+			}
+			& #summaries {
+				grid-area: summaries;
+			}
+			& #privacy {
+				grid-area: privacy;
+			}
+			& main {
+				grid-template-areas:
+					"about about about ."
+					". stats stats stats"
+					"disclaimer disclaimer disclaimer ."
+					". summaries summaries summaries"
+					"privacy privacy privacy privacy"
+				;
+
+				gap: 2rem;
+
+				grid-template-columns: repeat(4, 1fr);
+			}
+		}
+	}
+
+	@media (min-width: 1200px) {
+		.body--is-page-about {
+			& main {
+				grid-template-areas:
+					"about about stats stats"
+					"about about disclaimer disclaimer"
+					"summaries summaries privacy privacy"
+				;
+
+				gap: 2rem;
+				grid-template-columns: repeat(4, 1fr);
+			}
+		}
+	}
+}
