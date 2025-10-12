@@ -2,34 +2,38 @@
 	input[type="search"],
 	input[type="text"],
 	input[type="url"] {
+		--local-color-base: var(--color-base);
+		--local-color-base-muted: var(--color-base-muted);
 		font-family: var(--font-family-base);
 		padding: .75rem 0.5rem;
 		width: 100%;
 		font-size: 1.25rem;
 		border: 0;
-		box-shadow: 0 2px 0 0px var(--color-base);
+		box-shadow: 0 2px 0 0px var(--local-color-base);
 		background: transparent;
-		color: var(--color-base);
+		color: var(--local-color-base);
 
 		&:focus,
 		&:active {
-			box-shadow: 0 2px 0 0px var(--color-base),  0 0 0 2px var(--color-base);
+			box-shadow: 0 2px 0 0px var(--local-color-base),  0 0 0 2px var(--local-color-base);
 			outline: none;
 		}
 
 		&::placeholder {
-			color: var(--color-base-muted);
+			color: var(--local-color-base-muted);
 		}
 	}
 
 	button, .button {
+		--local-color-background: var(--color-contrast-bg);
+		--local-color-foreground: var(--color-contrast-fg);
 		padding: calc(0.75rem - 2px) .75rem;
 		font-size: 1.25rem;
 		font-family: var(--font-family-head);
-		background: var(--color-contrast-bg);
+		background: var(--local-color-background);
 		color: var(--color-contrast-fg);
-		border: 2px solid var(--color-contrast-bg);
-		box-shadow: 0 0 0 4px var(--color-contrast-bg);
+		border: 2px solid var(--local-color-background);
+		box-shadow: 0 0 0 4px var(--local-color-foreground);
 		text-decoration: none;
 
 		&:hover,
@@ -53,11 +57,12 @@
 	}
 
 	.button--hint {
+		--local-color-base: var(--color-base);
 		font-size: 1em;
 		box-shadow: none;
 		border: none;
 		background: transparent;
-		color: var(--color-base);
+		color: var(--local-color-base);
 		padding: 0 .5rem;
 		cursor: pointer;
 
@@ -83,6 +88,7 @@
 			font-size: 0.8rem;
 			padding-left: 0.35rem;
 		}
+
 		& input {
 			grid-area: input;
 			width: 100%;
@@ -113,6 +119,13 @@
 			display: flex;
 			height: min-content;
 			width: 100%;
+		}
+	}
+
+	.pagination {
+		& .button {
+			font-size: 1rem;
+			font-family: var(--font-family-base);
 		}
 	}
 }

@@ -1,90 +1,111 @@
 {{{ before }}}
-<main>
-	<nav class="nav-filter">
-		<section class="nav-filter__item">
-			<span>Filter by categories</span>
+<nav class="nav-filter">
+	<section class="nav-filter__item">
+		<details open>
+			<summary><span>Categories</span></summary>
 			<div>
-				<a href="/browse">none</a>
-				{{#allCategories}}
-				<a href="/browse/{{ encodedName }}">{{ name }}</a>
-				{{/allCategories}}
+				<ul>
+					<li>
+					<a href="/browse?lang={{currentLang}}">none</a>
+					</li>
+					{{#allCategories}}
+					<li>
+					<a href="/browse/{{ encodedName }}?lang={{currentLang}}">{{ name }}</a>
+					</li>
+					{{/allCategories}}
+				</ul>
 			</div>
-		</section>
-		<section class="nav-filter__item">
-			<span>Filter by languages</span>
+		</details>
+	</section>
+	<section class="nav-filter__item">
+		<details>
+			<summary><span>Filter by language</span></summary>
 			<div>
-				{{#languages}}
+				<ul>
+			<li>
+				<a href="/browse/{{encodedCategory}}">none</a>
+			</li>
+			{{#languages}}
+			<li>
 				<a href="?lang={{ . }}">{{ . }}</a>
-				{{/languages}}
+			</li>
+			{{/languages}}
+		</ul>
 			</div>
-		</section>
-		<section>
-			<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total). <a href="/about#browse-disclaimer">Please read the disclaimer</a></p>
-		</section>
-	</nav>
-	<div class="results">
-		<h2>Browse stuff</h2>
-		{{#summary}}
-		<section class="summary">
-			<h2>Summary</h2>
-			<p>{{ summary.summary }}</p>
-			<p><small>Updated: <format-date>{{summary.createdAt }}</format-date>. Disclaimer: "summary" is an experimental feature, read more on <a href="/about#summaries">about page</a>.</small></p>
-		</section>
-		{{/summary}}
-		<h2 id="posts">Posts</h2>
-		{{#hasResults}}
-		<section>
-			<ul>
-			{{#results}}
-				<li class="result-item-first-level">
-					<div class="result-item-first-level__data">
-						<h4>{{ accountDisplayName }}</h4>
-						<img
-							alt="{{ accountDisplayName }}"
+	</details>
+	</section>
+</nav>
+<div class="posts-wrapper">
+	<h2 id="posts">Browse {{ category }}</h2>
+	{{#summary}}
+	<section class="summary">
+		<h2>Summary</h2>
+		<p>{{ summary.summary }}</p>
+		<p><small>Updated: <format-date>{{summary.createdAt }}</format-date>. Disclaimer: "summary" is an experimental feature, read more on <a href="/about#summaries">about page</a>.</small></p>
+	</section>
+	{{/summary}}
+	{{#hasResults}}
+	<section class="posts">
+		<ul>
+		{{#results}}
+			<li>
+				<div class="post">
+					<div class="post__avatar">
+							<img
+							alt=""
 							src="{{ accountAvatar }}"
 							width="48"
 							height="48"
-							loading="lazy"
+							loading="eager"
 							decoding="async"
-							class="result-item-first-level__avatar"
+							aria-hidden="hidden"
 						/>
-						<div>{{{ content }}}</div>
-						<p><format-date>{{ createdAtDate }}</format-date></p>
-						<p>
-							Original url:
-							<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
-						</p>
-						{{# instanceUrl }}
-						<p>
-							<a href="{{ . }}{{ authorizePath }}">Open in your instance</a>
-						</p>
-						{{ / instanceUrl }}
-						<p class="result-item-first-level__categories">
-							Categories (<button type="button" class="button button--hint" popovertarget="popover-{{ id }}">?</button>):
-							{{#categoriesParsed}}
-							  <a href="/browse/{{ encodedName }}">{{ name }}</a>
-							{{/categoriesParsed}}
-						</p>
-						<p popover id="popover-{{ id}}">{{ categoriesReason }}</p>
 					</div>
-				</li>
-			{{/results}}
-			</ul>
-		</section>
-		<nav class="pagination" aria-labelledby="pagination">
-			<h2 class="visually-hidden" id="pagination">Pagination</h2>
-			{{#prevPageUrl}}
-			<a href="?{{ . }}#posts" class="button button--secondary">Previous page</a>
-			{{/prevPageUrl}}
-			{{#nextPageUrl}}
-			<a href="?{{ . }}#posts" class="button button--secondary">Next page</a>
-			{{/nextPageUrl}}
-		</nav>
-		{{/hasResults}}
-		{{^hasResults}}
-		<p>Looks like there's nothing here.</p>
-		{{/hasResults}}
-	</div>
-
-</main>
+					<h4 class="post__account"><span>{{ accountDisplayName }}</span></h4>
+					<div class="post__content">
+						{{{ content }}}
+					</div>
+					<div class="post__date">
+						<format-date>{{ createdAtDate }}</format-date>
+					</div>
+					<div class="post__url">
+						<a href="{{ url }}" target="_blank">Open original</a>
+					</div>
+					<div class="post__action">
+						{{# instanceUrl }}
+							<a href="{{ . }}{{ authorizePath }}" target="_blank">Open in your instance</a>
+						{{ / instanceUrl }}
+						{{^ instanceUrl }}
+							<a href="#instance">Open in your instance</a>
+						{{/ instanceUrl }}
+					</div>
+					<div class="post__categories">
+						Categories (<button type="button" class="button button--hint" popovertarget="popover-{{ id }}">?</button>):
+						{{#categoriesParsed}}
+							<a href="/browse/{{ encodedName }}">{{ name }}</a>
+						{{/categoriesParsed}}
+					</div>
+					<p popover id="popover-{{ id}}">{{ categoriesReason }}</p>
+				</div>
+			</li>
+		{{/results}}
+		</ul>
+	</section>
+	{{/hasResults}}
+	{{^hasResults}}
+	<p>Looks like there's nothing here.</p>
+	{{/hasResults}}
+</div>
+<nav class="pagination" aria-labelledby="pagination">
+	<h2 class="visually-hidden" id="pagination">Pagination</h2>
+	{{#prevPageUrl}}
+	<a href="?{{ . }}#posts" class="button button--secondary">Previous page</a>
+	{{/prevPageUrl}}
+	{{#nextPageUrl}}
+	<a href="?{{ . }}#posts" class="button button--secondary">Next page</a>
+	{{/nextPageUrl}}
+</nav>
+<aside>
+	<p>Status: {{ categorizedPostsCount }}/{{totalPostsCount}} (processed/total).<br/><a href="/about#browse-disclaimer">Please read the disclaimer</a></p>
+</aside>
 {{{ after }}}

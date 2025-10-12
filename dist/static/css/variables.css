@@ -11,8 +11,9 @@
 
 		--color-primary: oklch(0.56 0.22 34.07);
 		--color-background: oklch(0.88 0 0);
-		--color-background-focus: oklch(0.92 0 0);
-		--color-background-aside: oklch(0.7 0 0);
+		--color-background-focus: oklch(0.99 0 0);
+		--color-background-aside: oklch(0.84 0 0);
+		--color-background-aside-focus: oklch(0.79 0 0);
 		--color-base: oklch(0 0 0);
 		--color-base-muted: oklch(0.41 0 0);
 		--color-contrast-bg: var(--color-base);

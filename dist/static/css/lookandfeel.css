@@ -1,4 +1,4 @@
-@layer typography {
+@layer lookandfeel {
 	html {
 		background: var(--color-background);
 		color: var(--color-base);
@@ -99,4 +99,6 @@
 			list-style: disc;
 		}
 	}
+
+
 }

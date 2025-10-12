@@ -98,6 +98,8 @@ export const browseController = async (req, res) => {
 		languages,
 		category,
 		summary,
+		extraCss: 'page-browse.css',
+		currentLang: lang,
 		nextPageUrl: nextParams.toString(),
 		prevPageUrl: page > 0 ? prevParams.toString() : null,
 		encodedCategory: category ? encodeURIComponent(category) : null,

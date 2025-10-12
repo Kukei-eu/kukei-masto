@@ -48,7 +48,10 @@ const main = async () => {
 					'https://cdn.fosstodon.org',
 					'https://social-cdn.vivaldi.net',
 					'https://pcdn.mastodon.com.pl',
-					'https://fsn1.your-objectstorage.com'
+					'https://fsn1.your-objectstorage.com',
+					'https://media.hachyderm.io',
+					'https://cdn.masto.host',
+					'https://media.muenchen.social',
 				],
 				// eslint-disable-next-line quotes
 				scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`],

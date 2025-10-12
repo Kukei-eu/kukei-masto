@@ -26,22 +26,26 @@
 	}
 
 	.nav-filter {
-		& > section > span {
-			font-family: var(--font-family-head);
+		details[open] summary::marker {
+			color: var(--color-primary);
+		}
+		& section span {
+			font-family:var(--font-family-head);
 			font-weight: bold;
 		}
 
-		& > section > ul {
+		& section ul {
 			display: flex;
 			width: 100%;
 			gap: .25rem;
 			flex-wrap: wrap;
 			margin-top: 0;
 
-			& > li {
+			& li {
 				display: inline-block;
 				position: relative;
 				padding: 0.5rem 0.5rem;
+
 				& a {
 					text-decoration: none;
 				}
@@ -62,6 +66,7 @@
 					&:before {
 						background: var(--color-primary);
 					}
+
 					& a {
 						outline: none;
 					}

@@ -1,106 +1,126 @@
 @layer browser {
-	body.body--is-browse,
-	body.body--has-query {
-		& > main {
-			& .headline {
-				grid-area: headline;
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start;
-				justify-content: center;
-				min-height: 3rem;
-				& h1 {
-					margin: 0;
-					font-size: 1.5rem;
-					& span {
-						display: none;
-					}
-				}
-			}
-
-			& .results {
-				padding: 2rem 1rem;
-				display: grid;
-				grid-template-columns: var(--width-max-content);
-				box-shadow: -3px 4lh 0 1px var(--color-background), -3px 0 0 0;
-				grid-area: results;
-
-				& > section {
-					margin-top: 2rem;
-					box-shadow: 4rem -2px 0 1px var(--color-background), 0 -2px 0 0;
-
-					& li  a {
-						word-break: break-word;
-						hyphens: auto;
-						hyphenate-character: "↵";
-					}
-
-					.result-item-first-level__avatar {
-						float: right;
-						margin: 1rem;
-					}
-					.result-item-first-level__categories {
-						position: relative;
-					}
-					& h4 {
-						box-shadow: -.5rem 0 0 1px var(--color-background), calc(-.5rem - 3px) 0 0 0;
-					}
-				}
-
-				& > section:first-of-type {
-					box-shadow: none;
-				}
-			}
-		}
-	}
-	body.body--is-browse {
-		& > main {
+	.posts {
+		& ul {
 			display: grid;
-			grid-template-areas:
-			"headline ."
-			"results results";
-			grid-template-columns: auto 1fr;
-			grid-template-rows: min-content max-content;
-		}
-	}
-	body.body--has-query {
-		display: grid;
-		height: auto;
-	}
+			gap: 4rem;
 
-	@media screen and (max-width: 600px) {
-		body.body--has-query {
-			& > main > form.search-form {
-				width: 100%;
-				display: grid;
-				grid-template-areas:
-			"headline headline"
-			"form form"
-			"results results";
-				gap: 2rem;
+			& li {
+				padding: 0;
 			}
 		}
 	}
-
-	nav.nav-filter {
-		margin: 1rem 0 2rem;
-		max-width: var(--width-max-content);
+	.post {
 		display: grid;
-		gap: 1rem;
+		grid-template-areas:
+			"avatar account date"
+			"content  content content"
+			"categories categories url"
+			"categories categories action"
+		;
+		grid-template-columns: min-content 1fr 1fr;
+		& .post__avatar {
+			grid-area: avatar;
+			background: var(--color-background-aside);
+			box-shadow:
+				-20px 22px 0 -16px var(--color-primary),
+				calc(1rem - 10px) -0.25rem 0 1rem var(--color-background-aside)
+			;
+			display: flex;
+			align-items: end;
+		}
 
-		& section {
+		& .post__account {
+			grid-area: account;
+			background: var(--color-background-aside);
+
+			overflow: hidden;
+			max-width: 25ch;
+			display: flex;
+			align-items: center;
+			align-self: stretch;
+			margin: 0;
+			padding: 0 0.5rem;
+			& span {
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+
+		& .post__content {
+			grid-area: content;
+			overflow:hidden;
+			width: 100%;
+			/* add alpha */
+			background: oklch(from var(--color-background-focus) l c h / calc(alpha - 0.4));
 			display: grid;
-			gap: .5rem;
-			& span {}
-			& div {
-				display: flex;
-				flex-wrap: wrap;
-				gap: .5rem;
+			gap: 0.5rem;
+			padding: 1rem;
+			position: relative;
+			& p {
+			/* Hyphenation */
+				hyphens: auto;
+				margin: 0;
+			}
 
-				& a {
-					text-decoration: none;
-				}
+			& p > span:has(a) {
+				display: inline-flex;
+			}
+			& a {
+				display: inline-block;
+				max-width: 25ch;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				padding: 0;
+				text-decoration-style: dotted;
+				vertical-align: bottom;
+			}
+
+			&:after {
+				content: "";
+				width: 2rem;
+				height: 2px;
+				background: var(--color-primary);
+				position: absolute;
+				bottom: 0;
+				right:0;
 			}
 		}
+		& .post__categories {
+			grid-area: categories;
+			padding: 0.25rem 0.5rem;
+		}
+		& .post__date {
+			grid-area: date;
+			align-self: end;
+			padding: 0.25rem;
+			display:flex;
+			justify-content: end;
+			align-content: end;
+		}
+		& .post__url {
+			grid-area: url;
+			max-width: 100%;
+			overflow: hidden;
+			text-align: right;
+			padding: 0.25rem 0.5rem 0;
+			font-size: 1rem;
+			& a {
+				display: block;
+				max-width: 100%;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
+
+		& .post__action {
+			grid-area: action;
+			text-align: right;
+			padding: 0 0.5rem 0.25rem;
+			font-size: 1rem;
+		}
+
 	}
 }

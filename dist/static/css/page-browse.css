@@ -1,0 +1,125 @@
+@layer pageBrowse {
+	.body--is-page-browse {
+		display:grid;
+		grid-template-areas:
+		"logo"
+		"nav"
+		"posts"
+		"pagination"
+		"aside"
+		"instance"
+		"footer"
+		;
+	}
+
+	.logo {
+		grid-area: logo;
+		display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+	}
+	.instance {
+		grid-area: instance;
+		background: var(--color-background-aside-focus);
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	.nav-filter {
+		grid-area: nav;
+		& details {
+			background: var(--color-background-aside);
+			padding: 0;
+
+			& summary {
+				padding: 1rem;
+				cursor: pointer;
+			}
+
+			& > div {
+				background: var(--color-background);
+				padding: 1rem;
+			}
+		}
+	}
+	.posts-wrapper {
+		grid-area: posts;
+		padding: 4rem 1rem 2rem;
+	}
+
+	footer {
+		grid-area: footer;
+	}
+
+	aside {
+		grid-area: aside;
+		background: var(--color-background-aside);
+		& p {
+			font-size: small;
+			padding: 0 1rem;
+		}
+	}
+
+	.pagination {
+		grid-area: pagination;
+		background: var(--color-background-aside);
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	@media (min-width:700px) {
+		.body--is-page-browse {
+			display:grid;
+			grid-template-areas:
+			"logo logo"
+			"posts ."
+			"posts nav"
+			"posts aside"
+			"posts pagination"
+			"posts instance"
+			"posts ."
+			"footer footer"
+			;
+			grid-template-rows: auto 20vh min-content min-content min-content min-content auto auto;
+			grid-template-columns: 2fr 1fr;
+		}
+		.pagination{
+			position: sticky;
+			top: 0;
+		}
+
+		details summary::marker {
+			color: transparent;
+		}
+
+		::details-content {
+			content-visibility: visible;
+    	height: auto !important;
+		}
+	}
+
+	@media (min-width: 1200px) {
+		.body--is-page-browse {
+			display:grid;
+			grid-template-areas:
+			"logo . ."
+			". posts ."
+			"nav posts pagination"
+			"aside posts ."
+			"instance posts ."
+			". posts ."
+			"footer footer footer"
+			;
+			grid-template-rows: auto 20vh min-content min-content min-content min-content min-content auto auto;
+			grid-template-columns: 1fr 2fr 1fr;
+		}
+
+		.pagination {
+			align-self: start;
+		}
+	}
+}
