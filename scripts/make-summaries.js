@@ -1,8 +1,8 @@
 import { makeSummaryPrompt } from '../server/llm/lib/makeSummaryPrompt.js';
 import {getLatestNPostsPerCategoryAndLang} from '../server/lib/search.js';
 import {getMongo} from '../server/lib/db/mongo.js';
-import {OllamaPlain} from '../server/llm/providers/OllamaPlain.js';
-// import {OpenAIProvider} from './llm/providers/OpenAIProvider.js';
+// import {OllamaPlain} from '../server/llm/providers/OllamaPlain.js';
+import {OpenAIProvider} from '../server/llm/providers/OpenAIProvider.js';
 
 const main = async () => {
 	const [client, db] = await getMongo();
@@ -11,11 +11,12 @@ const main = async () => {
 		db,
 		'news',
 		undefined,
-		2000
+		1000
 	);
-	const llm = new OllamaPlain(
-		'qwen3:8b',
+	const llm = new OpenAIProvider(
+		'openai/gpt-4.1-nano',
 	);
+	console.log(prompt);
 	const response = await llm.prompt(prompt, [{
 		role: 'user',
 		content: entries,
