@@ -7,6 +7,7 @@ export const getTemplate = (...pathnameParts) => {
 };
 const beforeTemplate = getTemplate(import.meta.dirname, './partials/before.html');
 const afterTemplate = getTemplate(import.meta.dirname, './partials/after.html');
+const postTemplate = getTemplate(import.meta.dirname, './partials/post.html');
 
 export const renderHtml = async (template, data) => {
 	const finalData = {
@@ -19,6 +20,8 @@ export const renderHtml = async (template, data) => {
 		...finalData,
 		before,
 		after,
+	}, {
+		postTemplate,
 	});
 
 	return html;

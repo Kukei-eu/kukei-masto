@@ -115,10 +115,16 @@
 		align-items: start;
 		height: min-content;
 		justify-content: center;
+		background: var(--color-background-focus);
+		padding: 0;
 		& > div {
 			display: flex;
 			height: min-content;
 			width: 100%;
+		}
+
+		& button {
+			--local-color-foreground: var(--color-contrast-bg);
 		}
 	}
 

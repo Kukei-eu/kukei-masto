@@ -32,8 +32,6 @@
 
 	.form-main {
 		grid-area: form;
-		background: var(--color-background-focus);
-		padding: 0;
 	}
 
 	.nav-filter {

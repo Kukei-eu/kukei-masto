@@ -91,7 +91,7 @@ export const indexController = async (req, res) => {
 		hasQuery,
 		noQuery: !hasQuery,
 		mainClass,
-		extraCss: 'page-home.css',
+		extraCss: hasQuery ? 'page-results.css' : 'page-home.css',
 		allCategories: categories.map((cat) => ({
 			name: cat,
 			encodedName: encodeURIComponent(cat),

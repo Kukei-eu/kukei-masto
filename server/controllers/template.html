@@ -26,37 +26,14 @@
 </nav>
 {{/noQuery}}
 {{#hasQuery}}
-	<div class="results">
+	<div class="posts-wrapper">
 		<h2>Results <span>generated in {{ doneIn }}ms</span></h2>
 		{{#hasResults}}
-		<section>
-			<h3 id="{{ anchor }}">Local timelines results</h3>
+		<section class="posts">
 			<ul>
 			{{#results}}
-				<li class="result-item">
-					<div class="result-item__data">
-						<h4>{{ accountDisplayName }}</h4>
-						<img
-							alt="{{ accountDisplayName }}"
-							src="{{ accountAvatar }}"
-							width="48"
-							height="48"
-							loading="lazy"
-							decoding="async"
-							class="result-item__avatar"
-						/>
-						<div>{{{ content }}}</div>
-						<p><format-date>{{ createdAtDate }}</format-date></p>
-						<p>
-							Original url:
-							<a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a>
-						</p>
-						{{# instanceUrl }}
-						<p>
-							<a href="{{ . }}{{ authorizePath }}">Open in your instance</a>
-						</p>
-						{{ / instanceUrl }}
-					</div>
+				<li>
+					{{> postTemplate}}
 				</li>
 			{{/results}}
 			</ul>

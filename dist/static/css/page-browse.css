@@ -71,6 +71,10 @@
 		gap: 1rem;
 	}
 
+	.summary {
+		margin: 4rem 0;
+	}
+
 	@media (min-width:700px) {
 		.body--is-page-browse {
 			display:grid;

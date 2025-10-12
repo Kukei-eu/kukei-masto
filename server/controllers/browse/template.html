@@ -39,7 +39,7 @@
 	<h2 id="posts">Browse {{ category }}</h2>
 	{{#summary}}
 	<section class="summary">
-		<h2>Summary</h2>
+		<h3>Summary</h3>
 		<p>{{ summary.summary }}</p>
 		<p><small>Updated: <format-date>{{summary.createdAt }}</format-date>. Disclaimer: "summary" is an experimental feature, read more on <a href="/about#summaries">about page</a>.</small></p>
 	</section>
@@ -49,44 +49,7 @@
 		<ul>
 		{{#results}}
 			<li>
-				<div class="post">
-					<div class="post__avatar">
-							<img
-							alt=""
-							src="{{ accountAvatar }}"
-							width="48"
-							height="48"
-							loading="eager"
-							decoding="async"
-							aria-hidden="hidden"
-						/>
-					</div>
-					<h4 class="post__account"><span>{{ accountDisplayName }}</span></h4>
-					<div class="post__content">
-						{{{ content }}}
-					</div>
-					<div class="post__date">
-						<format-date>{{ createdAtDate }}</format-date>
-					</div>
-					<div class="post__url">
-						<a href="{{ url }}" target="_blank">Open original</a>
-					</div>
-					<div class="post__action">
-						{{# instanceUrl }}
-							<a href="{{ . }}{{ authorizePath }}" target="_blank">Open in your instance</a>
-						{{ / instanceUrl }}
-						{{^ instanceUrl }}
-							<a href="#instance">Open in your instance</a>
-						{{/ instanceUrl }}
-					</div>
-					<div class="post__categories">
-						Categories (<button type="button" class="button button--hint" popovertarget="popover-{{ id }}">?</button>):
-						{{#categoriesParsed}}
-							<a href="/browse/{{ encodedName }}">{{ name }}</a>
-						{{/categoriesParsed}}
-					</div>
-					<p popover id="popover-{{ id}}">{{ categoriesReason }}</p>
-				</div>
+				{{> postTemplate}}
 			</li>
 		{{/results}}
 		</ul>
