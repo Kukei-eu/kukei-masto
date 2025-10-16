@@ -42,6 +42,9 @@ export const processCategories = async (req, res) => {
 };
 
 export const browseController = async (req, res) => {
+	// Cache control header
+	// 5 minutes for browsers, 10 minutes for CDNs
+	res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
 	const viewDefaults = await getDefaultViewData(req, res);
 	const results = await getResults(req);
 	const { lang, page = 0 } = req.query;

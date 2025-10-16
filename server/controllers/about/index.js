@@ -10,6 +10,9 @@ const template = getTemplate(import.meta.dirname, './template.html');
 
 export const aboutController = async (req, res) => {
 	emitPageView(req);
+	// Cache control header
+	// 5 minutes for browsers, 10 minutes for CDNs
+	res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
 	const viewDefaults = await getDefaultViewData(req, res);
 	const stats = await getSearchStats();
 

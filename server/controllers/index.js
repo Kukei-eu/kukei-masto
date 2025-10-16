@@ -23,6 +23,9 @@ const indexTemplate = getTemplate(import.meta.dirname, './template.html');
  * @returns {Promise<*>}
  */
 export const indexController = async (req, res) => {
+	// Cache control header
+	// 5 minutes for browsers, 10 minutes for CDNs
+	res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
 	const startTime = Date.now();
 	const { searchParams } = new URL(req.originalUrl, 'http://localhost');
 	const { q } = Object.fromEntries(searchParams.entries());
