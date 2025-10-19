@@ -5,10 +5,10 @@ export class OllamaProvider {
 
 	#apiUrl;
 
-	constructor() {
+	constructor(model = process.env.OLLAMA_MODEL) {
 		this.#apiUrl = process.env.OLLAMA_API;
 		this.#token = process.env.OLLAMA_TOKEN;
-		this.#model = process.env.OLLAMA_MODEL;
+		this.#model = model;
 	}
 
 	async prompt(prompt, userMessages) {
