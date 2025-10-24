@@ -19,7 +19,7 @@ export const processSummary = (raw) => {
 	let currentPart = '';
 	// First split 360 chars, later 480 chars
 	for (const word of messageByWords) {
-		const length = parts.length === 0 ? 390 : 480;
+		const length = parts.length === 0 ? 360 : 480;
 		if (count + word.length + 1 > length) {
 			parts.push(currentPart.trim());
 			currentPart = '';
