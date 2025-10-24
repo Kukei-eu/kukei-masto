@@ -1,4 +1,4 @@
-import { testInputs } from './test-categories-inputs.js';
+import { testInputs } from './categories-inputs.js';
 import {categorize} from '../../server/llm/categorize.js';
 import {OllamaProvider} from '../../server/llm/providers/OllamaProvider.js';
 
