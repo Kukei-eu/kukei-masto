@@ -10,14 +10,17 @@ export const triggerSummaries = async (req, res) => {
 	}
 	const d = new Date();
 	const h = d.getHours();
+	// UTC+0!
+	const shouldRun = [4, 9, 13, 18, 24].includes(h);
+	const shouldSendBot = [9, 18, 24].includes(h);
 
-	if (![6, 12, 18, 24].includes(h)) {
+	if (!shouldRun) {
 		return res.status(200).send('Skipped');
 	}
 
-	await makeAndSendSummary('news');
-	await makeAndSendSummary('technology');
-	await makeAndSendSummary('programming');
+	await makeAndSendSummary('news', shouldSendBot);
+	await makeAndSendSummary('technology', shouldSendBot);
+	await makeAndSendSummary('programming', shouldSendBot);
 
 	res.status(201).send();
 };

@@ -6,6 +6,7 @@ import { OpenAIProvider } from '../providers/OpenAIProvider.js';
 
 export const makeAndSendSummary = async (
 	category,
+	shouldSendBot = false,
 ) => {
 	const entries = await getLatestPostsPerCategoryAndLangWrapped(
 		category,
@@ -32,6 +33,11 @@ export const makeAndSendSummary = async (
 
 	if (process.env.LLM_DRY_RUN) {
 		console.log('Dry run, not sending to Mastodon:', parts);
+		return true;
+	}
+
+	if (!shouldSendBot) {
+		console.log('Not sending bot message as shouldSendBot is false');
 		return true;
 	}
 
