@@ -14,7 +14,7 @@ export const makeAndSendSummary = async (
 	);
 	const prompt = makeSummaryPrompt();
 	const llm = new OpenAIProvider(
-		'openai/gpt-4.1-nano',
+		'openai/gpt-5-nano',
 	);
 	const response = await llm.prompt(prompt, [{
 		role: 'user',
@@ -35,7 +35,7 @@ export const makeAndSendSummary = async (
 		return true;
 	}
 
-	let first = `Blip blop, I'm a #mastobot. \n Here is a summary of the latest posts in #${category} category: \n ${parts[0]}`;
+	let first = `Blip blop, I'm a #mastobot. \n Here is a summary (in beta) of the latest posts in #${category} category: \n ${parts[0]}`;
 
 	let lastId = await sendMastodonStatus(first, 'en');
 
