@@ -41,7 +41,7 @@ export const makeAndSendSummary = async (
 		return true;
 	}
 
-	let first = `Blip blop, I'm a #mastobot. \n Here is a summary (in beta) of the latest posts in [${category}](https://masto.kukei.eu/browse/${category}) category: \n ${parts[0]}`;
+	let first = `Blip blop, I'm a #mastobot. \n Here is a summary (in beta) of the latest posts in #${category}AtKukei https://masto.kukei.eu/browse/${category} category: \n ${parts[0]}`;
 
 	let lastId = await sendMastodonStatus(first, 'en');
 

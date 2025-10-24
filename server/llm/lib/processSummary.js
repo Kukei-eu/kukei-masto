@@ -6,7 +6,7 @@ export const processSummary = (raw) => {
 		throw new Error('No message found');
 	}
 
-	if (message.length < 360) {
+	if (message.length <= 350) {
 		return {
 			completeMessage: message,
 			parts: [message],
@@ -17,9 +17,9 @@ export const processSummary = (raw) => {
 	const messageByWords = message.split(' ');
 	let count = 0;
 	let currentPart = '';
-	// First split 360 chars, later 480 chars
+	// First split 350 chars, later 480 chars
 	for (const word of messageByWords) {
-		const length = parts.length === 0 ? 360 : 480;
+		const length = parts.length === 0 ? 350 : 480;
 		if (count + word.length + 1 > length) {
 			parts.push(currentPart.trim());
 			currentPart = '';
