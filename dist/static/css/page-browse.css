@@ -73,6 +73,10 @@
 
 	.summary {
 		margin: 4rem 0;
+
+		& > .summary__text {
+			white-space: pre-wrap;
+		}
 	}
 
 	@media (min-width:700px) {
