@@ -15,9 +15,9 @@ const normalizeCategories = (categories) => categories.map((cat) => cat.toLowerC
 const processBatch = async (db, llmProvider, posts) => {
 	await categorize(llmProvider, posts);
 	for (const post of posts) {
+		const log = [];
 		try {
-			const log = [];
-			log.push(['Text:', post.plainText]);
+			log.push(['Post', post]);
 			const {result} = post;
 			const [categories, reason, language] = result;
 			const normalized = normalizeCategories(categories);
@@ -26,10 +26,12 @@ const processBatch = async (db, llmProvider, posts) => {
 			log.push(['Language:', language]);
 
 			await assignCategories(db, post._id, normalized, reason, language);
-			log.forEach((line) => console.log(...line));
 			console.log('---');
 		} catch (error) {
+			console.log(log);
 			console.error(error);
+		} finally {
+			log.forEach((line) => console.log(...line));
 		}
 	}
 };
