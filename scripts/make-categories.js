@@ -28,10 +28,8 @@ const processBatch = async (db, llmProvider, posts) => {
 			await assignCategories(db, post._id, normalized, reason, language);
 			console.log('---');
 		} catch (error) {
-			console.log(log);
-			console.error(error);
-		} finally {
 			log.forEach((line) => console.log(...line));
+			console.error(error);
 		}
 	}
 };
