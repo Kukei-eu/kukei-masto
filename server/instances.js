@@ -33,6 +33,11 @@ export const instanceHosts = [
 	'cyberplace.social',
 	'mstdn.social',
 	'mastodon.com.pl',
+	'defcon.social',
+	'flipboard.social',
+	'mastodon.scot',
+	'toot.community',
+	'ohai.social',
 ];
 
 export const bannedAccounts = [
