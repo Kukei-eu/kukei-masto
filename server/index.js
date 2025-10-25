@@ -52,6 +52,7 @@ const main = async () => {
 					'https://media.hachyderm.io',
 					'https://cdn.masto.host',
 					'https://media.muenchen.social',
+					'https://files.ioc.exchange'
 				],
 				// eslint-disable-next-line quotes
 				scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`],
