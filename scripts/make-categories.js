@@ -40,7 +40,7 @@ const processBatch = async (db, llmProvider, posts) => {
 };
 
 const gaugeToCategorise = new promClient.Gauge({
-	name: 'uncategorized_posts',
+	name: 'kukei_masto_llm_uncategorized_posts',
 	help: 'Number of uncategorized posts',
 });
 
