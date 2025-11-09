@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import crypto from 'crypto';
 import cookieParser from 'cookie-parser';
+import { makePromMiddleware } from "./middleware/prom.js";
 import { indexController } from './controllers/index.js';
 import { aboutController } from './controllers/about/index.js';
 import {startListening} from './lib/masto-listeners.js';
@@ -64,6 +65,9 @@ const main = async () => {
 		console.log(`Request: ${req.get('cf-connecting-ip')}, ${req.originalUrl}`);
 		next();
 	});
+	if (process.env.APP_WITH_PROMETHEUS) {
+		makePromMiddleware(app);
+	}
 	authMiddleware(app);
 	app.use('/', bodyParser.urlencoded({ extended: false }));
 	app.use((req, res, next) => {

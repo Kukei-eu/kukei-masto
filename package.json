@@ -10,8 +10,8 @@
     "local": "node -r dotenv/config server/index.js",
     "start": "node server/index.js",
     "llm": "node scripts/make-categories.js",
-  	"test:categories": "node -r dotenv/config scripts/playground/categories.js",
-  	"test:summaries": "node -r dotenv/config scripts/playground/summaries.js",
+    "test:categories": "node -r dotenv/config scripts/playground/categories.js",
+    "test:summaries": "node -r dotenv/config scripts/playground/summaries.js",
     "test": "node --test",
     "make:hash": "node ./scripts/make-hash.js",
     "build": "yarn make:hash && yarn install --production",
@@ -27,12 +27,14 @@
     "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
     "express-openid-connect": "^2.19.2",
+    "express-prom-bundle": "^8.0.0",
     "helmet": "^8.1.0",
     "html-classnames": "^1.0.0",
     "html-to-text": "^9.0.5",
     "ip-anonymize": "^0.1.0",
     "mongodb": "^6.20.0",
     "mustache": "^4.2.0",
+    "prom-client": "^15.1.3",
     "sanitize-html": "^2.17.0"
   }
 }
