@@ -90,7 +90,7 @@ const main = async () => {
 	const app = express();
 	app.get('/metrics', async (req, res) =>{
 		const metrics = await promClient.register.metrics();
-		res.contentType(promClient.Registry.OPENMETRICS_CONTENT_TYPE);
+		res.contentType(promClient.Registry.PROMETHEUS_CONTENT_TYPE);
 		res.send(metrics);
 	});
 
