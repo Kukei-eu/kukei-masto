@@ -1,3 +1,4 @@
+import express from 'express';
 import {
 	getUncategorized,
 	getUncategorizedCount,
@@ -8,6 +9,9 @@ import {getMongo} from '../server/lib/db/mongo.js';
 import {categorize} from '../server/llm/categorize.js';
 import {getProvider} from '../server/llm/providers/getProvider.js';
 
+promClient.collectDefaultMetrics({
+	prefix: 'kukei_masto_',
+});
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -83,6 +87,15 @@ const doRun = async (llmProvider) => {
 };
 
 const main = async () => {
+	const app = express();
+	app.get('/metrics', async (req, res) =>{
+		const metrics = await promClient.register.metrics();
+		res.contentType(promClient.Registry.OPENMETRICS_CONTENT_TYPE);
+		res.send(metrics);
+	});
+
+	app.listen(4090);
+
 	const llmProvider = getProvider();
 
 	if (!llmProvider) {
