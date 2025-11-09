@@ -11,7 +11,6 @@ export const promClient = client;
 const metricsMiddleware = promBundle({
 	includeMethod: true,
 	includePath: true,
-	promClient
 });
 
 export const makePromMiddleware = (app) => {
