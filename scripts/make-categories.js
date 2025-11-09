@@ -3,6 +3,7 @@ import {
 	getUncategorizedCount,
 	assignCategories,
 } from '../server/lib/search.js';
+import { promClient } from '../server/middleware/prom.js';
 import {getMongo} from '../server/lib/db/mongo.js';
 import {categorize} from '../server/llm/categorize.js';
 import {getProvider} from '../server/llm/providers/getProvider.js';
@@ -34,6 +35,11 @@ const processBatch = async (db, llmProvider, posts) => {
 	}
 };
 
+const gaugeToCategorise = new promClient.Gauge({
+	name: 'uncategorized_posts',
+	help: 'Number of uncategorized posts',
+});
+
 const doRun = async (llmProvider) => {
 	const [client, db] = await getMongo();
 	// testing
@@ -45,6 +51,7 @@ const doRun = async (llmProvider) => {
 	do {
 		const count = await getUncategorizedCount(db);
 		console.log(count);
+		gaugeToCategorise.set(count);
 
 		const now = Date.now();
 		const n = 10;

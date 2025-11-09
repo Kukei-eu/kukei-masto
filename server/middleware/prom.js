@@ -4,6 +4,10 @@ import promBundle from 'express-prom-bundle';
 
 export const promClient = client;
 
+client.collectDefaultMetrics({
+	prefix: 'kukei_masto_',
+});
+
 const metricsMiddleware = promBundle({
 	includeMethod: true,
 	includePath: true,
