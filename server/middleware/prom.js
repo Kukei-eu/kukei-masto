@@ -7,6 +7,7 @@ export const promClient = client;
 const metricsMiddleware = promBundle({
 	includeMethod: true,
 	includePath: true,
+	metricsPath: process.env.APP_PROM_METRICS_PATH || undefined,
 	promClient: {
 		collectDefaultMetrics: {
 			prefix: 'kukei_masto_',
