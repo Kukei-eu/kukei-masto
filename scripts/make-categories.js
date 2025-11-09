@@ -10,7 +10,7 @@ import {categorize} from '../server/llm/categorize.js';
 import {getProvider} from '../server/llm/providers/getProvider.js';
 
 promClient.collectDefaultMetrics({
-	prefix: 'kukei_masto_',
+	prefix: 'kukei_masto_llm',
 });
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
