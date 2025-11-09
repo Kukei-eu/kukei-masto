@@ -1,12 +1,4 @@
-import client from 'prom-client';
 import promBundle from 'express-prom-bundle';
-
-
-export const promClient = client;
-
-client.collectDefaultMetrics({
-	prefix: 'kukei_masto2_',
-});
 
 const metricsMiddleware = promBundle({
 	includeMethod: true,

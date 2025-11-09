@@ -3,7 +3,7 @@ import {
 	getUncategorizedCount,
 	assignCategories,
 } from '../server/lib/search.js';
-import { promClient } from '../server/middleware/prom.js';
+import promClient from 'prom-client';
 import {getMongo} from '../server/lib/db/mongo.js';
 import {categorize} from '../server/llm/categorize.js';
 import {getProvider} from '../server/llm/providers/getProvider.js';
