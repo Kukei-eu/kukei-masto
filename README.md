@@ -1,5 +1,6 @@
 # Masto.kukei.eu website
 
+Repository moved to [Codeberg](https://codeberg.org/kukei/masto-kukei-eu)
 ## What is it
 This is a repo of a [masto.kukei.eu](https://masto.kukei.eu) website.
 
